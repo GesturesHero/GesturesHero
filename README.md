@@ -1,6 +1,7 @@
 # GesturesHero
 Project - Advanced Interaction Methods (INFOM435) - School year 2020-2021 - University of Namur - Computer Science Faculty
 
+![](./assets/img/logo.svg | width=100)
 ## Contributors
 
 * ANDRE Maxime (maxiandrunamur)
