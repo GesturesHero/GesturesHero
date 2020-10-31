@@ -1,12 +1,20 @@
 # GesturesHero
-Project - Advanced Interaction Methods (INFOM435) - School year 2020-2021 - University of Namur - Computer Science Faculty
+School project
+
+Advanced Interaction Methods (INFOM435)
+
+University of Namur - Computer Science Faculty
+
+School year 2020-2021
+
+<img src="assets/img/logo.svg" width="150px" alt="GesturesHero's logo"/>
 
 ## Contributors
 
-* ANDRE Maxime (maxiandrunamur)
-* BAYET Anthony (abayet)
-* JETZEN Tobias (tjetzen)
-* LUYCX Pierre (pluycx)
+* ANDRE Maxime (@maxiandrunamur)
+* BAYET Anthony (@abayet)
+* JETZEN Tobias (@tjetzen)
+* LUYCX Pierre (@pluycx)
 
 
 ## Libraries used
