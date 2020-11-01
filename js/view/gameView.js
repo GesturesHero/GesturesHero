@@ -31,26 +31,53 @@ function drawMenuPage() {
  */
 function drawLevelPage(id) {
     $(".general").load("html/level.html", function () {
-        _drawCustomAudioPlayer();
+        _drawCustomAudioPlayer("./assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3");
     });
 }
 
 /**
  * Draws a custom flat audio player without any controls.
+ * @param sourcePath {string} The source path to the audio file.
  */
-function _drawCustomAudioPlayer(){
-    // Custom Audio Player
-    var audioPlayerOriginal = $('audio')[0];
-    audioPlayerOriginal.ontimeupdate = function () {
-        $('.audio-player-custom-progress-bar').css('width', audioPlayerOriginal.currentTime / audioPlayerOriginal.duration * 100 + '%')
-        $('.audio-player-custom-progress-bar-now').css('left', audioPlayerOriginal.currentTime / audioPlayerOriginal.duration * 100 + '%')
-    }
+function _drawCustomAudioPlayer(sourcePath) {
+    // Get the audio player.
+    let audioPlayerOriginal = $('.audio-player-original');
+    let audioPlayerCustomPlayControl = $('.audio-player-custom-play-control-disabled');
+
+    // Set the source file.
+    audioPlayerOriginal.attr('src', sourcePath);
+
+    // Load the source file.
+    audioPlayerOriginal[0].load();
+
+    // Play the source file when loaded.
+    // NOTE :   Google Chrome defined a policy that does not allow an audio autoplay if the user has not already interacted with the web page.
+    //          Thus, it is necessary to show a play control in this case.
+    //          Source : https://developers.google.com/web/updates/2017/09/autoplay-policy-changes
+    audioPlayerOriginal[0].oncanplaythrough = function () {
+        let audioPlayPromise = audioPlayerOriginal[0].play();
+
+        // When the autoplay is not allow, show a play control.
+        audioPlayPromise.catch(() => {
+            audioPlayerCustomPlayControl.removeClass("audio-player-custom-play-control-disabled");
+            audioPlayerCustomPlayControl.appendClass("audio-player-custom-play-control");
+            audioPlayerCustomPlayControl.click(function () {
+                audioPlayerOriginal[0].play();
+            });
+        });
+
+        // Update the progress bar at each time update.
+        audioPlayerOriginal[0].ontimeupdate = function () {
+            $('.audio-player-custom-progress-bar').css('width', audioPlayerOriginal[0].currentTime / audioPlayerOriginal[0].duration * 100 + '%');
+            $('.audio-player-custom-progress-bar-now').css('left', audioPlayerOriginal[0].currentTime / audioPlayerOriginal[0].duration * 100 + '%');
+        };
+    };
 }
 
 /**
  * Draws the level completed page.
  */
-function drawLevelCompletedPage(){
+function drawLevelCompletedPage() {
     $(".general").load("html/level-completed.html", function () {
         // WHEN LOADED
     });
@@ -59,7 +86,7 @@ function drawLevelCompletedPage(){
 /**
  * Draws the level failed page.
  */
-function drawLevelFailedPage(){
+function drawLevelFailedPage() {
     $(".general").load("html/level-failed.html", function () {
         // WHEN LOADED
     });
@@ -68,7 +95,7 @@ function drawLevelFailedPage(){
 /**
  * Draws the end page.
  */
-function drawEndPage(){
+function drawEndPage() {
     $(".general").load("html/end.html", function () {
         // WHEN LOADED
     });
@@ -77,7 +104,7 @@ function drawEndPage(){
 /**
  * Refreshes the view.
  */
-function refreshView(){
+function refreshView() {
     switch (_currentView) {
         case view.MENU:
             drawMenuPage();
@@ -102,8 +129,8 @@ function refreshView(){
  * @param {view} newView The new view to switch to.
  * @param {string} newId (optional) The new id of the level to go to.
  */
-function switchView(newView, newId=undefined) {
-    if(newId !== undefined){
+function switchView(newView, newId = undefined) {
+    if (newId !== undefined) {
         _currentLevelViewId = newId;
     }
     _currentView = newView;

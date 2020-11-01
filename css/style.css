@@ -104,6 +104,9 @@
     height: 50px;
     justify-content: flex-start !important;
 
+    margin: 0 !important;
+    padding: 0 !important;
+
     background-color: #000000;
 }
 
@@ -118,24 +121,35 @@
     width: 10px;
 
     margin-left: -5px;
-    z-index: 1;
+    z-index: 2;
 
     background-color: #33cccc;
 }
 
-.audio-player-song-milestones {
-    width: 100%;
-    height: 50px;
-    margin-top: -50px;
-    justify-content: flex-start !important;
-}
-
 .audio-player-song-milestone {
+    position: absolute;
     height: 50px;
     width: 10px;
+
     margin-left: -5px;
+    z-index: 1;
 
     background-color: #ffffff;
+}
+
+.audio-player-custom-play-control {
+    background-color: transparent;
+    border: none;
+}
+
+.audio-player-custom-play-control-disabled {
+    background-color: transparent;
+    border: none;
+    opacity: 0.1;
+}
+
+.audio-player-custom-play-control-disabled:focus {
+    outline: none;
 }
 
 /* Page > End */
