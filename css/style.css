@@ -152,6 +152,10 @@
     outline: none;
 }
 
+.audio-player-custom-play-control-disabled:hover{
+    cursor: not-allowed;
+}
+
 /* Page > End */
 
 .end {

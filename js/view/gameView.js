@@ -51,8 +51,8 @@ function _drawCustomAudioPlayer(sourcePath) {
     audioPlayerOriginal[0].load();
 
     // Play the source file when loaded.
-    // NOTE :   Google Chrome defined a policy that does not allow an audio autoplay if the user has not already interacted with the web page.
-    //          Thus, it is necessary to show a play control in this case.
+    // NOTE :   Some web browser such as Google Chrome or Firebox defined a policy that does not allow an audio autoplay in some conditions.
+    //          Thus, it is necessary to enable a play control in this case.
     //          Source : https://developers.google.com/web/updates/2017/09/autoplay-policy-changes
     audioPlayerOriginal[0].oncanplaythrough = function () {
         let audioPlayPromise = audioPlayerOriginal[0].play();
@@ -60,9 +60,10 @@ function _drawCustomAudioPlayer(sourcePath) {
         // When the autoplay is not allow, show a play control.
         audioPlayPromise.catch(() => {
             audioPlayerCustomPlayControl.removeClass("audio-player-custom-play-control-disabled");
-            audioPlayerCustomPlayControl.appendClass("audio-player-custom-play-control");
+            audioPlayerCustomPlayControl.addClass("audio-player-custom-play-control");
             audioPlayerCustomPlayControl.click(function () {
                 audioPlayerOriginal[0].play();
+                audioPlayerCustomPlayControl.addClass("audio-player-custom-play-control-disabled");
             });
         });
 
