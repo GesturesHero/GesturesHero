@@ -5,12 +5,14 @@
     "levelDifficulty": 1,
     "levelColor": "",
     "levelSong" : {
+      "songId": 1,
       "songAuthor": "Wii",
       "songTitle" : "Mii Chanel Theme",
       "songUrl": "/assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3"
     },
-    "levelGestures" : [
+    "levelMilestones" : [
       {
+        "levelMilestoneId": 1,
         "gestureId": "",
         "gestureIndexOrder": 1,
         "gestureTimestampStart": 0,

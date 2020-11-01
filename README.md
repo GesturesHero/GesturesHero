@@ -9,12 +9,12 @@ School year 2020-2021
 
 <img src="assets/img/logo.svg" width="150px" alt="GesturesHero's logo"/>
 
-## Contributors
+## Authors
 
 * ANDRE Maxime (@maxiandrunamur)
 * BAYET Anthony (@abayet)
 * JETZEN Tobias (@tjetzen)
-* LUYCX Pierre (@pluycx)
+* LUYCX Pierre (@tarhses)
 
 
 ## Libraries used

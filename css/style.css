@@ -37,8 +37,16 @@
     align-items: center;
 }
 
+.level-access:hover {
+    cursor: pointer;
+}
+
 .non-accessible {
     opacity: 0.2;
+}
+
+.non-accessible:hover{
+    cursor: not-allowed;
 }
 
 /* Page > Level */
@@ -152,7 +160,7 @@
     outline: none;
 }
 
-.audio-player-custom-play-control-disabled:hover{
+.audio-player-custom-play-control-disabled:hover {
     cursor: not-allowed;
 }
 
