@@ -12,16 +12,12 @@ let game = undefined; // Global game instance (model)
  */
 function initializeGame() {
 
-    // MODEL
+    // Building the game and sending it to the view.
     let gameBuilderService = new JSONGameBuilder();
     gameBuilderService.buildFrom("/GesturesHero/assets/data/levels.json", (builtGame => {
         game = builtGame;
-        console.log(game);
+        refreshGame();
     }));
-
-
-    // VIEW
-    refreshGame();
 }
 
 /**
@@ -31,7 +27,7 @@ function initializeGame() {
 function refreshGame() {
 
     //if(!game.isFinised()){
-    refreshView();
+    refreshView(game);
     //} else {
 //        drawEndGamePage()
     //}

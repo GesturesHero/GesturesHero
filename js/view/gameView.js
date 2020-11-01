@@ -14,11 +14,29 @@ let _currentLevelViewId = undefined;
 
 /**
  * Draws the (main) menu page.
+ * @param levels {[Level]} The list of levels.
  */
-function drawMenuPage() {
+function drawMenuPage(levels) {
     $(".general").load("html/menu.html", function () {
-        // WHEN LOADED
+        levels.forEach(level => {
+            _drawLevel(level);
+        })
     });
+}
+
+/**
+ * Draws a level.
+ * @param level {Level} The level to draw.
+ * @private
+ */
+function _drawLevel(level) {
+    $('.menu').append("" +
+        "<div class=\"level-access\"" +
+        "id=\"" + level.getLevelId() + "\"" +
+        "style=\"background-color: " + level.getLevelColor() + "\"" +
+        "onclick=\"switchView(view.LEVEL, " + level.getLevelId() + ")\">\n" +
+        level.getLevelName() +
+        "</div>");
 }
 
 /**
@@ -99,12 +117,13 @@ function drawEndPage() {
 }
 
 /**
- * Refreshes the view.
+ * Refreshes the view in terms of the game.
+ * @param game {game} The game.
  */
-function refreshView() {
+function refreshView(game) {
     switch (_currentView) {
         case view.MENU:
-            drawMenuPage();
+            drawMenuPage(game.getLevels());
             break;
         case view.LEVEL:
             drawLevelPage(_currentLevelViewId);
@@ -131,7 +150,7 @@ function switchView(newView, newId = undefined) {
         _currentLevelViewId = newId;
     }
     _currentView = newView;
-    refreshView();
+    refreshGame();
 }
 
 
