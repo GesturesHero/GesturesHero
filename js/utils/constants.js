@@ -6,6 +6,8 @@
 const view = {
     MENU: 'menu',
     LEVEL: 'level',
+    LEVEL_COMPLETED: 'level_completed',
+    LEVEL_FAILED: 'level_failed',
     END: 'end'
 };
 

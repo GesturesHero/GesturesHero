@@ -31,13 +31,37 @@ function drawMenuPage() {
  */
 function drawLevelPage(id) {
     $(".general").load("html/level.html", function () {
+        _drawCustomAudioPlayer();
+    });
+}
 
-        // Custom Audio Player
-        var audioPlayerOriginal = $('audio')[0];
-        audioPlayerOriginal.ontimeupdate = function () {
-            $('.audio-player-custom-progress-bar').css('width', audioPlayerOriginal.currentTime / audioPlayerOriginal.duration * 100 + '%')
-            $('.audio-player-custom-progress-bar-now').css('left', audioPlayerOriginal.currentTime / audioPlayerOriginal.duration * 100 + '%')
-        }
+/**
+ * Draws a custom flat audio player without any controls.
+ */
+function _drawCustomAudioPlayer(){
+    // Custom Audio Player
+    var audioPlayerOriginal = $('audio')[0];
+    audioPlayerOriginal.ontimeupdate = function () {
+        $('.audio-player-custom-progress-bar').css('width', audioPlayerOriginal.currentTime / audioPlayerOriginal.duration * 100 + '%')
+        $('.audio-player-custom-progress-bar-now').css('left', audioPlayerOriginal.currentTime / audioPlayerOriginal.duration * 100 + '%')
+    }
+}
+
+/**
+ * Draws the level completed page.
+ */
+function drawLevelCompletedPage(){
+    $(".general").load("html/level-completed.html", function () {
+        // WHEN LOADED
+    });
+}
+
+/**
+ * Draws the level failed page.
+ */
+function drawLevelFailedPage(){
+    $(".general").load("html/level-failed.html", function () {
+        // WHEN LOADED
     });
 }
 
@@ -54,14 +78,22 @@ function drawEndPage(){
  * Refreshes the view.
  */
 function refreshView(){
-    if (_currentView === view.MENU) { // MENU PAGE
-        drawMenuPage();
-
-    } else if (_currentView === view.LEVEL) { // LEVEL PAGE
-        drawLevelPage(_currentLevelViewId);
-
-    } else  if (_currentView === view.END) { // END PAGE
-        drawEndPage();
+    switch (_currentView) {
+        case view.MENU:
+            drawMenuPage();
+            break;
+        case view.LEVEL:
+            drawLevelPage(_currentLevelViewId);
+            break;
+        case view.END:
+            drawEndPage();
+            break;
+        case view.LEVEL_COMPLETED:
+            drawLevelCompletedPage();
+            break;
+        case view.LEVEL_FAILED:
+            drawLevelFailedPage();
+            break;
     }
 }
 

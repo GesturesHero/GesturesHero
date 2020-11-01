@@ -149,7 +149,38 @@
     font-size: 50pt;
     font-family: "Luckiest Guy", Arial, sans-serif;
     color: #ffc107;
+    -webkit-text-stroke: 4px #000000;
 }
+
+/* Page > Level completed */
+
+.level-completed {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+
+    font-size: 50pt;
+    font-family: "Luckiest Guy", Arial, sans-serif;
+    color: #1ae200;
+    -webkit-text-stroke: 4px #000000;
+}
+
+
+/* Page > Level failed */
+
+.level-failed {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+
+    font-size: 50pt;
+    font-family: "Luckiest Guy", Arial, sans-serif;
+    color: #f03a17;
+    -webkit-text-stroke: 4px #000000;
+}
+
 
 /* Alert */
 
