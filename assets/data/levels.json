@@ -14,10 +14,8 @@
       {
         "levelMilestoneId": 1,
         "gestureId": "",
-        "gestureIndexOrder": 1,
-        "gestureTimestampStart": 0,
-        "gestureTimestampEnd": 0,
-        "gestureIllustrationUrl": ""
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 0
       }
     ]
   }

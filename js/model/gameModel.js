@@ -11,9 +11,18 @@ class Game {
 
     /**
      * Instantiates the game.
+     * @param levels {[Level]} The levels for the game.
      */
-    constructor() {
+    constructor(levels) {
+        this.levels = levels;
         this.currentLevel = undefined;
+    }
+
+    /**
+     * @return {Level[]} A list of levels.
+     */
+    getLevels() {
+        return this.levels;
     }
 
     /**
@@ -51,13 +60,17 @@ class Level {
      * @param levelId {string} The level id.
      * @param levelName {string} The level name.
      * @param levelDifficulty {number} The level difficulty.
-     * @param levelColor {string} The level color
+     * @param levelColor {string} The level color.
+     * @param levelSong {LevelSong} The level song.
+     * @param levelMilestones {[LevelMilestone]} The level milestones.
      */
-    constructor(levelId, levelName, levelDifficulty, levelColor) {
+    constructor(levelId, levelName, levelDifficulty, levelColor, levelSong, levelMilestones) {
         this.levelId = levelId;
         this.levelName = levelName;
         this.levelDifficulty = levelDifficulty;
         this.levelColor = levelColor;
+        this.levelSong = levelSong;
+        this.levelMilestones = levelMilestones;
         this.succeeded = false;
     }
 
@@ -87,6 +100,20 @@ class Level {
      */
     getLevelColor() {
         return this.levelColor;
+    }
+
+    /**
+     * @return {LevelSong} The level song.
+     */
+    getLevelSong() {
+        return this.levelSong;
+    }
+
+    /**
+     * @return {[LevelMilestone]} A list of level milestones.
+     */
+    getLevelMilestones() {
+        return this.levelMilestones;
     }
 
     /**
@@ -159,13 +186,15 @@ class LevelMilestone {
 
     /**
      * Instantiates a level milestone .
-     * @param levelMilestoneId The milestone id.
-     * @param levelMilestoneOrder The milestone order number.
-     * @param levelMilestoneTimestampStart A timestamp representing the position of the milestone in the song.
+     * @param levelMilestoneId {number} The milestone id.
+     * @param gestureId {string} The milestone id.
+     * @param levelMilestoneIndexOrder {number} The milestone order number.
+     * @param levelMilestoneTimestampStart {number} A timestamp representing the position of the milestone in the song.
      */
-    constructor(levelMilestoneId, levelMilestoneOrder, levelMilestoneTimestampStart) {
+    constructor(levelMilestoneId, gestureId, levelMilestoneIndexOrder, levelMilestoneTimestampStart) {
         this.levelMilestoneId = levelMilestoneId;
-        this.levelMilestoneOrder = levelMilestoneOrder;
+        this.gestureId = gestureId;
+        this.levelMilestoneIndexOrder = levelMilestoneIndexOrder;
         this.levelMilestoneTimestampStart = levelMilestoneTimestampStart;
     }
 
@@ -180,7 +209,7 @@ class LevelMilestone {
      * @return {number} The level milestone order number.
      */
     getLevelMilestoneOrder() {
-        return this.levelMilestoneOrder;
+        return this.levelMilestoneIndexOrder;
     }
 
     /**
@@ -197,7 +226,7 @@ class LevelMilestone {
 /**
  * @overview Represents an abstract gesture.
  */
-class AbstractGesture {
+class Gesture {
 
     /**
      * Instantiates a gesture.
@@ -245,7 +274,7 @@ class AbstractGesture {
 /**
  * @overview Represents an abstract movement.
  */
-class AbstractMovement {
+class Movement {
 
     /**
      * Instantiates a movement.

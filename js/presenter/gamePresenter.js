@@ -4,7 +4,7 @@
 
 // ------------------------------------------------------------------------------------------------------------------------------ GAME
 
-//let game = new Game(); // Global game instance (model)
+let game = undefined; // Global game instance (model)
 
 
 /**
@@ -13,6 +13,12 @@
 function initializeGame() {
 
     // MODEL
+    let gameBuilderService = new JSONGameBuilder();
+    gameBuilderService.buildFrom("/GesturesHero/assets/data/levels.json", (builtGame => {
+        game = builtGame;
+        console.log(game);
+    }));
+
 
     // VIEW
     refreshGame();
@@ -25,7 +31,7 @@ function initializeGame() {
 function refreshGame() {
 
     //if(!game.isFinised()){
-        refreshView();
+    refreshView();
     //} else {
 //        drawEndGamePage()
     //}
