@@ -1,0 +1,22 @@
+[
+  {
+    "levelId": "Prepa1",
+    "levelName" : "Music Theory : Preparatory #1",
+    "levelDifficulty": 1,
+    "levelColor": "",
+    "levelSong" : {
+      "songAuthor": "Wii",
+      "songTitle" : "Mii Chanel Theme",
+      "songUrl": "/assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3"
+    },
+    "levelGestures" : [
+      {
+        "gestureId": "",
+        "gestureIndexOrder": 1,
+        "gestureTimestampStart": 0,
+        "gestureTimestampEnd": 0,
+        "gestureIllustrationUrl": ""
+      }
+    ]
+  }
+]

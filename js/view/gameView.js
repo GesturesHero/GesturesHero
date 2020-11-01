@@ -13,8 +13,8 @@ $(document).ready(function () {
 });
 
 // ------------------------------------------------------------------------------------------------------------------------------ DRAWERS
-let _currentView = view.MENU;
-let _currentLevelViewId = -1;
+let _currentView = view.LEVEL;
+let _currentLevelViewId = undefined;
 
 /**
  * Draws the (main) menu page.
@@ -31,7 +31,13 @@ function drawMenuPage() {
  */
 function drawLevelPage(id) {
     $(".general").load("html/level.html", function () {
-        // WHEN LOADED
+
+        // Custom Audio Player
+        var audioPlayerOriginal = $('audio')[0];
+        audioPlayerOriginal.ontimeupdate = function () {
+            $('.audio-player-custom-progress-bar').css('width', audioPlayerOriginal.currentTime / audioPlayerOriginal.duration * 100 + '%')
+            $('.audio-player-custom-progress-bar-now').css('left', audioPlayerOriginal.currentTime / audioPlayerOriginal.duration * 100 + '%')
+        }
     });
 }
 
@@ -62,10 +68,10 @@ function refreshView(){
 /**
  * Switches from a view to another
  * @param {view} newView The new view to switch to.
- * @param {number} newId (optional) The new id of the level to go to.
+ * @param {string} newId (optional) The new id of the level to go to.
  */
-function switchView(newView, newId=-1) {
-    if(newId !== undefined && newId !== -1){
+function switchView(newView, newId=undefined) {
+    if(newId !== undefined){
         _currentLevelViewId = newId;
     }
     _currentView = newView;

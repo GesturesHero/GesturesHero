@@ -1,63 +1,154 @@
-/* Page > General */
-
-.container {
-    display: flex;
-    justify-content: center;
-
-    margin-top: 30px;
+/* Navbar */
+.brand-name {
+    line-height: 50px;
+    color: #33cccc;
 }
+
+/* Page > General */
 
 .general {
     margin-top: 30px;
+    max-width: 1440px !important;
 }
 
 /* Page > Menu */
+
 .menu {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
-
-    width: 800px !important;
-    max-width: 800px !important;
 }
 
 .level-access {
     display: flex;
     width: 300px;
     height: 200px;
-
-    margin: 20px;
-    padding: 10px;
-
     max-width: 300px;
     max-height: 200px;
     overflow: hidden;
 
+    margin: 20px;
+    padding: 10px;
+
     font-size: 30pt;
     font-family: "Luckiest Guy", Arial, sans-serif;
-    color: #FFFFFF;
+    color: #ffffff;
     text-align: center;
     align-items: center;
 }
 
-.non-accessible{
+.non-accessible {
     opacity: 0.2;
 }
 
 /* Page > Level */
-.level {
 
+.level div {
+    display: flex;
+    justify-content: center;
 }
 
-/* Page > Level */
-.end .title {
+.level-header {
+    padding-top: 10px;
+
+    font-size: 30pt;
+    font-family: "Luckiest Guy", Arial, sans-serif;
+    color: #ffffff;
+    background-color: #000000;
+}
+
+.level-header h1 {
+    padding: 0;
+    margin: 0;
+}
+
+.level-song-information {
+    padding-top: 10px;
+    margin-bottom: 50px;
+
+    font-size: 15pt;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    background-color: #000000;
+}
+
+.level-gestures {
+    height: 500px;
+}
+
+.level-gestures h2 {
+    padding-top: 25px;
+
+    font-size: 30pt;
+    font-weight: bold;
+}
+
+.level-gestures h3 {
+    font-size: 15pt;
+}
+
+.previous-gesture, .next-gesture {
+    opacity: 0.5;
+}
+
+.level-lives {
+    height: 50px;
+}
+
+.level-song-player {
+    height: 50px;
+}
+
+.audio-player-custom {
+    width: 100%;
+    height: 50px;
+    justify-content: flex-start !important;
+
+    background-color: #000000;
+}
+
+.audio-player-custom-progress-bar {
+    height: 50px;
+
+    background-color: #ffffff;
+}
+
+.audio-player-custom-progress-bar-now {
+    height: 50px;
+    width: 10px;
+
+    margin-left: -5px;
+    z-index: 1;
+
+    background-color: #33cccc;
+}
+
+.audio-player-song-milestones {
+    width: 100%;
+    height: 50px;
+    margin-top: -50px;
+    justify-content: flex-start !important;
+}
+
+.audio-player-song-milestone {
+    height: 50px;
+    width: 10px;
+    margin-left: -5px;
+
+    background-color: #ffffff;
+}
+
+/* Page > End */
+
+.end {
     display: flex;
-    width: 800px;
+    justify-content: center;
+    align-items: center;
     height: 500px;
 
     font-size: 50pt;
     font-family: "Luckiest Guy", Arial, sans-serif;
     color: #ffc107;
-    align-items: center;
 }
 
 /* Alert */
