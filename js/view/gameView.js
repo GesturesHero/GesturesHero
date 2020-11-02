@@ -9,8 +9,46 @@ $(document).ready(function () {
 });
 
 // ------------------------------------------------------------------------------------------------------------------------------ DRAWERS
-let _currentView = view.LEVEL;
+let _currentView = view.MENU;
 let _currentLevelViewId = undefined;
+
+/**
+ * Switches from a view to another
+ * @param {view} newView The new view to switch to.
+ * @param {string} newId (optional) The new id of the level to go to.
+ */
+function switchView(newView, newId = undefined) {
+    if (newId !== undefined) {
+        _currentLevelViewId = newId;
+    }
+    _currentView = newView;
+    refreshGame();
+}
+
+/**
+ * Refreshes the view in terms of the game.
+ * @param game {game} The game.
+ */
+function refreshView(game) {
+    switch (_currentView) {
+        case view.MENU:
+            drawMenuPage(game.getLevels());
+            break;
+        case view.LEVEL:
+            let level = game.getLevelById(_currentLevelViewId);
+            drawLevelPage(level);
+            break;
+        case view.END:
+            drawEndPage();
+            break;
+        case view.LEVEL_COMPLETED:
+            drawLevelCompletedPage();
+            break;
+        case view.LEVEL_FAILED:
+            drawLevelFailedPage();
+            break;
+    }
+}
 
 /**
  * Draws the (main) menu page.
@@ -27,33 +65,39 @@ function drawMenuPage(levels) {
 /**
  * Draws a level.
  * @param level {Level} The level to draw.
- * @private
  */
 function _drawLevel(level) {
     $('.menu').append("" +
         "<div class=\"level-access\"" +
         "id=\"" + level.getLevelId() + "\"" +
         "style=\"background-color: " + level.getLevelColor() + "\"" +
-        "onclick=\"switchView(view.LEVEL, " + level.getLevelId() + ")\">\n" +
+        "onclick=\"switchView(view.LEVEL, '" + level.getLevelId() + "')\">\n" +
         level.getLevelName() +
         "</div>");
 }
 
 /**
  * Draws a level page.
- * @param {number} id The ID of the level.
+ * @param {Level} level The level to draw.
  */
-function drawLevelPage(id) {
+function drawLevelPage(level) {
     $(".general").load("html/level.html", function () {
-        _drawCustomAudioPlayer("./assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3");
+        _drawCustomAudioPlayer(level.getLevelSong().getSongUrl(), level.getLevelMilestones());
+        $('.level-name').text(level.getLevelName());
+        $('.song-author').text(level.getLevelSong().getSongAuthor());
+        $('.song-title').text(level.getLevelSong().getSongTitle());
+        $('.level-header').css("background-color", level.getLevelColor());
+        $('.level-song-information').css("background-color", level.getLevelColor());
+        $('.audio-player-custom').css("background-color", level.getLevelColor());
     });
 }
 
 /**
- * Draws a custom flat audio player without any controls.
+ * Draws a custom flat audio player with milestones.
  * @param sourcePath {string} The source path to the audio file.
+ * @param milestones {[LevelMilestone]} A list of level milestones.
  */
-function _drawCustomAudioPlayer(sourcePath) {
+function _drawCustomAudioPlayer(sourcePath, milestones) {
     // Get the audio player.
     let audioPlayerOriginal = $('.audio-player-original');
     let audioPlayerCustomPlayControl = $('.audio-player-custom-play-control-disabled');
@@ -81,10 +125,17 @@ function _drawCustomAudioPlayer(sourcePath) {
             });
         });
 
+        // Draw milestones
+        let songDuration = audioPlayerOriginal[0].duration;
+        milestones.forEach(milestone => {
+            var milestoneAppended = $("<div class=\"audio-player-song-milestone\"></div>").appendTo('.audio-player-custom');
+            milestoneAppended.css("margin-left", milestone.getLevelMilestoneTimestampStart() / songDuration * 100 + '%');
+        });
+
         // Update the progress bar at each time update.
         audioPlayerOriginal[0].ontimeupdate = function () {
-            $('.audio-player-custom-progress-bar').css('width', audioPlayerOriginal[0].currentTime / audioPlayerOriginal[0].duration * 100 + '%');
-            $('.audio-player-custom-progress-bar-now').css('left', audioPlayerOriginal[0].currentTime / audioPlayerOriginal[0].duration * 100 + '%');
+            $('.audio-player-custom-progress-bar').css('width', audioPlayerOriginal[0].currentTime / songDuration * 100 + '%');
+            $('.audio-player-custom-progress-bar-now').css('left', audioPlayerOriginal[0].currentTime / songDuration * 100 + '%');
         };
     };
 }
@@ -115,44 +166,6 @@ function drawEndPage() {
         // WHEN LOADED
     });
 }
-
-/**
- * Refreshes the view in terms of the game.
- * @param game {game} The game.
- */
-function refreshView(game) {
-    switch (_currentView) {
-        case view.MENU:
-            drawMenuPage(game.getLevels());
-            break;
-        case view.LEVEL:
-            drawLevelPage(_currentLevelViewId);
-            break;
-        case view.END:
-            drawEndPage();
-            break;
-        case view.LEVEL_COMPLETED:
-            drawLevelCompletedPage();
-            break;
-        case view.LEVEL_FAILED:
-            drawLevelFailedPage();
-            break;
-    }
-}
-
-/**
- * Switches from a view to another
- * @param {view} newView The new view to switch to.
- * @param {string} newId (optional) The new id of the level to go to.
- */
-function switchView(newView, newId = undefined) {
-    if (newId !== undefined) {
-        _currentLevelViewId = newId;
-    }
-    _currentView = newView;
-    refreshGame();
-}
-
 
 // ------------------------------------------------------------------------------------------------------------------------------ ALERTS
 

@@ -20,6 +20,7 @@ School year 2020-2021
 ## Libraries used
 * [MomentJS](https://momentjs.com/)
 * [Bootstrap](https://getbootstrap.com/)
+* [Bootstrap Icons](https://icons.getbootstrap.com/)
 
 ## Technologies
 * HTML5, CSS3, JavaScript

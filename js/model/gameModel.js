@@ -26,6 +26,14 @@ class Game {
     }
 
     /**
+     * @param levelId {string} A level id.
+     * @return {Level} The level corresponding to the given id.
+     */
+    getLevelById(levelId){
+        return this.levels.find(level => level.getLevelId() == levelId);
+    }
+
+    /**
      * @return {Level} The current game level.
      */
     getCurrentLevel() {
