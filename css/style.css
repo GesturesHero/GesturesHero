@@ -120,6 +120,7 @@
 
 .audio-player-custom-progress-bar {
     height: 50px;
+    transition: width 1s;
 
     background-color: #ffffff;
 }

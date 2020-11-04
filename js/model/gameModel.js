@@ -241,11 +241,13 @@ class Gesture {
      * @param gestureId {string} The gesture id.
      * @param durationInSec {number} The gesture duration within the one the gesture must be recognized.
      * @param illustrationUrl {string} An URL to an illustration of the gesture (PNG, GIF, etc.).
+     * @param movements {[Movement]} The movements that compose the gesture.
      */
-    constructor(gestureId, durationInSec, illustrationUrl) {
+    constructor(gestureId, durationInSec, illustrationUrl, movements) {
         this.gestureId = gestureId;
         this.durationInSec = durationInSec;
         this.illustrationUrl = illustrationUrl;
+        this.movements = movements;
     }
 
     /**
@@ -267,6 +269,13 @@ class Gesture {
      */
     getIllustrationUrl() {
         return this.illustrationUrl;
+    }
+
+    /**
+     * @return {Movement[]} The list of movements that composed the gesture.
+     */
+    getMovements(){
+        return this.movements;
     }
 
     /**

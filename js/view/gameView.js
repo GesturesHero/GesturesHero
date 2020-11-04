@@ -58,7 +58,7 @@ function drawMenuPage(levels) {
     $(".general").load("html/menu.html", function () {
         levels.forEach(level => {
             _drawLevel(level);
-        })
+        });
     });
 }
 
