@@ -32,7 +32,7 @@ function switchView(newView, newId = undefined) {
 function refreshView(game) {
     switch (_currentView) {
         case view.MENU:
-            drawMenuPage(game.getLevels());
+            drawMenuPage(game.getLevels(), game.getCurrentLevel());
             break;
         case view.LEVEL:
             let level = game.getLevelById(_currentLevelViewId);
@@ -51,13 +51,14 @@ function refreshView(game) {
 }
 
 /**
- * Draws the (main) menu page.
+ * Draws the (main) menu page (list of levels that are available or not).
  * @param levels {[Level]} The list of levels.
+ * @param currentLevel {Level} The current level that is allowed to try.
  */
-function drawMenuPage(levels) {
+function drawMenuPage(levels, currentLevel) {
     $(".general").load("html/menu.html", function () {
         levels.forEach(level => {
-            _drawLevel(level);
+            _drawLevel(level, currentLevel);
         });
     });
 }
@@ -65,15 +66,25 @@ function drawMenuPage(levels) {
 /**
  * Draws a level.
  * @param level {Level} The level to draw.
+ * @param currentLevel {Level} The current level.
  */
-function _drawLevel(level) {
-    $('.menu').append("" +
-        "<div class=\"level-access\"" +
-        "id=\"" + level.getLevelId() + "\"" +
-        "style=\"background-color: " + level.getLevelColor() + "\"" +
-        "onclick=\"switchView(view.LEVEL, '" + level.getLevelId() + "')\">\n" +
-        level.getLevelName() +
-        "</div>");
+function _drawLevel(level, currentLevel) {
+    if (level.getLevelIndexOrder() > currentLevel.getLevelIndexOrder()) { // NON-ACCESSIBLE LEVEL
+        $('.menu').append("" +
+            "<div class=\"level-access non-accessible\"" +
+            "id=\"" + level.getLevelId() + "\"" +
+            "style=\"background-color: " + level.getLevelColor() + "\">" +
+            level.getLevelName() +
+            "</div>");
+    } else { // ACCESSIBLE LEVEL
+        $('.menu').append("" +
+            "<div class=\"level-access\"" +
+            "id=\"" + level.getLevelId() + "\"" +
+            "style=\"background-color: " + level.getLevelColor() + "\"" +
+            "onclick=\"switchView(view.LEVEL, '" + level.getLevelId() + "')\">\n" +
+            level.getLevelName() +
+            "</div>");
+    }
 }
 
 /**

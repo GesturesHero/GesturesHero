@@ -14,8 +14,12 @@ class Game {
      * @param levels {[Level]} The levels for the game.
      */
     constructor(levels) {
-        this.levels = levels;
-        this.currentLevel = undefined;
+        this.levels = levels.sort((levelA, levelB) => levelA.levelIndexOrder > levelB.levelIndexOrder ? 1 : -1);
+        if (levels !== undefined && levels.length !== 0) {
+            this.currentLevel = levels[0];
+        } else {
+            this.currentLevel = undefined;
+        }
     }
 
     /**
@@ -29,8 +33,8 @@ class Game {
      * @param levelId {string} A level id.
      * @return {Level} The level corresponding to the given id.
      */
-    getLevelById(levelId){
-        return this.levels.find(level => level.getLevelId() == levelId);
+    getLevelById(levelId) {
+        return this.levels.find(level => level.getLevelId() === levelId);
     }
 
     /**
@@ -67,14 +71,16 @@ class Level {
      * Instantiates a level.
      * @param levelId {string} The level id.
      * @param levelName {string} The level name.
+     * @param levelIndexOrder {number} The level index order.
      * @param levelDifficulty {number} The level difficulty.
      * @param levelColor {string} The level color.
      * @param levelSong {LevelSong} The level song.
      * @param levelMilestones {[LevelMilestone]} The level milestones.
      */
-    constructor(levelId, levelName, levelDifficulty, levelColor, levelSong, levelMilestones) {
+    constructor(levelId, levelName, levelIndexOrder, levelDifficulty, levelColor, levelSong, levelMilestones) {
         this.levelId = levelId;
         this.levelName = levelName;
+        this.levelIndexOrder = levelIndexOrder;
         this.levelDifficulty = levelDifficulty;
         this.levelColor = levelColor;
         this.levelSong = levelSong;
@@ -94,6 +100,13 @@ class Level {
      */
     getLevelName() {
         return this.levelName;
+    }
+
+    /**
+     * @return {number} The level index order.
+     */
+    getLevelIndexOrder() {
+        return this.levelIndexOrder;
     }
 
     /**
@@ -274,7 +287,7 @@ class Gesture {
     /**
      * @return {Movement[]} The list of movements that composed the gesture.
      */
-    getMovements(){
+    getMovements() {
         return this.movements;
     }
 
