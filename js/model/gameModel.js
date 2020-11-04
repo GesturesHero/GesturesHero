@@ -48,7 +48,7 @@ class Game {
      * Sets the current level to the next level.
      */
     setToNextLevel() {
-        this.currentLevel = this.levels.find(level => level.getLevelIndexOrder() > this.currentLevel.getLevelIndexOrder());
+        this._setCurrentLevel(this.levels.find(level => level.getLevelIndexOrder() > this.currentLevel.getLevelIndexOrder()));
     }
 
     /**
