@@ -1,0 +1,14 @@
+{
+  "name": "gestures-hero",
+  "private": true,
+  "scripts": {
+    "start": "sirv . -p 8000 --host"
+  },
+  "dependencies": {
+    "bootstrap-icons": "^1.1.0"
+  },
+  "devDependencies": {
+    "sirv": "^1.0.7",
+    "sirv-cli": "^1.0.8"
+  }
+}

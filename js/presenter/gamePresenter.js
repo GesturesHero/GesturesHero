@@ -14,7 +14,7 @@ function initializeGame() {
 
     // Building the game and sending it to the view.
     let gameBuilderService = new JSONGameBuilder();
-    gameBuilderService.buildFrom("/GesturesHero/assets/data/levels.json", (builtGame => {
+    gameBuilderService.buildFrom("/assets/data/levels.json", (builtGame => {
         game = builtGame;
         refreshGame();
     }));
