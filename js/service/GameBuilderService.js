@@ -65,7 +65,7 @@ class JSONGameBuilder extends GameBuilder {
                 });
 
                 // Build level.
-                let newLevel = new Level(currentLevel.levelId, currentLevel.levelName,  currentLevel.levelIndexOrder, currentLevel.levelDifficulty, currentLevel.levelColor, newLevelSong, levelSongMilestonesList);
+                let newLevel = new Level(currentLevel.levelId, currentLevel.levelName, currentLevel.levelIndexOrder, currentLevel.levelDifficulty, currentLevel.levelColor, newLevelSong, levelSongMilestonesList);
 
                 // Add level to the list.
                 levels.push(newLevel);

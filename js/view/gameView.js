@@ -22,20 +22,20 @@ function switchView(newView, newId = undefined) {
         _currentLevelViewId = newId;
     }
     _currentView = newView;
-    refreshGame();
+    refreshGameView();
 }
 
 /**
  * Refreshes the view in terms of the game.
- * @param game {game} The game.
+ * @param game {Object} A JavaScript object representing the game.
  */
 function refreshView(game) {
     switch (_currentView) {
         case view.MENU:
-            drawMenuPage(game.getLevels(), game.getCurrentLevel());
+            drawMenuPage(game.levels, game.currentLevel);
             break;
         case view.LEVEL:
-            let level = game.getLevelById(_currentLevelViewId);
+            let level = getLevelById(_currentLevelViewId);
             drawLevelPage(level);
             break;
         case view.END:
@@ -69,20 +69,20 @@ function drawMenuPage(levels, currentLevel) {
  * @param currentLevel {Level} The current level.
  */
 function _drawLevel(level, currentLevel) {
-    if (level.getLevelIndexOrder() > currentLevel.getLevelIndexOrder()) { // NON-ACCESSIBLE LEVEL
+    if (level.levelIndexOrder > currentLevel.levelIndexOrder) { // NON-ACCESSIBLE LEVEL
         $('.menu').append("" +
             "<div class=\"level-access non-accessible\"" +
-            "id=\"" + level.getLevelId() + "\"" +
-            "style=\"background-color: " + level.getLevelColor() + "\">" +
-            level.getLevelName() +
+            "id=\"" + level.levelId + "\"" +
+            "style=\"background-color: " + level.levelColor + "\">" +
+            level.levelName +
             "</div>");
     } else { // ACCESSIBLE LEVEL
         $('.menu').append("" +
             "<div class=\"level-access\"" +
-            "id=\"" + level.getLevelId() + "\"" +
-            "style=\"background-color: " + level.getLevelColor() + "\"" +
-            "onclick=\"switchView(view.LEVEL, '" + level.getLevelId() + "')\">\n" +
-            level.getLevelName() +
+            "id=\"" + level.levelId + "\"" +
+            "style=\"background-color: " + level.levelColor + "\"" +
+            "onclick=\"switchView(view.LEVEL, '" + level.levelId + "')\">\n" +
+            level.levelName +
             "</div>");
     }
 }
@@ -93,28 +93,27 @@ function _drawLevel(level, currentLevel) {
  */
 function drawLevelPage(level) {
     $(".general").load("html/level.html", function () {
-        _drawCustomAudioPlayer(level.getLevelSong().getSongUrl(), level.getLevelMilestones());
-        $('.level-name').text(level.getLevelName());
-        $('.song-author').text(level.getLevelSong().getSongAuthor());
-        $('.song-title').text(level.getLevelSong().getSongTitle());
-        $('.level-header').css("background-color", level.getLevelColor());
-        $('.level-song-information').css("background-color", level.getLevelColor());
-        $('.audio-player-custom').css("background-color", level.getLevelColor());
+        _drawCustomAudioPlayer(level);
+        $('.level-name').text(level.levelName);
+        $('.song-author').text(level.levelSong.songAuthor);
+        $('.song-title').text(level.levelSong.songTitle);
+        $('.level-header').css("background-color", level.levelColor);
+        $('.level-song-information').css("background-color", level.levelColor);
+        $('.audio-player-custom').css("background-color", level.levelColor);
     });
 }
 
 /**
  * Draws a custom flat audio player with milestones.
- * @param sourcePath {string} The source path to the audio file.
- * @param milestones {[LevelMilestone]} A list of level milestones.
+ * @param level {Level} The level's information.
  */
-function _drawCustomAudioPlayer(sourcePath, milestones) {
+function _drawCustomAudioPlayer(level) {
     // Get the audio player.
     let audioPlayerOriginal = $('.audio-player-original');
     let audioPlayerCustomPlayControl = $('.audio-player-custom-play-control-disabled');
 
     // Set the source file.
-    audioPlayerOriginal.attr('src', sourcePath);
+    audioPlayerOriginal.attr('src', level.levelSong.songUrl);
 
     // Load the source file.
     audioPlayerOriginal[0].load();
@@ -138,16 +137,23 @@ function _drawCustomAudioPlayer(sourcePath, milestones) {
 
         // Draw milestones
         let songDuration = audioPlayerOriginal[0].duration;
-        milestones.forEach(milestone => {
+        level.levelMilestones.forEach(milestone => {
             var milestoneAppended = $("<div class=\"audio-player-song-milestone\"></div>").appendTo('.audio-player-custom');
-            milestoneAppended.css("margin-left", milestone.getLevelMilestoneTimestampStart() / songDuration * 100 + '%');
+            milestoneAppended.css("margin-left", milestone.levelMilestoneTimestampStart / songDuration * 100 + '%');
         });
 
         // Update the progress bar at each time update.
         audioPlayerOriginal[0].ontimeupdate = function () {
             $('.audio-player-custom-progress-bar').css('width', audioPlayerOriginal[0].currentTime / songDuration * 100 + '%');
             $('.audio-player-custom-progress-bar-now').css('left', audioPlayerOriginal[0].currentTime / songDuration * 100 + '%');
+            // TODO : Update gesture carousel here (related to milestones) !
+            // TODO : Check gesture recognition here !
         };
+
+        // Check on finish
+        audioPlayerOriginal[0].onended = function () {
+
+        }
     };
 }
 

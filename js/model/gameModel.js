@@ -65,6 +65,20 @@ class Game {
     isFinished() {
         return false;
     }
+
+    /**
+     * @return {Object} A JavaScript object representing the model object (without his methods).
+     * NOTE : It keeps the separation of concerns. The layers that are not allowed to set the object state will
+     * receive only this data representation (without the methods to interact with).
+     */
+    toJsonObject() {
+        let levelsToJson = [];
+        this.getLevels().forEach(level => levelsToJson.push(level.toJsonObject()));
+        return {
+            "currentLevel": this.getCurrentLevel().toJsonObject(),
+            "levels": levelsToJson
+        };
+    }
 }
 
 // ----------------------------------------------------------------------------------------------------------------LEVEL
@@ -150,6 +164,24 @@ class Level {
     isSucceeded() {
         return this.succeeded;
     }
+
+    /**
+     * @return {Object} A JavaScript object representing the model object (without his methods).
+     */
+    toJsonObject() {
+        let levelMilestonesToJson = [];
+        this.getLevelMilestones().forEach(levelMilestone => levelMilestonesToJson.push(levelMilestone.toJsonObject()));
+        return {
+            "levelId": this.getLevelId(),
+            "levelName": this.getLevelName(),
+            "levelIndexOrder": this.getLevelIndexOrder(),
+            "levelDifficulty": this.getLevelDifficulty(),
+            "levelColor": this.getLevelColor(),
+            "levelSong": this.getLevelSong().toJsonObject(),
+            "levelMilestones": levelMilestonesToJson,
+            "succeeded": this.succeeded
+        };
+    }
 }
 
 
@@ -202,6 +234,18 @@ class LevelSong {
     getSongUrl() {
         return this.songUrl;
     }
+
+    /**
+     * @return {Object} A JavaScript object representing the model object (without his methods).
+     */
+    toJsonObject() {
+        return {
+            "songId": this.getSongIg(),
+            "songAuthor": this.getSongAuthor(),
+            "songTitle": this.getSongTitle(),
+            "songUrl": this.getSongUrl()
+        };
+    }
 }
 
 
@@ -234,9 +278,16 @@ class LevelMilestone {
     }
 
     /**
-     * @return {number} The level milestone order number.
+     * @return {string} The gesture id.
      */
-    getLevelMilestoneOrder() {
+    getGestureId() {
+        return this.gestureId;
+    }
+
+    /**
+     * @return {number} The level milestone index order number.
+     */
+    getLevelMilestoneIndexOrder() {
         return this.levelMilestoneIndexOrder;
     }
 
@@ -245,6 +296,18 @@ class LevelMilestone {
      */
     getLevelMilestoneTimestampStart() {
         return this.levelMilestoneTimestampStart;
+    }
+
+    /**
+     * @return {Object} A JavaScript object representing the model object (without his methods).
+     */
+    toJsonObject() {
+        return {
+            "levelMilestoneId": this.getLevelMilestoneId(),
+            "gestureId": this.getGestureId(),
+            "levelMilestoneIndexOrder": this.getLevelMilestoneIndexOrder(),
+            "levelMilestoneTimestampStart": this.getLevelMilestoneTimestampStart()
+        };
     }
 }
 
@@ -261,7 +324,7 @@ class Gesture {
      * @param gestureId {string} The gesture id.
      * @param durationInSec {number} The gesture duration within the one the gesture must be recognized.
      * @param illustrationUrl {string} An URL to an illustration of the gesture (PNG, GIF, etc.).
-     * @param movements {[Movement]} The movements that compose the gesture.
+     * @param movements {[GesturePart]} The movements that compose the gesture.
      */
     constructor(gestureId, durationInSec, illustrationUrl, movements) {
         this.gestureId = gestureId;
@@ -292,7 +355,7 @@ class Gesture {
     }
 
     /**
-     * @return {Movement[]} The list of movements that composed the gesture.
+     * @return {GesturePart[]} The list of movements that composed the gesture.
      */
     getMovements() {
         return this.movements;
@@ -309,9 +372,9 @@ class Gesture {
 // -------------------------------------------------------------------------------------------------------------MOVEMENT
 
 /**
- * @overview Represents an abstract movement.
+ * @overview Represents an abstract gesture part (a static position or a dynamic movement).
  */
-class Movement {
+class GesturePart {
 
     /**
      * Instantiates a movement.
