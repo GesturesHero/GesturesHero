@@ -324,13 +324,13 @@ class Gesture {
      * @param gestureId {string} The gesture id.
      * @param durationInSec {number} The gesture duration within the one the gesture must be recognized.
      * @param illustrationUrl {string} An URL to an illustration of the gesture (PNG, GIF, etc.).
-     * @param movements {[GesturePart]} The movements that compose the gesture.
+     * @param gestureParts {[GesturePart]} The gesture parts that compose the gesture.
      */
-    constructor(gestureId, durationInSec, illustrationUrl, movements) {
+    constructor(gestureId, durationInSec, illustrationUrl, gestureParts) {
         this.gestureId = gestureId;
         this.durationInSec = durationInSec;
         this.illustrationUrl = illustrationUrl;
-        this.movements = movements;
+        this.gestureParts = gestureParts;
     }
 
     /**
@@ -355,10 +355,10 @@ class Gesture {
     }
 
     /**
-     * @return {GesturePart[]} The list of movements that composed the gesture.
+     * @return {GesturePart[]} The list of gesture parts that composed the gesture.
      */
-    getMovements() {
-        return this.movements;
+    getGestureParts() {
+        return this.gestureParts;
     }
 
     /**
@@ -377,18 +377,18 @@ class Gesture {
 class GesturePart {
 
     /**
-     * Instantiates a movement.
-     * @param movementId {number} The movement id.
+     * Instantiates a gesture part.
+     * @param gesturePartId {number} The gesture part id.
      */
-    constructor(movementId) {
-        this.movementId = movementId;
+    constructor(gesturePartId) {
+        this.gesturePartId = gesturePartId;
     }
 
     /**
      * @param frame {Frame} A LeapMotion loop's frame.
      * @return {RecognitionState} A recognition state represent the progression in the recognition.
-     *  - Failure : Incorrect movement or duration elapsed ;
-     *  - Success : Succeeded movement ;
+     *  - Failure : Incorrect gesture part or duration elapsed ;
+     *  - Success : Succeeded gesture part ;
      *  - InProgress : Recognition in progress (towards a success or a failure) where the previous frames passed. ;
      */
     isRecognized(frame) {
@@ -400,7 +400,7 @@ class GesturePart {
 // ----------------------------------------------------------------------------------------------------------------LEVEL
 
 /**
- * @overview Enumerates the possible states while a movement recognition.
+ * @overview Enumerates the possible states while a gesture part recognition.
  */
 let RecognitionState = {
     SUCCESS: 'success',
