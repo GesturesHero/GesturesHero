@@ -13,7 +13,7 @@ class Game {
      * Instantiates the game.
      * @param levels {[Level]} The levels for the game.
      */
-    constructor(levels) {
+    constructor(levels = []) {
         this.levels = levels.sort((levelA, levelB) => levelA.levelIndexOrder > levelB.levelIndexOrder ? 1 : -1);
         if (levels !== undefined && levels.length !== 0) {
             this.currentLevel = levels[0];
@@ -48,7 +48,8 @@ class Game {
      * Sets the current level to the next level.
      */
     setToNextLevel() {
-        this._setCurrentLevel(this.levels.find(level => level.getLevelIndexOrder() > this.currentLevel.getLevelIndexOrder()));
+        let nextLevel = this.levels.find(level => level.getLevelIndexOrder() > this.currentLevel.getLevelIndexOrder());
+        this._setCurrentLevel(nextLevel);
     }
 
     /**
@@ -73,9 +74,11 @@ class Game {
      */
     toJsonObject() {
         let levelsToJson = [];
-        this.getLevels().forEach(level => levelsToJson.push(level.toJsonObject()));
+        if (this.getLevels() !== undefined) {
+            this.getLevels().forEach(level => levelsToJson.push(level.toJsonObject()));
+        }
         return {
-            "currentLevel": this.getCurrentLevel().toJsonObject(),
+            "currentLevel": this.getCurrentLevel() !== undefined ? this.getCurrentLevel().toJsonObject() : undefined,
             "levels": levelsToJson
         };
     }
@@ -200,7 +203,7 @@ class Level {
             "levelIndexOrder": this.getLevelIndexOrder(),
             "levelDifficulty": this.getLevelDifficulty(),
             "levelColor": this.getLevelColor(),
-            "levelSong": this.getLevelSong().toJsonObject(),
+            "levelSong": this.getLevelSong() !== undefined ? this.getLevelSong().toJsonObject() : undefined,
             "levelMilestones": levelMilestonesToJson,
             "succeeded": this.isSucceeded(),
             "levelLives": this.getLevelLives()

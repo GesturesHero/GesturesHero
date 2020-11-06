@@ -3,8 +3,8 @@
  */
 
 let game = undefined; // Global game instance (model)
-let gestureRecognizer = undefined; // Global instance of the gesture recognizer.
-
+let gestureRecognizer = undefined; // Global instance of the gesture recognizer service.
+let gameBuilderService = undefined; // Global instance of the game builder service.
 // ------------------------------------------------------------------------------------------------------------------------------ VIEW -> MODEL
 
 /**
@@ -13,14 +13,26 @@ let gestureRecognizer = undefined; // Global instance of the gesture recognizer.
 function initializeGame() {
 
     // Building the game and sending it to the view.
-    let gameBuilderService = new JSONGameBuilder();
-    gameBuilderService.buildFrom("/GesturesHero/assets/data/levels.json", (builtGame => {
-        game = builtGame;
-        refreshGameView();
-    }));
+    gameBuilderService = new JSONGameBuilder();
 
     // Setting up the gesture recognizer.
     gestureRecognizer = new GestureRecognizerLeapMotion();
+
+    // Builds the game
+    _buildGame((game) => {
+        refreshGameView();
+    });
+
+}
+
+/**
+ * Builds the game from a representation file.
+ */
+function _buildGame(callback) {
+    gameBuilderService.buildFrom("/GesturesHero/assets/data/levels.json", (builtGame => {
+        game = builtGame;
+        callback(game);
+    }));
 }
 
 /**
@@ -35,21 +47,21 @@ function refreshGameView() {
  * @return {string} The current level id.
  */
 function getCurrentLevelId() {
-    return game.getCurrentLevel().getLevelId();
+    return game.getCurrentLevel() !== undefined ? game.getCurrentLevel().getLevelId() : undefined;
 }
 
 /**
  * @return {Object} A JavaScript object representing the current level.
  */
 function getCurrentLevel() {
-    return game.toJsonObject().currentLevel;
+    return game.getCurrentLevel() !== undefined ? game.toJsonObject().currentLevel : undefined;
 }
 
 /**
  * @return {[Object]} A list of objects representing the levels.
  */
 function getLevels() {
-    return game.toJsonObject().levels;
+    return game.getLevels() !== undefined ? game.toJsonObject().levels : [];
 }
 
 /**
@@ -57,7 +69,7 @@ function getLevels() {
  * @return {Object} A JavaScript object representing the level.
  */
 function getLevelById(levelId) {
-    return game.getLevelById(levelId).toJsonObject();
+    return game.getLevelById(levelId) !== undefined ? game.getLevelById(levelId).toJsonObject() : undefined;
 }
 
 /**
@@ -74,7 +86,7 @@ function checkGestureNow(gestureId, callback) {
  * @return {number} The amount of remaining lives to the level.
  */
 function getLevelLive(levelId) {
-    return game.getLevelById(levelId).getLevelLives();
+    return game.getLevelById(levelId) !== undefined ? game.getLevelById(levelId).getLevelLives() : undefined;
 }
 
 /**
@@ -83,8 +95,11 @@ function getLevelLive(levelId) {
  * @param step {number} The step of the decreasing.
  */
 function decreaseLevelLive(levelId, step = 1) {
-    game.getLevelById(levelId).decreaseLives(step);
-    updateLevelLive(game.getLevelById(levelId).getLevelLives());
+    let level = game.getLevelById(levelId);
+    if (level !== undefined) {
+        level.decreaseLives(step);
+        updateLevelLive(level.getLevelLives());
+    }
 }
 
 /**
@@ -92,7 +107,10 @@ function decreaseLevelLive(levelId, step = 1) {
  * @param levelId {string} The level id.
  */
 function resetLevelLives(levelId) {
-    game.getLevelById(levelId).setLevelLives(LEVEL_LIVES_AMOUNT);
+    let level = game.getLevelById(levelId);
+    if (level !== undefined) {
+        level.setLevelLives(LEVEL_LIVES_AMOUNT);
+    }
 }
 
 /**
@@ -100,6 +118,15 @@ function resetLevelLives(levelId) {
  */
 function setNextLevel() {
     game.setToNextLevel();
+}
+
+/**
+ * Resets the game.
+ */
+function resetGame() {
+    _buildGame(() => {
+        // Do nothing
+    });
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------ MODEL -> VIEW

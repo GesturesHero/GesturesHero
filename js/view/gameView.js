@@ -47,6 +47,8 @@ function refreshView(game) {
         case view.LEVEL_FAILED:
             drawLevelFailedPage();
             break;
+        default:
+            alertUserView("Target page not found");
     }
 }
 
@@ -56,11 +58,15 @@ function refreshView(game) {
  * @param currentLevel {Object} A JavaScript object representing the current level that is allowed to try.
  */
 function drawMenuPage(levels, currentLevel) {
-    $(".general").load("html/menu.html", function () {
-        levels.forEach(level => {
-            _drawLevel(level, currentLevel);
+    if (levels !== [] && levels !== undefined) {
+        $(".general").load("html/menu.html", function () {
+            levels.forEach(level => {
+                _drawLevel(level, currentLevel);
+            });
         });
-    });
+    } else {
+        alertUserView("There is no level to display.");
+    }
 }
 
 /**
@@ -69,21 +75,25 @@ function drawMenuPage(levels, currentLevel) {
  * @param currentLevel {Level} The current level.
  */
 function _drawLevel(level, currentLevel) {
-    if (level.levelIndexOrder > currentLevel.levelIndexOrder) { // NON-ACCESSIBLE LEVEL
-        $('.menu').append("" +
-            "<div class=\"level-access non-accessible\"" +
-            "id=\"" + level.levelId + "\"" +
-            "style=\"background-color: " + level.levelColor + "\">" +
-            level.levelName +
-            "</div>");
-    } else { // ACCESSIBLE LEVEL
-        $('.menu').append("" +
-            "<div class=\"level-access\"" +
-            "id=\"" + level.levelId + "\"" +
-            "style=\"background-color: " + level.levelColor + "\"" +
-            "onclick=\"switchView(view.LEVEL, '" + level.levelId + "')\">\n" +
-            level.levelName +
-            "</div>");
+    if (level !== undefined && currentLevel !== undefined) {
+        if (level.levelIndexOrder > currentLevel.levelIndexOrder) { // NON-ACCESSIBLE LEVEL
+            $('.menu').append("" +
+                "<div class=\"level-access non-accessible\"" +
+                "id=\"" + level.levelId + "\"" +
+                "style=\"background-color: " + level.levelColor + "\">" +
+                level.levelName +
+                "</div>");
+        } else { // ACCESSIBLE LEVEL
+            $('.menu').append("" +
+                "<div class=\"level-access\"" +
+                "id=\"" + level.levelId + "\"" +
+                "style=\"background-color: " + level.levelColor + "\"" +
+                "onclick=\"switchView(view.LEVEL, '" + level.levelId + "')\">\n" +
+                level.levelName +
+                "</div>");
+        }
+    } else {
+        alertUserView("An issue occurred while displaying the levels. Please try again.");
     }
 }
 
@@ -92,17 +102,21 @@ function _drawLevel(level, currentLevel) {
  * @param {Level} level The level to draw.
  */
 function drawLevelPage(level) {
-    $(".general").load("html/level.html", function () {
-        _drawCustomAudioPlayer(level);
-        $('.level-name').text(level.levelName);
-        $('.song-author').text(level.levelSong.songAuthor);
-        $('.song-title').text(level.levelSong.songTitle);
-        $('.level-header').css("background-color", level.levelColor);
-        $('.level-song-information').css("background-color", level.levelColor);
-        $('.audio-player-custom').css("background-color", level.levelColor);
-        resetLevelLives(level.levelId);
-        updateLevelLive(getLevelLive(level.levelId));
-    });
+    if (level !== undefined) {
+        $(".general").load("html/level.html", function () {
+            _drawCustomAudioPlayer(level);
+            $('.level-name').text(level.levelName);
+            $('.song-author').text(level.levelSong.songAuthor);
+            $('.song-title').text(level.levelSong.songTitle);
+            $('.level-header').css("background-color", level.levelColor);
+            $('.level-song-information').css("background-color", level.levelColor);
+            $('.audio-player-custom').css("background-color", level.levelColor);
+            resetLevelLives(level.levelId);
+            updateLevelLive(getLevelLive(level.levelId));
+        });
+    } else {
+        alertUserView("An issue occurred while displaying the level. Please try again.");
+    }
 }
 
 /**
@@ -122,80 +136,90 @@ function updateLevelLive(levelLives) {
  * @param level {Level} The level's information.
  */
 function _drawCustomAudioPlayer(level) {
-    // Get the audio player.
-    let audioPlayerOriginal = $('.audio-player-original');
-    let audioPlayerCustomPlayControl = $('.audio-player-custom-play-control-disabled');
+    if (level !== undefined) {
+        // Get the audio player.
+        let audioPlayerOriginal = $('.audio-player-original');
+        let audioPlayerCustomPlayControl = $('.audio-player-custom-play-control-disabled');
 
-    // Set the source file.
-    audioPlayerOriginal.attr('src', level.levelSong.songUrl);
+        // Set the source file.
+        audioPlayerOriginal.attr('src', level.levelSong.songUrl);
 
-    // Load the source file.
-    audioPlayerOriginal[0].load();
+        // Load the source file.
+        audioPlayerOriginal[0].load();
 
-    // Play the source file when loaded.
-    // NOTE :   Some web browser such as Google Chrome or Firebox defined a policy that does not allow an audio autoplay in some conditions.
-    //          Thus, it is necessary to enable a play control in this case.
-    //          Source : https://developers.google.com/web/updates/2017/09/autoplay-policy-changes
-    audioPlayerOriginal[0].oncanplaythrough = function () {
-        let audioPlayPromise = audioPlayerOriginal[0].play();
+        // Play the source file when loaded.
+        // NOTE :   Some web browser such as Google Chrome or Firebox defined a policy that does not allow an audio autoplay in some conditions.
+        //          Thus, it is necessary to enable a play control in this case.
+        //          Source : https://developers.google.com/web/updates/2017/09/autoplay-policy-changes
+        audioPlayerOriginal[0].oncanplaythrough = function () {
+            let audioPlayPromise = audioPlayerOriginal[0].play();
 
-        // When the autoplay is not allow, show a play control.
-        audioPlayPromise.catch(() => {
-            audioPlayerCustomPlayControl.removeClass("audio-player-custom-play-control-disabled");
-            audioPlayerCustomPlayControl.addClass("audio-player-custom-play-control");
-            audioPlayerCustomPlayControl.click(function () {
-                audioPlayerOriginal[0].play();
-                audioPlayerCustomPlayControl.addClass("audio-player-custom-play-control-disabled");
+            // When the autoplay is not allow, show a play control.
+            audioPlayPromise.catch(() => {
+                audioPlayerCustomPlayControl.removeClass("audio-player-custom-play-control-disabled");
+                audioPlayerCustomPlayControl.addClass("audio-player-custom-play-control");
+                audioPlayerCustomPlayControl.click(function () {
+                    audioPlayerOriginal[0].play();
+                    audioPlayerCustomPlayControl.addClass("audio-player-custom-play-control-disabled");
+                });
             });
-        });
 
-        // Draw milestones
-        let songDuration = audioPlayerOriginal[0].duration;
-        level.levelMilestones.forEach(milestone => {
-            var milestoneAppended = $("<div class=\"audio-player-song-milestone\"></div>").appendTo('.audio-player-custom');
-            milestoneAppended.css("margin-left", milestone.levelMilestoneTimestampStart / songDuration * 100 + '%');
-        });
+            // Draw milestones
+            let songDuration = audioPlayerOriginal[0].duration;
+            level.levelMilestones.forEach(milestone => {
+                var milestoneAppended = $("<div class=\"audio-player-song-milestone\"></div>").appendTo('.audio-player-custom');
+                milestoneAppended.css("margin-left", milestone.levelMilestoneTimestampStart / songDuration * 100 + '%');
+            });
 
-        // Update the progress bar at each time update.
-        let lastSecondCheck = 0;
-        audioPlayerOriginal[0].ontimeupdate = function () {
-            let currentTime = audioPlayerOriginal[0].currentTime;
-            let roundedCurrentTime = Math.round(currentTime);
-            $('.audio-player-custom-progress-bar').css('width', currentTime / songDuration * 100 + '%');
-            $('.audio-player-custom-progress-bar-now').css('left', currentTime / songDuration * 100 + '%');
+            // Update the progress bar at each time update.
+            let lastSecondCheck = 0;
+            audioPlayerOriginal[0].ontimeupdate = function () {
+                let currentTime = audioPlayerOriginal[0].currentTime;
+                let roundedCurrentTime = Math.round(currentTime);
+                $('.audio-player-custom-progress-bar').css('width', currentTime / songDuration * 100 + '%');
+                $('.audio-player-custom-progress-bar-now').css('left', currentTime / songDuration * 100 + '%');
 
-            // TODO : Update gesture carousel here (related to milestones) !
+                // TODO : Update gesture carousel here (related to milestones) !
 
-            // Checking gesture corresponding to the milestone (if existing).
-            if (roundedCurrentTime > lastSecondCheck) {
-                lastSecondCheck = roundedCurrentTime;
-                let milestoneToCheckWith = _getMilestoneAt(roundedCurrentTime, level.levelMilestones);
-                if (milestoneToCheckWith !== undefined) {
-                    checkGestureNow(milestoneToCheckWith.gestureId, (recognitionState) => {
-                        if (recognitionState === false) {
-                            decreaseLevelLive(level.levelId);
-                        }
-                    });
+                // Checking gesture corresponding to the milestone (if existing).
+                if (roundedCurrentTime > lastSecondCheck) {
+                    lastSecondCheck = roundedCurrentTime;
+                    let milestoneToCheckWith = _getMilestoneAt(roundedCurrentTime, level.levelMilestones);
+                    if (milestoneToCheckWith !== undefined) {
+                        checkGestureNow(milestoneToCheckWith.gestureId, (recognitionState) => {
+                            if (recognitionState === false) {
+                                decreaseLevelLive(level.levelId);
+                            }
+                        });
+                    }
+                }
+            };
+
+            // Check on finish
+            audioPlayerOriginal[0].onended = function () {
+
+                if (getLevelLive(level.levelId) > 0) { // Level completed.
+                    if (level.levelId === getCurrentLevelId()) {
+                        // The next level could be set only if the current level is the highest.
+                        // If an already-completed level is done again, the next level could not be set.
+                        setNextLevel();
+                    }
+                    if (getCurrentLevel() === undefined) {
+                        drawEndPage(); // In case of no more levels.
+                        resetGame();
+                    } else {
+                        drawLevelCompletedPage();
+                    }
+                } else { // Level failed.
+                    resetLevelLives(level.levelId);
+                    drawLevelFailedPage();
                 }
             }
         };
+    } else {
+        alertUserView("An issue occurred while displaying the level. Please try again.");
+    }
 
-        // Check on finish
-        audioPlayerOriginal[0].onended = function () {
-
-            if (getLevelLive(level.levelId) > 0) { // Level completed.
-                if (level.levelId === getCurrentLevelId()) {
-                    // The next level could be set only if the current level is the highest.
-                    // If an already-completed level is done again, the next level could not be set.
-                    setNextLevel();
-                }
-                drawLevelCompletedPage();
-            } else { // Level failed.
-                resetLevelLives(level.levelId);
-                drawLevelFailedPage();
-            }
-        }
-    };
 }
 
 /**
@@ -228,7 +252,6 @@ function drawLevelFailedPage() {
  */
 function drawEndPage() {
     $(".general").load("html/end.html", function () {
-        // WHEN LOADED
     });
 }
 

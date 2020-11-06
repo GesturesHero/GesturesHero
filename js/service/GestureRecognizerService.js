@@ -7,7 +7,7 @@
 /**
  * @overview Represents an abstract gesture recognizer.
  */
-class GestureRecognizer {
+class GestureRecognizerService {
 
     /**
      * Instantiates a gesture recognizer.
@@ -34,7 +34,7 @@ class GestureRecognizerLeapMotion {
      * Instantiates a gesture recognizer.
      */
     constructor() {
-        // TODO : Manage the LeapMotion recognition.
+        // TODO : Manage the LeapMotion connexion.
         this.recognizableGestures = new Map();
         this.recognizableGestures.set("HAMMER", new GestureHammerLeapMotion("HAMMER", 1, "", []));
         this.recognizableGestures.set("ROTATION", new GestureRotationLeapMotion("ROTATION", 1, "", []));
