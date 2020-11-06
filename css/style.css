@@ -45,7 +45,7 @@
     opacity: 0.2;
 }
 
-.non-accessible:hover{
+.non-accessible:hover {
     cursor: not-allowed;
 }
 
@@ -190,7 +190,10 @@
     font-size: 50pt;
     font-family: "Luckiest Guy", Arial, sans-serif;
     color: #1ae200;
-    -webkit-text-stroke: 4px #000000;
+}
+
+.level-completed .btn{
+    margin-left: 50px
 }
 
 
@@ -205,9 +208,11 @@
     font-size: 50pt;
     font-family: "Luckiest Guy", Arial, sans-serif;
     color: #f03a17;
-    -webkit-text-stroke: 4px #000000;
 }
 
+.level-failed .btn{
+    margin-left: 50px
+}
 
 /* Alert */
 

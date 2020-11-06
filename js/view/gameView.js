@@ -32,7 +32,7 @@ function switchView(newView, newId = undefined) {
 function refreshView(game) {
     switch (_currentView) {
         case view.MENU:
-            drawMenuPage(game.levels, game.currentLevel);
+            drawMenuPage(getLevels(), getCurrentLevel());
             break;
         case view.LEVEL:
             let level = getLevelById(_currentLevelViewId);
@@ -52,8 +52,8 @@ function refreshView(game) {
 
 /**
  * Draws the (main) menu page (list of levels that are available or not).
- * @param levels {[Level]} The list of levels.
- * @param currentLevel {Level} The current level that is allowed to try.
+ * @param levels {[Object]} A JavaScript object representing the list of levels.
+ * @param currentLevel {Object} A JavaScript object representing the current level that is allowed to try.
  */
 function drawMenuPage(levels, currentLevel) {
     $(".general").load("html/menu.html", function () {
@@ -100,7 +100,21 @@ function drawLevelPage(level) {
         $('.level-header').css("background-color", level.levelColor);
         $('.level-song-information').css("background-color", level.levelColor);
         $('.audio-player-custom').css("background-color", level.levelColor);
+        resetLevelLives(level.levelId);
+        updateLevelLive(getLevelLive(level.levelId));
     });
+}
+
+/**
+ * Updates on the view the amount of level lives.
+ * @param levelLives The amount of level lives.
+ */
+function updateLevelLive(levelLives) {
+    let levelLivesNumberHtml = "";
+    for (let i = 0; i < levelLives; i++) {
+        levelLivesNumberHtml += "🎵";
+    }
+    $('.level-lives').text(levelLivesNumberHtml);
 }
 
 /**
@@ -143,18 +157,52 @@ function _drawCustomAudioPlayer(level) {
         });
 
         // Update the progress bar at each time update.
+        let lastSecondCheck = 0;
         audioPlayerOriginal[0].ontimeupdate = function () {
-            $('.audio-player-custom-progress-bar').css('width', audioPlayerOriginal[0].currentTime / songDuration * 100 + '%');
-            $('.audio-player-custom-progress-bar-now').css('left', audioPlayerOriginal[0].currentTime / songDuration * 100 + '%');
+            let currentTime = audioPlayerOriginal[0].currentTime;
+            let roundedCurrentTime = Math.round(currentTime);
+            $('.audio-player-custom-progress-bar').css('width', currentTime / songDuration * 100 + '%');
+            $('.audio-player-custom-progress-bar-now').css('left', currentTime / songDuration * 100 + '%');
+
             // TODO : Update gesture carousel here (related to milestones) !
-            // TODO : Check gesture recognition here !
+
+            // Checking gesture corresponding to the milestone (if existing).
+            if (roundedCurrentTime > lastSecondCheck) {
+                lastSecondCheck = roundedCurrentTime;
+                let milestoneToCheckWith = _getMilestoneAt(roundedCurrentTime, level.levelMilestones);
+                if (milestoneToCheckWith !== undefined) {
+                    checkGestureNow(milestoneToCheckWith.gestureId, (recognitionState) => {
+                        if (recognitionState === false) {
+                            decreaseLevelLive(level.levelId);
+                        }
+                    });
+                }
+            }
         };
 
         // Check on finish
         audioPlayerOriginal[0].onended = function () {
 
+            if (getLevelLive(level.levelId) > 0) { // Level completed.
+                if (level.levelId === getCurrentLevelId()) {
+                    // The next level could be set only if the current level is the highest.
+                    // If an already-completed level is done again, the next level could not be set.
+                    setNextLevel();
+                }
+                drawLevelCompletedPage();
+            } else { // Level failed.
+                resetLevelLives(level.levelId);
+                drawLevelFailedPage();
+            }
         }
     };
+}
+
+/**
+ * @return {Object} A JavaScript object representing the milestone at the given time ; undefined if no milestone exists.
+ */
+function _getMilestoneAt(timeInSec, milestones) {
+    return milestones.find(milestone => milestone.levelMilestoneTimestampStart === timeInSec);
 }
 
 /**
@@ -162,7 +210,7 @@ function _drawCustomAudioPlayer(level) {
  */
 function drawLevelCompletedPage() {
     $(".general").load("html/level-completed.html", function () {
-        // WHEN LOADED
+        $('.next-level').attr('onclick', 'switchView(view.LEVEL,"' + getCurrentLevelId() + '")');
     });
 }
 
@@ -171,7 +219,7 @@ function drawLevelCompletedPage() {
  */
 function drawLevelFailedPage() {
     $(".general").load("html/level-failed.html", function () {
-        // WHEN LOADED
+        $('.retry').attr('onclick', 'switchView(view.LEVEL,"' + getCurrentLevelId() + '")');
     });
 }
 

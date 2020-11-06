@@ -107,6 +107,7 @@ class Level {
         this.levelSong = levelSong;
         this.levelMilestones = levelMilestones;
         this.succeeded = false;
+        this.levelLives = LEVEL_LIVES_AMOUNT; // The amount of lives remaining.
     }
 
     /**
@@ -166,6 +167,28 @@ class Level {
     }
 
     /**
+     * @return {number} The amount of lives remaining.
+     */
+    getLevelLives() {
+        return this.levelLives;
+    }
+
+    /**
+     * Sets the amount of remaining lives.
+     */
+    setLevelLives(newAmountOfLives) {
+        this.levelLives = newAmountOfLives;
+    }
+
+    /**
+     * Decreases the amount of remaining lives.
+     * @param step The step of the decreasing.
+     */
+    decreaseLives(step = 1) {
+        this.levelLives -= step;
+    }
+
+    /**
      * @return {Object} A JavaScript object representing the model object (without his methods).
      */
     toJsonObject() {
@@ -179,11 +202,11 @@ class Level {
             "levelColor": this.getLevelColor(),
             "levelSong": this.getLevelSong().toJsonObject(),
             "levelMilestones": levelMilestonesToJson,
-            "succeeded": this.succeeded
+            "succeeded": this.isSucceeded(),
+            "levelLives": this.getLevelLives()
         };
     }
 }
-
 
 // -----------------------------------------------------------------------------------------------------------LEVEL SONG
 
@@ -365,7 +388,26 @@ class Gesture {
      * @return {boolean} True if the gesture is recognized within the duration ; false otherwise.
      */
     isRecognized() {
-        return false;
+    }
+}
+
+class GestureHammerLeapMotion extends Gesture {
+
+    /**
+     * @override
+     */
+    isRecognized() {
+        return true;
+    }
+}
+
+class GestureRotationLeapMotion extends Gesture {
+
+    /**
+     * @override
+     */
+    isRecognized() {
+        return true;
     }
 }
 
@@ -385,6 +427,13 @@ class GesturePart {
     }
 
     /**
+     * @return {number} The gesture part id.
+     */
+    getGesturePartId() {
+        return this.gesturePartId;
+    }
+
+    /**
      * @param frame {Frame} A LeapMotion loop's frame.
      * @return {RecognitionState} A recognition state represent the progression in the recognition.
      *  - Failure : Incorrect gesture part or duration elapsed ;
@@ -392,7 +441,6 @@ class GesturePart {
      *  - InProgress : Recognition in progress (towards a success or a failure) where the previous frames passed. ;
      */
     isRecognized(frame) {
-        return RecognitionState.SUCCESS;
     }
 }
 
