@@ -9,13 +9,19 @@ School year 2020-2021
 
 <img src="assets/img/logo.svg" width="150px" alt="GesturesHero's logo"/>
 
+## Getting started
+
+```sh
+npm install
+npm run start
+```
+
 ## Authors
 
 * ANDRE Maxime (@maxiandrunamur)
 * BAYET Anthony (@abayet)
 * JETZEN Tobias (@tjetzen)
 * LUYCX Pierre (@tarhses)
-
 
 ## Libraries used
 * [MomentJS](https://momentjs.com/)

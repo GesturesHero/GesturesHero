@@ -29,7 +29,7 @@ function initializeGame() {
  * Builds the game from a representation file.
  */
 function _buildGame(callback) {
-    gameBuilderService.buildFrom("/GesturesHero/assets/data/levels.json", (builtGame => {
+    gameBuilderService.buildFrom("/assets/data/levels.json", (builtGame => {
         game = builtGame;
         callback(game);
     }));
