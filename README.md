@@ -25,7 +25,6 @@ Starting the server.
 NOTE : The "dev" mode avoid caching and reload all the files on each request.
 
 ```sh
-npm install
 npm run start-dev
 ```
 
@@ -34,8 +33,7 @@ npm run start-dev
 Starting the server.
 
 ```sh
-npm install
-npm run start-dev
+npm run start
 ```
 
 ## Authors
