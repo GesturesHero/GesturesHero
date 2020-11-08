@@ -40,10 +40,10 @@ npm run start-dev
 
 ## Authors
 
-* ANDRE Maxime (@maxiandrunamur)
-* BAYET Anthony (@abayet)
-* JETZEN Tobias (@tjetzen)
-* LUYCX Pierre (@tarhses)
+* ANDRE Maxime ([@maxiandrunamur](https://github.com/maxiandrunamur))
+* BAYET Anthony ([@abayet](https://github.com/abayet))
+* JETZEN Tobias ([@tjetzen](https://github.com/tjetzen))
+* LUYCX Pierre ([@tarhses](https://github.com/tarhses))
 
 ## Libraries used
 * [MomentJS](https://momentjs.com/)
