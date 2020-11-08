@@ -14,8 +14,8 @@ let _currentLevelViewId = undefined;
 
 /**
  * Switches from a view to another
- * @param {view} newView The new view to switch to.
- * @param {string} newId (optional) The new id of the level to go to.
+ * @param newView {view} The new view to switch to.
+ * @param newId {string}(optional) The new id of the level to go to.
  */
 function switchView(newView, newId = undefined) {
     if (newId !== undefined) {
@@ -27,7 +27,7 @@ function switchView(newView, newId = undefined) {
 
 /**
  * Refreshes the view in terms of the game.
- * @param game {Object} A JavaScript object representing the game.
+ * @param game {Object} An object representing the game.
  */
 function refreshView(game) {
     switch (_currentView) {
@@ -54,14 +54,14 @@ function refreshView(game) {
 
 /**
  * Draws the (main) menu page (list of levels that are available or not).
- * @param levels {[Object]} A JavaScript object representing the list of levels.
- * @param currentLevel {Object} A JavaScript object representing the current level that is allowed to try.
+ * @param levels {[Object]} An object representing the list of levels.
+ * @param currentLevel {Object} An object representing the current level that is allowed to try.
  */
 function drawMenuPage(levels, currentLevel) {
     if (levels !== [] && levels !== undefined) {
         $(".general").load("html/menu.html", function () {
             levels.forEach(level => {
-                _drawLevel(level, currentLevel);
+                _drawLevelAccess(level, currentLevel);
             });
         });
     } else {
@@ -70,11 +70,11 @@ function drawMenuPage(levels, currentLevel) {
 }
 
 /**
- * Draws a level.
- * @param level {Level} The level to draw.
- * @param currentLevel {Level} The current level.
+ * Draws a level access on the menu page.
+ * @param level {Object} An object representing the level to draw the access.
+ * @param currentLevel {Object} An object representing the current level.
  */
-function _drawLevel(level, currentLevel) {
+function _drawLevelAccess(level, currentLevel) {
     if (level !== undefined && currentLevel !== undefined) {
         if (level.levelIndexOrder > currentLevel.levelIndexOrder) { // NON-ACCESSIBLE LEVEL
             $('.menu').append("" +
@@ -99,12 +99,11 @@ function _drawLevel(level, currentLevel) {
 
 /**
  * Draws a level page.
- * @param {Level} level The level to draw.
+ * @param level {Level} The level to draw.
  */
 function drawLevelPage(level) {
     if (level !== undefined) {
         $(".general").load("html/level.html", function () {
-            _drawCustomAudioPlayer(level);
             $('.level-name').text(level.levelName);
             $('.song-author').text(level.levelSong.songAuthor);
             $('.song-title').text(level.levelSong.songTitle);
@@ -112,18 +111,20 @@ function drawLevelPage(level) {
             $('.level-song-information').css("background-color", level.levelColor);
             $('.audio-player-custom').css("background-color", level.levelColor);
             resetLevelLives(level.levelId);
-            updateLevelLive(getLevelLive(level.levelId));
+            _updateLevelLives(getLevelLive(level.levelId));
+            _onAudioPlayerSetUp(level);
         });
     } else {
         alertUserView("An issue occurred while displaying the level. Please try again.");
     }
 }
 
+
 /**
  * Updates on the view the amount of level lives.
- * @param levelLives The amount of level lives.
+ * @param levelLives {number} The amount of level lives.
  */
-function updateLevelLive(levelLives) {
+function _updateLevelLives(levelLives) {
     let levelLivesNumberHtml = "";
     for (let i = 0; i < levelLives; i++) {
         levelLivesNumberHtml += "<svg width=\"3em\" height=\"3em\" viewBox=\"0 0 16 16\" class=\"bi bi-music-note\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -136,10 +137,10 @@ function updateLevelLive(levelLives) {
 }
 
 /**
- * Draws a custom flat audio player with milestones.
- * @param level {Level} The level's information.
+ * Draws and sets up a custom audio player with timed milestones.
+ * @param level {Object} An object representing the level's information.
  */
-function _drawCustomAudioPlayer(level) {
+function _onAudioPlayerSetUp(level) {
     if (level !== undefined) {
         // Get the audio player.
         let audioPlayerOriginal = $('.audio-player-original');
@@ -156,7 +157,7 @@ function _drawCustomAudioPlayer(level) {
         //          Thus, it is necessary to enable a play control in this case.
         //          Source : https://developers.google.com/web/updates/2017/09/autoplay-policy-changes
         audioPlayerOriginal[0].oncanplaythrough = function () {
-            let audioPlayPromise = audioPlayerOriginal[0].play();
+            let audioPlayPromise = audioPlayerOriginal[0].play(); // Autoplay.
 
             // When the autoplay is not allow, show a play control.
             audioPlayPromise.catch(() => {
@@ -168,71 +169,101 @@ function _drawCustomAudioPlayer(level) {
                 });
             });
 
-            // Draw milestones
+            // Draw the milestones
             let songDuration = audioPlayerOriginal[0].duration;
             level.levelMilestones.forEach(milestone => {
                 var milestoneAppended = $("<div class=\"audio-player-song-milestone\"></div>").appendTo('.audio-player-custom');
                 milestoneAppended.css("margin-left", milestone.levelMilestoneTimestampStart / songDuration * 100 + '%');
             });
 
-            // Time update.
-            let lastSecondCheck = 0;
-            audioPlayerOriginal[0].ontimeupdate = function () {
+            _onAudioPlayerUpdate(level);
+            _onAudioPlayerFinish(level);
+        };
+    }
+}
 
-                let currentTime = audioPlayerOriginal[0].currentTime;
+/**
+ * Catches the song's updates.
+ * @param level {Object} An object representing the level's information.
+ */
+function _onAudioPlayerUpdate(level) {
+    if (level !== undefined) {
+        // Get the audio player.
+        let audioPlayerOriginal = $('.audio-player-original');
 
-                // Updating the progress bar.
-                $('.audio-player-custom-progress-bar').css('width', currentTime / songDuration * 100 + '%');
-                $('.audio-player-custom-progress-bar-now').css('left', currentTime / songDuration * 100 + '%');
+        // On time update.
+        let lastSecondCheck = 0;
+        let songDuration = audioPlayerOriginal[0].duration;
 
-                // TODO : Update gesture carousel here (related to milestones) !
+        audioPlayerOriginal[0].ontimeupdate = function () {
 
-                // Checking gesture corresponding to the milestone (if existing).
-                if (currentTime > lastSecondCheck) {
-                    let milestoneToCheckWith = _getMilestoneAt(lastSecondCheck, currentTime, level.levelMilestones);
-                    lastSecondCheck = currentTime;
-                    if (milestoneToCheckWith !== undefined) {
-                        checkGestureNow(milestoneToCheckWith.gestureId, (recognitionState) => {
-                            if (recognitionState === false) {
-                                decreaseLevelLive(level.levelId);
-                            }
-                        });
-                    }
-                }
-            };
+            let currentTime = audioPlayerOriginal[0].currentTime;
 
-            // Check on finish
-            audioPlayerOriginal[0].onended = function () {
+            // Updating the progress bar.
+            $('.audio-player-custom-progress-bar').css('width', currentTime / songDuration * 100 + '%');
+            $('.audio-player-custom-progress-bar-now').css('left', currentTime / songDuration * 100 + '%');
 
-                if (getLevelLive(level.levelId) > 0) { // Level completed.
-                    if (level.levelId === getCurrentLevelId()) {
-                        // The next level could be set only if the current level is the highest.
-                        // If an already-completed level is done again, the next level could not be set.
-                        setNextLevel();
-                    }
-                    if (getCurrentLevel() === undefined) { // Game finished.
-                        drawEndPage(); // In case of no more levels.
-                        resetGame();
-                    } else {
-                        drawLevelCompletedPage();
-                    }
-                } else { // Level failed.
-                    resetLevelLives(level.levelId);
-                    drawLevelFailedPage();
+            // Checking and trying to recognize the gesture corresponding to the milestone (if it exists).
+            if (currentTime > lastSecondCheck) {
+
+                let milestoneToCheckWith = _getMilestoneAt(lastSecondCheck, currentTime, level.levelMilestones);
+                lastSecondCheck = currentTime;
+
+                if (milestoneToCheckWith !== undefined) {
+
+                    // Displaying gesture illustration.
+
+
+                    // Recognition.
+                    checkGestureNow(milestoneToCheckWith.gestureId, (recognitionState) => {
+                        if (recognitionState === false) {
+                            decreaseLevelLive(level.levelId);
+                        }
+                    });
                 }
             }
         };
-    } else {
-        alertUserView("An issue occurred while displaying the level. Please try again.");
     }
+}
 
+/**
+ * Catches the song's end.
+ * @param level {Object} An object representing the level's information.
+ */
+function _onAudioPlayerFinish(level) {
+    if (level !== undefined) {
+
+        // Get the audio player.
+        let audioPlayerOriginal = $('.audio-player-original');
+
+        // On finish.
+        audioPlayerOriginal[0].onended = function () {
+
+            if (getLevelLive(level.levelId) > 0) { // Level completed.
+                if (level.levelId === getCurrentLevelId()) {
+                    // The next level could be set only if the current level is the highest.
+                    // If an already-completed level is done again, the next level could not be set.
+                    setNextLevel();
+                }
+                if (getCurrentLevel() === undefined) { // Game finished.
+                    drawEndPage(); // In case of no more levels.
+                    resetGame();
+                } else {
+                    drawLevelCompletedPage();
+                }
+            } else { // Level failed.
+                resetLevelLives(level.levelId);
+                drawLevelFailedPage();
+            }
+        };
+    }
 }
 
 /**
  * @param intervalStart {number} Timestamp for interval start.
  * @param intervalEnd {number} Timestamp for interval start.
- * @param milestones {[Object]} The list of objects that each represents a level milestone.
- * @return {Object} A JavaScript object representing the milestone found within the interval ; undefined if no milestone exists.
+ * @param milestones {[Object]} A list of objects representing a level milestone.
+ * @return {Object} An object representing the milestone found within the interval ; undefined if no milestone exists.
  */
 function _getMilestoneAt(intervalStart, intervalEnd, milestones) {
     return milestones.find(milestone => milestone.levelMilestoneTimestampStart >= intervalStart && milestone.levelMilestoneTimestampStart < intervalEnd);

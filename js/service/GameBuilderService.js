@@ -17,7 +17,7 @@ class GameBuilder {
 
     /**
      * @param gameRepresentationPath {?} A given game representation file under any format.
-     * @param {function} callback A callback function to call on game built.
+     * @param callback {function} A callback function to call on game built.
      */
     buildFrom(gameRepresentationPath, callback) {
     }
@@ -41,7 +41,7 @@ class JSONGameBuilder extends GameBuilder {
     /**
      * @override GameBuilder.buildFrom
      * @param gameRepresentationPath {string} A JSON file representation of the game.
-     * @param {function} callback A callback function to call on game built.
+     * @param callback {function} A callback function to call on game built.
      */
     buildFrom(gameRepresentationPath, callback) {
         loadJsonFile(gameRepresentationPath, (response) => {

@@ -185,7 +185,7 @@ class Level {
 
     /**
      * Decreases the amount of remaining lives.
-     * @param step The step of the decreasing.
+     * @param step {number} The step of the decreasing.
      */
     decreaseLives(step = 1) {
         this.levelLives -= step;

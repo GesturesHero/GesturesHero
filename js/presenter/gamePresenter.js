@@ -36,7 +36,7 @@ function _buildGame(callback) {
 }
 
 /**
- * Refreshes  the game logic (model) and the game rendering (view).
+ * Refreshes the game logic (model) and the game rendering (view).
  * @returns Nothing.
  */
 function refreshGameView() {
@@ -51,7 +51,7 @@ function getCurrentLevelId() {
 }
 
 /**
- * @return {Object} A JavaScript object representing the current level.
+ * @return {Object} An object representing the current level.
  */
 function getCurrentLevel() {
     return game.getCurrentLevel() !== undefined ? game.toJsonObject().currentLevel : undefined;
@@ -65,8 +65,8 @@ function getLevels() {
 }
 
 /**
- * @param levelId The level id to find.
- * @return {Object} A JavaScript object representing the level.
+ * @param levelId {string} The level id to find.
+ * @return {Object} An object representing the level.
  */
 function getLevelById(levelId) {
     return game.getLevelById(levelId) !== undefined ? game.getLevelById(levelId).toJsonObject() : undefined;
@@ -98,7 +98,7 @@ function decreaseLevelLive(levelId, step = 1) {
     let level = game.getLevelById(levelId);
     if (level !== undefined) {
         level.decreaseLives(step);
-        updateLevelLive(level.getLevelLives());
+        _updateLevelLives(level.getLevelLives());
     }
 }
 
