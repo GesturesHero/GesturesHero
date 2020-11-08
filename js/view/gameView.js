@@ -126,9 +126,13 @@ function drawLevelPage(level) {
 function updateLevelLive(levelLives) {
     let levelLivesNumberHtml = "";
     for (let i = 0; i < levelLives; i++) {
-        levelLivesNumberHtml += "🎵";
+        levelLivesNumberHtml += "<svg width=\"3em\" height=\"3em\" viewBox=\"0 0 16 16\" class=\"bi bi-music-note\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
+            "  <path d=\"M9 13c0 1.105-1.12 2-2.5 2S4 14.105 4 13s1.12-2 2.5-2 2.5.895 2.5 2z\"/>\n" +
+            "  <path fill-rule=\"evenodd\" d=\"M9 3v10H8V3h1z\"/>\n" +
+            "  <path d=\"M8 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 13 2.22V4L8 5V2.82z\"/>\n" +
+            "</svg>";
     }
-    $('.level-lives').text(levelLivesNumberHtml);
+    $('.level-lives').html(levelLivesNumberHtml);
 }
 
 /**
@@ -171,20 +175,22 @@ function _drawCustomAudioPlayer(level) {
                 milestoneAppended.css("margin-left", milestone.levelMilestoneTimestampStart / songDuration * 100 + '%');
             });
 
-            // Update the progress bar at each time update.
+            // Time update.
             let lastSecondCheck = 0;
             audioPlayerOriginal[0].ontimeupdate = function () {
+
                 let currentTime = audioPlayerOriginal[0].currentTime;
-                let roundedCurrentTime = Math.round(currentTime);
+
+                // Updating the progress bar.
                 $('.audio-player-custom-progress-bar').css('width', currentTime / songDuration * 100 + '%');
                 $('.audio-player-custom-progress-bar-now').css('left', currentTime / songDuration * 100 + '%');
 
                 // TODO : Update gesture carousel here (related to milestones) !
 
                 // Checking gesture corresponding to the milestone (if existing).
-                if (roundedCurrentTime > lastSecondCheck) {
-                    lastSecondCheck = roundedCurrentTime;
-                    let milestoneToCheckWith = _getMilestoneAt(roundedCurrentTime, level.levelMilestones);
+                if (currentTime > lastSecondCheck) {
+                    let milestoneToCheckWith = _getMilestoneAt(lastSecondCheck, currentTime, level.levelMilestones);
+                    lastSecondCheck = currentTime;
                     if (milestoneToCheckWith !== undefined) {
                         checkGestureNow(milestoneToCheckWith.gestureId, (recognitionState) => {
                             if (recognitionState === false) {
@@ -204,7 +210,7 @@ function _drawCustomAudioPlayer(level) {
                         // If an already-completed level is done again, the next level could not be set.
                         setNextLevel();
                     }
-                    if (getCurrentLevel() === undefined) {
+                    if (getCurrentLevel() === undefined) { // Game finished.
                         drawEndPage(); // In case of no more levels.
                         resetGame();
                     } else {
@@ -223,10 +229,13 @@ function _drawCustomAudioPlayer(level) {
 }
 
 /**
- * @return {Object} A JavaScript object representing the milestone at the given time ; undefined if no milestone exists.
+ * @param intervalStart {number} Timestamp for interval start.
+ * @param intervalEnd {number} Timestamp for interval start.
+ * @param milestones {[Object]} The list of objects that each represents a level milestone.
+ * @return {Object} A JavaScript object representing the milestone found within the interval ; undefined if no milestone exists.
  */
-function _getMilestoneAt(timeInSec, milestones) {
-    return milestones.find(milestone => milestone.levelMilestoneTimestampStart === timeInSec);
+function _getMilestoneAt(intervalStart, intervalEnd, milestones) {
+    return milestones.find(milestone => milestone.levelMilestoneTimestampStart >= intervalStart && milestone.levelMilestoneTimestampStart < intervalEnd);
 }
 
 /**

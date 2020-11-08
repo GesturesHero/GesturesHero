@@ -100,7 +100,8 @@
 }
 
 .level-lives {
-    height: 50px;
+    height: 75px;
+    padding: 10px;
 }
 
 .level-song-player {
@@ -192,7 +193,8 @@
 }
 
 .level-completed .btn{
-    margin-left: 50px
+    margin-left: 50px;
+    font-size: 25pt !important;
 }
 
 
@@ -210,7 +212,8 @@
 }
 
 .level-failed .btn{
-    margin-left: 50px
+    margin-left: 50px;
+    font-size: 25pt !important;
 }
 
 /* Alert */

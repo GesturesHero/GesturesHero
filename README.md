@@ -11,9 +11,32 @@ School year 2020-2021
 
 ## Getting started
 
+### Common
+
+Installing all the libraries.
 ```sh
 npm install
 npm run start
+```
+
+### While development
+
+Starting the server.
+
+NOTE : The "dev" mode avoid caching and reload all the files on each request.
+
+```sh
+npm install
+npm run start-dev
+```
+
+### While production
+
+Starting the server.
+
+```sh
+npm install
+npm run start-dev
 ```
 
 ## Authors
