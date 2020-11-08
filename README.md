@@ -13,10 +13,9 @@ School year 2020-2021
 
 ### Common
 
-Installing all the libraries.
+Installing the dependencies.
 ```sh
 npm install
-npm run start
 ```
 
 ### While development
