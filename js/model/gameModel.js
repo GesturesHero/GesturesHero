@@ -388,6 +388,12 @@ class Gesture {
     }
 
     /**
+     * @return nothing
+     */
+    check(){
+    }
+
+    /**
      * @return {boolean} True if the gesture is recognized within the duration ; false otherwise.
      */
     isRecognized() {
@@ -395,6 +401,13 @@ class Gesture {
 }
 
 class GestureHammerLeapMotion extends Gesture {
+
+    /**
+     * 
+     */
+    check(frame){
+        console.log(frame);
+    }
 
     /**
      * @override

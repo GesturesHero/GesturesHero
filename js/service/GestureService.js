@@ -28,13 +28,17 @@ class GestureService {
 /**
  * @overview Represents gesture service for LeapMotion.
  */
-class LeapMotionGestureService {
+class LeapMotionGestureService extends GestureService {
 
     /**
      * Instantiates a gesture recognizer.
      */
     constructor() {
+        super();
         // TODO : Manage the LeapMotion connexion.
+        this.controller = new Leap.Controller();
+        this.controller.connect();
+
         this.recognizableGestures = new Map();
         this.recognizableGestures.set("HAMMER", new GestureHammerLeapMotion("HAMMER", 1, "/assets/data/gestures-illustrations/hammer.png", []));
         this.recognizableGestures.set("ROTATION", new GestureRotationLeapMotion("ROTATION", 1, "/assets/data/gestures-illustrations/rotation.png", []));
@@ -47,7 +51,13 @@ class LeapMotionGestureService {
     recognize(gestureId, callback) {
         let gestureToRecognize = this.recognizableGestures.get(gestureId);
         // TODO : Recognize via the LeapMotion
+        const onFrame = (frame) => {
+            gestureToRecognize.check(frame);
+        }
+        this.controller.on('frame', onFrame);
+
         setTimeout(() => {
+            this.controller.removeListener('frame', onFrame);
             if (gestureToRecognize.isRecognized()) {
                 callback(true);
             } else {
