@@ -3,9 +3,17 @@
  */
 
 let game = undefined; // Global game instance (model)
-let gestureRecognizer = undefined; // Global instance of the gesture recognizer service.
+let gestureService = undefined; // Global instance of the gesture recognizer service.
 let gameBuilderService = undefined; // Global instance of the game builder service.
 // ------------------------------------------------------------------------------------------------------------------------------ VIEW -> MODEL
+
+/**
+ * Refreshes the game logic (model) and the game rendering (view).
+ * @returns Nothing.
+ */
+function refreshGameView() {
+    refreshView(game.toJsonObject());
+}
 
 /**
  * Initializes the game logic (model) and the game rendering (view)
@@ -16,7 +24,7 @@ function initializeGame() {
     gameBuilderService = new JSONGameBuilder();
 
     // Setting up the gesture recognizer.
-    gestureRecognizer = new GestureRecognizerLeapMotion();
+    gestureService = new LeapMotionGestureService();
 
     // Builds the game
     _buildGame((game) => {
@@ -35,13 +43,6 @@ function _buildGame(callback) {
     }));
 }
 
-/**
- * Refreshes the game logic (model) and the game rendering (view).
- * @returns Nothing.
- */
-function refreshGameView() {
-    refreshView(game.toJsonObject());
-}
 
 /**
  * @return {string} The current level id.
@@ -70,15 +71,6 @@ function getLevels() {
  */
 function getLevelById(levelId) {
     return game.getLevelById(levelId) !== undefined ? game.getLevelById(levelId).toJsonObject() : undefined;
-}
-
-/**
- * Checks a gesture now.
- * @param gestureId {string} The id of the gesture to recognize.
- * @param callback {function} The callback to call on end of the recognition.
- */
-function checkGestureNow(gestureId, callback) {
-    gestureRecognizer.recognize(gestureId, callback);
 }
 
 /**
@@ -127,6 +119,23 @@ function resetGame() {
     _buildGame(() => {
         // Do nothing
     });
+}
+
+/**
+ * Gets the gesture illustration URL.
+ * @param levelId {string} The gesture id.
+ */
+function getGestureIllustrationUrl(levelId) {
+    return gestureService.getGestureIllustrationUrl(levelId);
+}
+
+/**
+ * Checks a gesture now.
+ * @param gestureId {string} The id of the gesture to recognize.
+ * @param callback {function} The callback to call on end of the recognition.
+ */
+function checkGestureNow(gestureId, callback) {
+    gestureService.recognize(gestureId, callback);
 }
 
 // ------------------------------------------------------------------------------------------------------------------------------ MODEL -> VIEW

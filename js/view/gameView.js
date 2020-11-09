@@ -212,7 +212,11 @@ function _onAudioPlayerUpdate(level) {
                 if (milestoneToCheckWith !== undefined) {
 
                     // Displaying gesture illustration.
+                    let gestureIllustrationUrl = getGestureIllustrationUrl(milestoneToCheckWith.gestureId);
 
+                    _setGestureIllustration('.level-gestures .current-gesture', gestureIllustrationUrl);
+
+                    // TODO : previous and upcoming gesture + Timeout
 
                     // Recognition.
                     checkGestureNow(milestoneToCheckWith.gestureId, (recognitionState) => {
@@ -267,6 +271,17 @@ function _onAudioPlayerFinish(level) {
  */
 function _getMilestoneAt(intervalStart, intervalEnd, milestones) {
     return milestones.find(milestone => milestone.levelMilestoneTimestampStart >= intervalStart && milestone.levelMilestoneTimestampStart < intervalEnd);
+}
+
+/**
+ * Sets a gesture illustration.
+ * @param htmlIdentifier {string} The HTML DOM identifier.
+ * @param gestureIllustrationUrl The gesture illustration's URL/path.
+ */
+function _setGestureIllustration(htmlIdentifier, gestureIllustrationUrl) {
+    $(htmlIdentifier).html(
+        '<img src="' + gestureIllustrationUrl + '">'
+    );
 }
 
 /**

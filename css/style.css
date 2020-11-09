@@ -72,7 +72,7 @@
 
 .level-song-information {
     padding-top: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 
     font-size: 15pt;
     font-family: Arial, sans-serif;
@@ -80,19 +80,17 @@
     background-color: #000000;
 }
 
-.level-gestures {
-    height: 500px;
-}
-
-.level-gestures h2 {
-    padding-top: 25px;
-
+.level-gestures-title h2 {
     font-size: 30pt;
     font-weight: bold;
 }
 
-.level-gestures h3 {
+.level-gestures-title h3 {
     font-size: 15pt;
+}
+
+.level-gestures {
+    height: 500px;
 }
 
 .previous-gesture, .next-gesture {

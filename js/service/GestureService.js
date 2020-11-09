@@ -1,13 +1,13 @@
 /**
- * @overview This file contains the available gesture recognizer services.
+ * @overview This file contains the available gesture services.
  */
 
 // ---------------------------------------------------------------------------------------------------GESTURE RECOGNIZER
 
 /**
- * @overview Represents an abstract gesture recognizer.
+ * @overview Represents an abstract gesture service.
  */
-class GestureRecognizerService {
+class GestureService {
 
     /**
      * Instantiates a gesture recognizer.
@@ -26,9 +26,9 @@ class GestureRecognizerService {
 
 
 /**
- * @overview Represents an abstract gesture recognizer.
+ * @overview Represents gesture service for LeapMotion.
  */
-class GestureRecognizerLeapMotion {
+class LeapMotionGestureService {
 
     /**
      * Instantiates a gesture recognizer.
@@ -36,8 +36,8 @@ class GestureRecognizerLeapMotion {
     constructor() {
         // TODO : Manage the LeapMotion connexion.
         this.recognizableGestures = new Map();
-        this.recognizableGestures.set("HAMMER", new GestureHammerLeapMotion("HAMMER", 1, "", []));
-        this.recognizableGestures.set("ROTATION", new GestureRotationLeapMotion("ROTATION", 1, "", []));
+        this.recognizableGestures.set("HAMMER", new GestureHammerLeapMotion("HAMMER", 1, "/assets/data/gestures-illustrations/hammer.png", []));
+        this.recognizableGestures.set("ROTATION", new GestureRotationLeapMotion("ROTATION", 1, "/assets/data/gestures-illustrations/rotation.png", []));
     }
 
     /**
@@ -54,6 +54,15 @@ class GestureRecognizerLeapMotion {
                 callback(false);
             }
         }, gestureToRecognize.getDurationInSec() * SECOND_TO_MILLISECONDS);
+    }
+
+    /**
+     * Gets the gesture illustration URL.
+     * @param levelId {string} The gesture id.
+     */
+    getGestureIllustrationUrl(levelId) {
+        let gesture = this.recognizableGestures.get(levelId);
+        return gesture !== undefined ? gesture.getIllustrationUrl() : undefined;
     }
 }
 
