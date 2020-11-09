@@ -1,0 +1,189 @@
+[
+  {
+    "levelId": "Prepa1",
+    "levelName": "Music Theory : Preparatory #1",
+    "levelIndexOrder": 1.1,
+    "levelDifficulty": 1,
+    "levelColor": "#00cc66",
+    "levelSong": {
+      "songId": 1,
+      "songAuthor": "Wii",
+      "songTitle" : "Mii Chanel Theme",
+      "songUrl": "/assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3"
+    },
+    "levelMilestones": [
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 3
+      },
+      {
+        "levelMilestoneId": 2,
+        "gestureId": "HAMMER",
+        "levelMilestoneIndexOrder": 2,
+        "levelMilestoneTimestampStart": 13
+      },
+      {
+        "levelMilestoneId": 3,
+        "gestureId": "ROTATION",
+        "levelMilestoneIndexOrder": 3,
+        "levelMilestoneTimestampStart": 23
+      }
+    ]
+  },
+  {
+    "levelId": "Prepa2",
+    "levelName": "Music Theory : Preparatory #2",
+    "levelIndexOrder": 1.2,
+    "levelDifficulty": 1,
+    "levelColor": "#00cc66",
+    "levelSong": {
+      "songId": 1,
+      "songAuthor": "Wii",
+      "songTitle" : "Mii Chanel Theme",
+      "songUrl": "/assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3"
+    },
+    "levelMilestones": []
+  },
+  {
+    "levelId": "Edu1",
+    "levelName": "Music Theory : Education #1",
+    "levelIndexOrder": 2.1,
+    "levelDifficulty": 2,
+    "levelColor": "#0378ff",
+    "levelSong": {
+      "songId": 1,
+      "songAuthor": "Wii",
+      "songTitle" : "Mii Chanel Theme",
+      "songUrl": "/assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3"
+    },
+    "levelMilestones": []
+  },
+  {
+    "levelId": "Edu2",
+    "levelName": "Music Theory : Education #2",
+    "levelIndexOrder": 2.2,
+    "levelDifficulty": 2,
+    "levelColor": "#0378ff",
+    "levelSong": {
+      "songId": 1,
+      "songAuthor": "Wii",
+      "songTitle" : "Mii Chanel Theme",
+      "songUrl": "/assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3"
+    },
+    "levelMilestones": []
+  },
+  {
+    "levelId": "Quali1",
+    "levelName": "Music Theory : Qualification #1",
+    "levelIndexOrder": 3.1,
+    "levelDifficulty": 3,
+    "levelColor": "#ff0080",
+    "levelSong": {
+      "songId": 1,
+      "songAuthor": "Wii",
+      "songTitle" : "Mii Chanel Theme",
+      "songUrl": "/assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3"
+    },
+    "levelMilestones": []
+  },
+  {
+    "levelId": "Quali2",
+    "levelName": "Music Theory : Qualification #2",
+    "levelIndexOrder": 3.2,
+    "levelDifficulty": 3,
+    "levelColor": "#ff0080",
+    "levelSong": {
+      "songId": 1,
+      "songAuthor": "Wii",
+      "songTitle" : "Mii Chanel Theme",
+      "songUrl": "/assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3"
+    },
+    "levelMilestones": []
+  },
+  {
+    "levelId": "Tran1",
+    "levelName": "Music Theory : Transition #1",
+    "levelIndexOrder": 4.1,
+    "levelDifficulty": 4,
+    "levelColor": "#ff8100",
+    "levelSong": {
+      "songId": 1,
+      "songAuthor": "Wii",
+      "songTitle" : "Mii Chanel Theme",
+      "songUrl": "/assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3"
+    },
+    "levelMilestones": []
+  },
+  {
+    "levelId": "Tran2",
+    "levelName": "Music Theory : Transition #2",
+    "levelIndexOrder": 4.2,
+    "levelDifficulty": 4,
+    "levelColor": "#ff8100",
+    "levelSong": {
+      "songId": 1,
+      "songAuthor": "Wii",
+      "songTitle" : "Mii Chanel Theme",
+      "songUrl": "/assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3"
+    },
+    "levelMilestones": []
+  },
+  {
+    "levelId": "Grad1",
+    "levelName": "Music Theory : Graduation #1",
+    "levelDifficulty": 5,
+    "levelIndexOrder": 5.1,
+    "levelColor": "#ff0000",
+    "levelSong": {
+      "songId": 1,
+      "songAuthor": "Wii",
+      "songTitle" : "Mii Chanel Theme",
+      "songUrl": "/assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3"
+    },
+    "levelMilestones": []
+  },
+  {
+    "levelId": "Grad2",
+    "levelName": "Music Theory : Graduation #2",
+    "levelIndexOrder": 5.2,
+    "levelDifficulty": 5,
+    "levelColor": "#ff0000",
+    "levelSong": {
+      "songId": 1,
+      "songAuthor": "Wii",
+      "songTitle" : "Mii Chanel Theme",
+      "songUrl": "/assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3"
+    },
+    "levelMilestones": []
+  },
+  {
+    "levelId": "Orch1",
+    "levelName": "Music Theory : Orchestra #1",
+    "levelIndexOrder": 6.1,
+    "levelDifficulty": 6,
+    "levelColor": "#d61f7b",
+    "levelSong": {
+      "songId": 1,
+      "songAuthor": "Wii",
+      "songTitle" : "Mii Chanel Theme",
+      "songUrl": "/assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3"
+    },
+    "levelMilestones": []
+  },
+  {
+    "levelId": "Orch2",
+    "levelName": "Music Theory : Orchestra #2",
+    "levelIndexOrder": 6.2,
+    "levelDifficulty": 6,
+    "levelColor": "#d61f7b",
+    "levelSong": {
+      "songId": 1,
+      "songAuthor": "Wii",
+      "songTitle" : "Mii Chanel Theme",
+      "songUrl": "/assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3"
+    },
+    "levelMilestones": []
+  }
+]
