@@ -357,6 +357,8 @@ class Gesture {
         this.durationInSec = durationInSec;
         this.illustrationUrl = illustrationUrl;
         this.gestureParts = gestureParts;
+        this.recognized = false;
+        this.init();
     }
 
     /**
@@ -388,6 +390,12 @@ class Gesture {
     }
 
     /**
+     * 
+     */
+    init(){
+    }
+
+    /**
      * @return nothing
      */
     check(){
@@ -402,18 +410,37 @@ class Gesture {
 
 class GestureHammerLeapMotion extends Gesture {
 
-    /**
-     * 
-     */
-    check(frame){
-        console.log(frame);
+    constructor(gestureId, durationInSec, illustrationUrl, gestureParts) {
+        super(gestureId, durationInSec, illustrationUrl, gestureParts);
     }
 
     /**
      * @override
      */
-    isRecognized() {
-        return true;
+    init(){
+        this.gestureParts = [
+            new GestureHammerPart(),
+            new GestureHammerPart(),
+            new GestureHammerPart(),
+        ];
+        this.gestureIndex = 0;
+        this.gestureCount = this.gestureParts.length;
+    }
+    
+    /**
+     * @override
+     */
+    check(frame){
+        if(this.gestureParts[this.gestureIndex].isRecognized(frame)) this.gestureIndex++;
+        this.recognized = this.gestureIndex == this.gestureCount;
+    }
+
+    /**
+     * @override
+     */
+    isRecognized(){
+        this.init();
+        return this.recognized;
     }
 }
 
@@ -457,6 +484,66 @@ class GesturePart {
      *  - InProgress : Recognition in progress (towards a success or a failure) where the previous frames passed. ;
      */
     isRecognized(frame) {
+    }
+}
+
+class GestureHammerPart extends GesturePart {
+    constructor(gesturePartId) {
+        super(gesturePartId);
+        this.oldPos = null;
+        this.palmWentDown = false;
+    }
+
+    /**
+     * @override
+     */
+    isRecognized(frame) {
+        if(frame.hands.length == 0) return false;
+        
+        var hand = frame.hands[0];
+        if(this.isCheckFistWithIndexFinger(hand)){
+            if(!this.oldPos){
+                this.oldPos = hand.palmPosition;
+            }
+
+            if(!this.palmWentDown && this.isCheckPalmWentDown(this.oldPos, hand.palmPosition)){
+                this.palmWentDown = true;
+            }
+
+            if(this.palmWentDown && this.isSamePosition(this.oldPos, hand.palmPosition)){
+                this.oldPos = null;
+                this.palmWentDown = false
+                return true;
+            }	
+        } else {
+			//this.oldPos = null;
+        }
+        return false;
+    }
+
+    isCheckFistWithIndexFinger(hand){
+        if(hand.indexFinger.extended
+        && !hand.thumb.extended
+        && !hand.middleFinger.extended
+        && !hand.ringFinger.extended
+        && !hand.pinky.extended){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    isCheckPalmWentDown(pos1, pos2){
+        var diff = pos1[1]-pos2[1];
+        return 70 < diff;
+    }
+
+    isSamePosition(pos1, pos2){
+        var factor = 30;
+        return Math.abs(pos1[0] - pos2[0]) < factor
+            && pos2[1] >= pos1[1]
+            && Math.abs(pos1[2] - pos2[2]) < factor;
     }
 }
 

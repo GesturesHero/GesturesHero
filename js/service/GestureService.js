@@ -50,7 +50,6 @@ class LeapMotionGestureService extends GestureService {
      */
     recognize(gestureId, callback) {
         let gestureToRecognize = this.recognizableGestures.get(gestureId);
-        // TODO : Recognize via the LeapMotion
         const onFrame = (frame) => {
             gestureToRecognize.check(frame);
         }
@@ -58,11 +57,7 @@ class LeapMotionGestureService extends GestureService {
 
         setTimeout(() => {
             this.controller.removeListener('frame', onFrame);
-            if (gestureToRecognize.isRecognized()) {
-                callback(true);
-            } else {
-                callback(false);
-            }
+            callback(gestureToRecognize.isRecognized());
         }, gestureToRecognize.getDurationInSec() * SECOND_TO_MILLISECONDS);
     }
 
