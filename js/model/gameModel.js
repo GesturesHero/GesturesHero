@@ -420,8 +420,6 @@ class GestureHammerLeapMotion extends Gesture {
     init(){
         this.gestureParts = [
             new GestureHammerPart(),
-            new GestureHammerPart(),
-            new GestureHammerPart(),
         ];
         this.gestureIndex = 0;
         this.gestureCount = this.gestureParts.length;
@@ -431,7 +429,7 @@ class GestureHammerLeapMotion extends Gesture {
      * @override
      */
     check(frame){
-        if(this.gestureParts[this.gestureIndex].isRecognized(frame)) this.gestureIndex++;
+        if(this.gestureIndex < this.gestureCount && this.gestureParts[this.gestureIndex].isRecognized(frame)) this.gestureIndex++;
         this.recognized = this.gestureIndex == this.gestureCount;
     }
 
@@ -501,16 +499,16 @@ class GestureHammerPart extends GesturePart {
         if(frame.hands.length == 0) return false;
         
         var hand = frame.hands[0];
-        if(this.isCheckFistWithIndexFinger(hand)){
+        if(this._isCheckFistWithIndexFinger(hand)){
             if(!this.oldPos){
                 this.oldPos = hand.palmPosition;
             }
 
-            if(!this.palmWentDown && this.isCheckPalmWentDown(this.oldPos, hand.palmPosition)){
+            if(!this.palmWentDown && this._isCheckPalmWentDown(this.oldPos, hand.palmPosition)){
                 this.palmWentDown = true;
             }
 
-            if(this.palmWentDown && this.isSamePosition(this.oldPos, hand.palmPosition)){
+            if(this.palmWentDown && this._isSamePosition(this.oldPos, hand.palmPosition)){
                 this.oldPos = null;
                 this.palmWentDown = false
                 return true;
@@ -521,7 +519,7 @@ class GestureHammerPart extends GesturePart {
         return false;
     }
 
-    isCheckFistWithIndexFinger(hand){
+    _isCheckFistWithIndexFinger(hand){
         if(hand.indexFinger.extended
         && !hand.thumb.extended
         && !hand.middleFinger.extended
@@ -534,12 +532,12 @@ class GestureHammerPart extends GesturePart {
         }
     }
 
-    isCheckPalmWentDown(pos1, pos2){
+    _isCheckPalmWentDown(pos1, pos2){
         var diff = pos1[1]-pos2[1];
         return 70 < diff;
     }
 
-    isSamePosition(pos1, pos2){
+    _isSamePosition(pos1, pos2){
         var factor = 30;
         return Math.abs(pos1[0] - pos2[0]) < factor
             && pos2[1] >= pos1[1]
