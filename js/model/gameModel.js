@@ -458,11 +458,36 @@ class GestureHammerLeapMotion extends Gesture {
 
 class GestureRotationLeapMotion extends Gesture {
 
+    constructor(gestureId, durationInSec, illustrationUrl, gestureParts) {
+        super(gestureId, durationInSec, illustrationUrl, gestureParts);
+    }
+
     /**
      * @override
      */
-    isRecognized() {
-        return true;
+    init(){
+        this.gestureParts = [
+            new GestureRotationPartStart(),
+            new GestureRotationPart()
+        ];
+        this.gestureIndex = 0;
+        this.gestureCount = this.gestureParts.length;
+    }
+    
+    /**
+     * @override
+     */
+    check(frame){
+        if(this.gestureIndex < this.gestureCount && this.gestureParts[this.gestureIndex].isRecognized(frame)) this.gestureIndex++;
+        this.recognized = this.gestureIndex == this.gestureCount;
+    }
+
+    /**
+     * @override
+     */
+    isRecognized(){
+        this.init();
+        return this.recognized;
     }
 }
 
@@ -585,16 +610,13 @@ class GestureHammerPart extends GesturePart {
     }
 }
 
-class GesturePartRotationLeapMotion extends GesturePart {
+class GestureRotationPartStart extends GesturePart {
 
     /**
      * @override
      */
     constructor(gesturePartId) {
         super(gesturePartId);
-        this.firstFrame = true;
-        this.timeout = 0;
-        this.previousNormals = [0, 0];
     }
 
     /**
@@ -602,36 +624,44 @@ class GesturePartRotationLeapMotion extends GesturePart {
      */
     isRecognized(frame) {
         if (frame.hands.length !== 2) {
-            return RecognitionState.FAILURE;
+            return false;
         }
 
-        if (this.firstFrame) {
-            this.firstFrame = false;
-            if (!this.isRecognizedStart(frame)) {
-                return RecognitionState.FAILURE;
-            }
-        }
-
-        if (frame.timestamp < this.timeout) {
-            return this.isRecognizedFrame(frame);
-        } else {
-            return this.isRecognizedEnd(frame);
-        }
+        return this.isRecognizedStart(frame);
     }
 
     isRecognizedStart(frame) {
-        this.timeout = frame.timestamp + 1000000;
-        
         for (const [i, hand] of frame.hands.entries()) {
             const normal = hand.palmNormal[1];
             if (normal > -0.9) {
                 return false;
             }
-
-            this.previousNormals[i] = normal;
         }
 
+        log("gameModel.GestureRotationPartStart :  recognised");
         return true;
+    }
+}
+
+class GestureRotationPart extends GesturePart {
+
+    /**
+     * @override
+     */
+    constructor(gesturePartId) {
+        super(gesturePartId);
+        this.previousNormals = [-1, -1];
+    }
+
+    /**
+     * @override
+     */
+    isRecognized(frame) {
+        if (frame.hands.length !== 2) {
+            return false;
+        }
+
+        return this.isRecognizedFrame(frame);
     }
 
     isRecognizedFrame(frame) {
@@ -640,48 +670,49 @@ class GesturePartRotationLeapMotion extends GesturePart {
 
             // Normal
             if (normalY < this.previousNormals[i] - 0.1) {
-                return RecognitionState.FAILURE;
+                return false;
             }
 
             this.previousNormals[i] = Math.max(normalY, this.previousNormals[i]);
             
             if (normalZ < -0.3 || normalZ > 0.3) {
-                return RecognitionState.FAILURE;
+                return false;
             }
 
             // Grab
             if (hand.grabStrength !== 0) {
-                return RecognitionState.FAILURE;
+                return false;
             }
             
             // Direction
             const [x, y, z] = hand.direction;
             if (hand.type === 'left') {
                 if (x < -0.2 || x > 0.5) {
-                    return RecognitionState.FAILURE;
+                    return false;
                 }
             } else {
                 if (x < -0.5 || x > 0.2) {
-                    return RecognitionState.FAILURE;
+                    return false;
                 }
             }
 
             if (y < -0.3 || y > 0.3 || z > -0.8) {
-                return RecognitionState.FAILURE;
+                return false;
             }
         }
 
-        return RecognitionState.IN_PROGRESS;
+        return this.isRecognizedEnd(frame);
     }
 
     isRecognizedEnd(frame) {
         for (const hand of frame.hands) {
             if (hand.palmNormal[1] < 0.9) {
-                return RecognitionState.FAILURE;
+                return false;
             }
         }
 
-        return RecognitionState.SUCCESS;
+        log("gameModel.GestureRotationPart.isRecognizedEnd : OK");
+        return true;
     }
 }
 
