@@ -423,9 +423,7 @@ class GestureHammerLeapMotion extends Gesture {
             [ new GestureHammerPart(3,0), new GestureHammerPart(4,1) ],
             [ new GestureHammerPart(5,0), new GestureHammerPart(6,1) ],
         ]
-        this.gestureIndex = 0;
         this.gestureCount = this.gestureParts.length;
-
         this.hand1Index = 0;
         this.hand2Index = 0;
     }
@@ -434,8 +432,6 @@ class GestureHammerLeapMotion extends Gesture {
      * @override
      */
     check(frame){
-        msg.innerHTML = frame.hands.length;
-        msg.dbg1 = this.gestureIndex;
         if(frame.hands.length != 2) return;
         if(this.hand1Index < this.gestureCount
         && this.gestureParts[this.hand1Index][0].isRecognized(frame)){
@@ -448,6 +444,7 @@ class GestureHammerLeapMotion extends Gesture {
             console.log("hand2 "+this.hand2Index + "/"+ this.gestureCount);
         }
         this.recognized = this.hand1Index + this.hand2Index == this.gestureCount*2;
+        //if(this.recognized) console.log("yep");
     }
 
     /**
