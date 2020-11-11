@@ -16,18 +16,12 @@
         "levelMilestoneId": 1,
         "gestureId": "HAMMER",
         "levelMilestoneIndexOrder": 1,
-        "levelMilestoneTimestampStart": 3
+        "levelMilestoneTimestampStart": 12
       },
       {
         "levelMilestoneId": 2,
-        "gestureId": "HAMMER",
-        "levelMilestoneIndexOrder": 2,
-        "levelMilestoneTimestampStart": 13
-      },
-      {
-        "levelMilestoneId": 3,
         "gestureId": "ROTATION",
-        "levelMilestoneIndexOrder": 3,
+        "levelMilestoneIndexOrder": 2,
         "levelMilestoneTimestampStart": 23
       }
     ]
@@ -44,7 +38,50 @@
       "songTitle" : "Mii Chanel Theme",
       "songUrl": "/assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3"
     },
-    "levelMilestones": []
+    "levelMilestones": [
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER_FAST",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 1.8
+      },
+      {
+        "levelMilestoneId": 2,
+        "gestureId": "ROTATION",
+        "levelMilestoneIndexOrder": 2,
+        "levelMilestoneTimestampStart": 6
+      },
+      {
+        "levelMilestoneId": 3,
+        "gestureId": "HAMMER_FAST",
+        "levelMilestoneIndexOrder": 3,
+        "levelMilestoneTimestampStart": 12.5
+      },
+      {
+        "levelMilestoneId": 4,
+        "gestureId": "HAMMER_FAST",
+        "levelMilestoneIndexOrder": 4,
+        "levelMilestoneTimestampStart": 14
+      },
+      {
+        "levelMilestoneId": 5,
+        "gestureId": "HAMMER_FAST",
+        "levelMilestoneIndexOrder": 5,
+        "levelMilestoneTimestampStart": 19
+      },
+      {
+        "levelMilestoneId": 6,
+        "gestureId": "ROTATION",
+        "levelMilestoneIndexOrder": 6,
+        "levelMilestoneTimestampStart": 23
+      },
+      {
+        "levelMilestoneId": 7,
+        "gestureId": "HAMMER_FAST",
+        "levelMilestoneIndexOrder": 7,
+        "levelMilestoneTimestampStart": 28.5
+      }
+    ]
   },
   {
     "levelId": "Edu1",

@@ -405,6 +405,9 @@ class Gesture {
      * @return {boolean} True if the gesture is recognized within the duration ; false otherwise.
      */
     isRecognized() {
+        let temp = this.recognized;
+        this.init();
+        return temp;
     }
 }
 
@@ -426,6 +429,7 @@ class GestureHammerLeapMotion extends Gesture {
         this.gestureCount = this.gestureParts.length;
         this.hand1Index = 0;
         this.hand2Index = 0;
+        this.recognized = false;
     }
     
     /**
@@ -446,14 +450,6 @@ class GestureHammerLeapMotion extends Gesture {
         this.recognized = this.hand1Index + this.hand2Index == this.gestureCount*2;
         //if(this.recognized) console.log("yep");
     }
-
-    /**
-     * @override
-     */
-    isRecognized(){
-        this.init();
-        return this.recognized;
-    }
 }
 
 class GestureRotationLeapMotion extends Gesture {
@@ -472,6 +468,7 @@ class GestureRotationLeapMotion extends Gesture {
         ];
         this.gestureIndex = 0;
         this.gestureCount = this.gestureParts.length;
+        this.recognized = false;
     }
     
     /**
@@ -480,14 +477,6 @@ class GestureRotationLeapMotion extends Gesture {
     check(frame){
         if(this.gestureIndex < this.gestureCount && this.gestureParts[this.gestureIndex].isRecognized(frame)) this.gestureIndex++;
         this.recognized = this.gestureIndex == this.gestureCount;
-    }
-
-    /**
-     * @override
-     */
-    isRecognized(){
-        this.init();
-        return this.recognized;
     }
 }
 

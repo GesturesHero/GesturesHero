@@ -41,7 +41,8 @@ class LeapMotionGestureService extends GestureService {
 
         this.recognizableGestures = new Map();
         this.recognizableGestures.set("HAMMER", new GestureHammerLeapMotion("HAMMER", 3, "/assets/data/gestures-illustrations/hammer.png", []));
-        this.recognizableGestures.set("ROTATION", new GestureRotationLeapMotion("ROTATION", 1, "/assets/data/gestures-illustrations/rotation.png", []));
+        this.recognizableGestures.set("HAMMER_FAST", new GestureHammerLeapMotion("HAMMER_FAST", 2, "/assets/data/gestures-illustrations/hammer.png", []));
+        this.recognizableGestures.set("ROTATION", new GestureRotationLeapMotion("ROTATION", 1.5, "/assets/data/gestures-illustrations/rotation.png", []));
     }
 
     /**
@@ -58,8 +59,9 @@ class LeapMotionGestureService extends GestureService {
 
         setTimeout(() => {
             this.controller.removeListener('frame', onFrame);
-            log(`GestureService.recognize : ${gestureToRecognize.isRecognized()}`);
-            callback(gestureToRecognize.isRecognized());
+            let isRecognized = gestureToRecognize.isRecognized();
+            log(`GestureService.recognize : ${isRecognized}`);
+            callback(isRecognized);
         }, gestureToRecognize.getDurationInSec() * SECOND_TO_MILLISECONDS);
     }
 

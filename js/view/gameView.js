@@ -125,6 +125,7 @@ function drawLevelPage(level) {
  * @param levelLives {number} The amount of level lives.
  */
 function _updateLevelLives(levelLives) {
+    log(`gameView._updateLevelLives : ${levelLives}`);
     let levelLivesNumberHtml = "";
     for (let i = 0; i < levelLives; i++) {
         levelLivesNumberHtml += "<svg width=\"3em\" height=\"3em\" viewBox=\"0 0 16 16\" class=\"bi bi-music-note\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -220,6 +221,7 @@ function _onAudioPlayerUpdate(level) {
 
                     // Recognition.
                     checkGestureNow(milestoneToCheckWith.gestureId, (recognitionState) => {
+                        log(`gameView._onAudioPlayerUpdate : ${recognitionState}`);
                         if (recognitionState === false) {
                             decreaseLevelLive(level.levelId);
                         }
