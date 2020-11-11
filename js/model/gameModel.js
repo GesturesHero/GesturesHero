@@ -616,7 +616,7 @@ class GestureRotationPart extends GesturePart {
      */
     constructor(gesturePartId) {
         super(gesturePartId);
-        this.previousNormals = [0, 0];
+        this.previousNormals = [-1, -1];
     }
 
     /**
