@@ -57,6 +57,7 @@ class LeapMotionGestureService extends GestureService {
 
         setTimeout(() => {
             this.controller.removeListener('frame', onFrame);
+            log(`GestureService.recognize : ${gestureToRecognize.isRecognized()}`);
             callback(gestureToRecognize.isRecognized());
         }, gestureToRecognize.getDurationInSec() * SECOND_TO_MILLISECONDS);
     }

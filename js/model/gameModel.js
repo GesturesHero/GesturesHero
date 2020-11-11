@@ -475,13 +475,6 @@ class GestureRotationLeapMotion extends Gesture {
         this.init();
         return this.recognized;
     }
-
-    /**
-     * @override
-     */
-    isRecognized() {
-        return true;
-    }
 }
 
 // -------------------------------------------------------------------------------------------------------------MOVEMENT
@@ -605,6 +598,7 @@ class GestureRotationPartStart extends GesturePart {
             }
         }
 
+        log("gameModel.GestureRotationPartStart :  recognised");
         return true;
     }
 }
@@ -677,107 +671,8 @@ class GestureRotationPart extends GesturePart {
             }
         }
 
+        log("gameModel.GestureRotationPart.isRecognizedEnd : OK");
         return true;
-    }
-}
-
-class GesturePartRotationLeapMotion extends GesturePart {
-
-    /**
-     * @override
-     */
-    constructor(gesturePartId) {
-        super(gesturePartId);
-        this.firstFrame = true;
-        this.timeout = 0;
-        this.previousNormals = [0, 0];
-    }
-
-    /**
-     * @override
-     */
-    isRecognized(frame) {
-        if (frame.hands.length !== 2) {
-            return RecognitionState.FAILURE;
-        }
-
-        if (this.firstFrame) {
-            this.firstFrame = false;
-            if (!this.isRecognizedStart(frame)) {
-                return RecognitionState.FAILURE;
-            }
-        }
-
-        if (frame.timestamp < this.timeout) {
-            return this.isRecognizedFrame(frame);
-        } else {
-            return this.isRecognizedEnd(frame);
-        }
-    }
-
-    isRecognizedStart(frame) {
-        this.timeout = frame.timestamp + 1000000;
-        
-        for (const [i, hand] of frame.hands.entries()) {
-            const normal = hand.palmNormal[1];
-            if (normal > -0.9) {
-                return false;
-            }
-
-            this.previousNormals[i] = normal;
-        }
-
-        return true;
-    }
-
-    isRecognizedFrame(frame) {
-        for (const [i, hand] of frame.hands.entries()) {
-            const [_, normalY, normalZ] = hand.palmNormal;
-
-            // Normal
-            if (normalY < this.previousNormals[i] - 0.1) {
-                return RecognitionState.FAILURE;
-            }
-
-            this.previousNormals[i] = Math.max(normalY, this.previousNormals[i]);
-            
-            if (normalZ < -0.3 || normalZ > 0.3) {
-                return RecognitionState.FAILURE;
-            }
-
-            // Grab
-            if (hand.grabStrength !== 0) {
-                return RecognitionState.FAILURE;
-            }
-            
-            // Direction
-            const [x, y, z] = hand.direction;
-            if (hand.type === 'left') {
-                if (x < -0.2 || x > 0.5) {
-                    return RecognitionState.FAILURE;
-                }
-            } else {
-                if (x < -0.5 || x > 0.2) {
-                    return RecognitionState.FAILURE;
-                }
-            }
-
-            if (y < -0.3 || y > 0.3 || z > -0.8) {
-                return RecognitionState.FAILURE;
-            }
-        }
-
-        return RecognitionState.IN_PROGRESS;
-    }
-
-    isRecognizedEnd(frame) {
-        for (const hand of frame.hands) {
-            if (hand.palmNormal[1] < 0.9) {
-                return RecognitionState.FAILURE;
-            }
-        }
-
-        return RecognitionState.SUCCESS;
     }
 }
 
