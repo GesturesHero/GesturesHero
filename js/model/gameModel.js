@@ -582,12 +582,12 @@ class GestureHammerPart extends GesturePart {
 
     _hasHandTraveledDown(before, after){
         var diff = before[1]-after[1];
-        return diff > 70;
+        return diff > 30;
     }
 
     _hasHandTraveledUp(before, after){
         var diff = after[1]-before[1];
-        return diff > 70;
+        return diff > 30;
     }
 
     _isHandGoingUp(before, after){
