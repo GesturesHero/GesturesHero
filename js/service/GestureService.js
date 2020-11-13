@@ -54,7 +54,7 @@ class LeapMotionGestureService extends GestureService {
         console.log(gestureId);
         const onFrame = (frame) => {
             gestureToRecognize.check(frame);
-        }
+        };
         this.controller.on('frame', onFrame);
 
         setTimeout(() => {
@@ -67,11 +67,20 @@ class LeapMotionGestureService extends GestureService {
 
     /**
      * Gets the gesture illustration URL.
-     * @param levelId {string} The gesture id.
+     * @param gestureId {string} The gesture id.
      */
-    getGestureIllustrationUrl(levelId) {
-        let gesture = this.recognizableGestures.get(levelId);
+    getGestureIllustrationUrl(gestureId) {
+        let gesture = this.recognizableGestures.get(gestureId);
         return gesture !== undefined ? gesture.getIllustrationUrl() : undefined;
+    }
+
+    /**
+     * Gets the gesture duration.
+     * @param gestureId {string} The gesture id.
+     */
+    getGestureDuration(gestureId){
+        let gesture = this.recognizableGestures.get(gestureId);
+        return gesture !== undefined ? gesture.getDurationInSec() : undefined;
     }
 }
 

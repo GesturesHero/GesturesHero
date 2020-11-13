@@ -212,12 +212,19 @@ function _onAudioPlayerUpdate(level) {
 
                 if (milestoneToCheckWith !== undefined) {
 
-                    // Displaying gesture illustration.
+                    // GESTURE ILLUSTRATION > CURRENT
+
                     let gestureIllustrationUrl = getGestureIllustrationUrl(milestoneToCheckWith.gestureId);
-
+                    let gestureDuration = getGestureDuration(milestoneToCheckWith.gestureId);
                     _setGestureIllustration('.level-gestures .current-gesture', gestureIllustrationUrl);
+                    setTimeout(()=>{
+                        _resetGestureIllustration('.level-gestures .current-gesture');
+                    }, gestureDuration * SECOND_TO_MILLISECONDS);
 
-                    // TODO : previous and upcoming gesture + Timeout
+                    // GESTURE ILLUSTRATION > NEXT
+                    // TODO
+                    // GESTURE ILLUSTRATION > PREVIOUS
+                    // TODO
 
                     // Recognition.
                     checkGestureNow(milestoneToCheckWith.gestureId, (recognitionState) => {
@@ -284,6 +291,14 @@ function _setGestureIllustration(htmlIdentifier, gestureIllustrationUrl) {
     $(htmlIdentifier).html(
         '<img src="' + gestureIllustrationUrl + '">'
     );
+}
+
+/**
+ * Resets to blank the gesture illustration.
+ * @param htmlIdentifier {string} The HTML DOM identifier.
+ */
+function _resetGestureIllustration(htmlIdentifier){
+    $(htmlIdentifier).html('<span></span>');
 }
 
 /**

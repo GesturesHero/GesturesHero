@@ -124,10 +124,18 @@ function resetGame() {
 
 /**
  * Gets the gesture illustration URL.
- * @param levelId {string} The gesture id.
+ * @param gestureId {string} The gesture id.
  */
-function getGestureIllustrationUrl(levelId) {
-    return gestureService.getGestureIllustrationUrl(levelId);
+function getGestureIllustrationUrl(gestureId) {
+    return gestureService.getGestureIllustrationUrl(gestureId);
+}
+
+/**
+ * Gets the gesture duration.
+ * @param gestureId {string} The gesture id.
+ */
+function getGestureDuration(gestureId){
+    return gestureService.getGestureDuration(gestureId);
 }
 
 /**
