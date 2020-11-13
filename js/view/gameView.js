@@ -171,10 +171,11 @@ function _onAudioPlayerSetUp(level) {
             });
 
             // Draw the milestones
+                log(level);
             let songDuration = audioPlayerOriginal[0].duration;
             level.levelMilestones.forEach(milestone => {
                 var milestoneAppended = $("<div class=\"audio-player-song-milestone\"></div>").appendTo('.audio-player-custom');
-                milestoneAppended.css("margin-left", milestone.levelMilestoneTimestampStart / songDuration * 100 + '%');
+                milestoneAppended.css("left", milestone.levelMilestoneTimestampStart / songDuration * 100 + '%');
             });
 
             _onAudioPlayerUpdate(level);
