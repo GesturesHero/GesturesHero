@@ -43,7 +43,7 @@
         "levelMilestoneId": 1,
         "gestureId": "HAMMER_FAST",
         "levelMilestoneIndexOrder": 1,
-        "levelMilestoneTimestampStart": 2.1
+        "levelMilestoneTimestampStart": 2.25
       },
       {
         "levelMilestoneId": 2,
@@ -73,7 +73,7 @@
         "levelMilestoneId": 6,
         "gestureId": "ROTATION",
         "levelMilestoneIndexOrder": 6,
-        "levelMilestoneTimestampStart": 23
+        "levelMilestoneTimestampStart": 23.5
       },
       {
         "levelMilestoneId": 7,
