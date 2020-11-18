@@ -440,12 +440,12 @@ class GestureHammerLeapMotion extends Gesture {
         if(this.hand1Index < this.gestureCount
         && this.gestureParts[this.hand1Index][0].isRecognized(frame)){
             this.hand1Index++;
-            console.log("hand1 "+this.hand1Index + "/"+ this.gestureCount);
+            log.debug("hand1 "+this.hand1Index + "/"+ this.gestureCount);
         }
         if(this.hand2Index < this.gestureCount
         && this.gestureParts[this.hand2Index][1].isRecognized(frame)){
             this.hand2Index++;
-            console.log("hand2 "+this.hand2Index + "/"+ this.gestureCount);
+            log.debug("hand2 "+this.hand2Index + "/"+ this.gestureCount);
         }
         this.recognized = this.hand1Index + this.hand2Index == this.gestureCount*2;
         //if(this.recognized) console.log("yep");
@@ -627,7 +627,7 @@ class GestureRotationPartStart extends GesturePart {
             }
         }
 
-        log("gameModel.GestureRotationPartStart :  recognised");
+        log.debug("gameModel.GestureRotationPartStart :  recognized");
         return true;
     }
 }
@@ -700,7 +700,7 @@ class GestureRotationPart extends GesturePart {
             }
         }
 
-        log("gameModel.GestureRotationPart.isRecognizedEnd : OK");
+        log.debug("gameModel.GestureRotationPart.isRecognizedEnd : OK");
         return true;
     }
 }

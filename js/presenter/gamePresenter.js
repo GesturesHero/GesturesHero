@@ -90,7 +90,7 @@ function decreaseLevelLive(levelId, step = 1) {
     let level = game.getLevelById(levelId);
     if (level !== undefined) {
         level.decreaseLives(step);
-        log("gamePresenter.decreaseLevelLive : Live decreased");
+        log.info("gamePresenter.decreaseLevelLive : Live decreased");
         _updateLevelLives(level.getLevelLives());
     }
 }

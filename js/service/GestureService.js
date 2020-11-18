@@ -50,17 +50,18 @@ class LeapMotionGestureService extends GestureService {
      * @param callback {function} The callback to call on end of the recognition.
      */
     recognize(gestureId, callback) {
+        log.info(`New gesture : ${gestureId}`);
         let gestureToRecognize = this.recognizableGestures.get(gestureId);
-        console.log(gestureId);
+
         const onFrame = (frame) => {
             gestureToRecognize.check(frame);
         };
-        this.controller.on('frame', onFrame);
 
+        this.controller.on('frame', onFrame);
         setTimeout(() => {
             this.controller.removeListener('frame', onFrame);
             let isRecognized = gestureToRecognize.isRecognized();
-            log(`GestureService.recognize : ${isRecognized}`);
+            log.debug(`GestureService.recognize : ${isRecognized}`);
             callback(isRecognized);
         }, gestureToRecognize.getDurationInSec() * SECOND_TO_MILLISECONDS);
     }

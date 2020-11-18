@@ -14,8 +14,3 @@ const view = {
 // Constants values
 const SECOND_TO_MILLISECONDS = 1000;
 const LEVEL_LIVES_AMOUNT = 3;
-
-// Constants functions
-function log(message) {
-    console.log("[" + moment().format('DD-MM-YYYY h:mm:ss') + "] : " + message);
-}
