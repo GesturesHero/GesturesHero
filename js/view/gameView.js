@@ -127,15 +127,35 @@ function drawLevelPage(level) {
 function _updateLevelLives(levelLives) {
     log.debug(`gameView._updateLevelLives : ${levelLives}`);
     let levelLivesNumberHtml = "";
+
+    // Remaining lives
     for (let i = 0; i < levelLives; i++) {
-        levelLivesNumberHtml += "<svg width=\"3em\" height=\"3em\" viewBox=\"0 0 16 16\" class=\"bi bi-music-note\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
-            "  <path d=\"M9 13c0 1.105-1.12 2-2.5 2S4 14.105 4 13s1.12-2 2.5-2 2.5.895 2.5 2z\"/>\n" +
-            "  <path fill-rule=\"evenodd\" d=\"M9 3v10H8V3h1z\"/>\n" +
-            "  <path d=\"M8 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 13 2.22V4L8 5V2.82z\"/>\n" +
-            "</svg>";
+        levelLivesNumberHtml += musicNote;
     }
+
+    // Lost lives
+    for (let j = 0; j < (LEVEL_LIVES_AMOUNT - levelLives); j++) {
+        levelLivesNumberHtml += musicNoteTranslucent;
+    }
+
     $('.level-lives').html(levelLivesNumberHtml);
 }
+
+let musicNote = "<span class='music-note'>" +
+    "<svg width=\"3em\" height=\"3em\" viewBox=\"0 0 16 16\" class=\"bi bi-music-note\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
+    "  <path d=\"M9 13c0 1.105-1.12 2-2.5 2S4 14.105 4 13s1.12-2 2.5-2 2.5.895 2.5 2z\"/>\n" +
+    "  <path fill-rule=\"evenodd\" d=\"M9 3v10H8V3h1z\"/>\n" +
+    "  <path d=\"M8 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 13 2.22V4L8 5V2.82z\"/>\n" +
+    "</svg>" +
+    "</span>";
+
+let musicNoteTranslucent = "<span class='music-note-translucent'>" +
+    "<svg width=\"3em\" height=\"3em\" viewBox=\"0 0 16 16\" class=\"bi bi-music-note\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
+    "  <path d=\"M9 13c0 1.105-1.12 2-2.5 2S4 14.105 4 13s1.12-2 2.5-2 2.5.895 2.5 2z\"/>\n" +
+    "  <path fill-rule=\"evenodd\" d=\"M9 3v10H8V3h1z\"/>\n" +
+    "  <path d=\"M8 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 13 2.22V4L8 5V2.82z\"/>\n" +
+    "</svg>" +
+    "</span>";
 
 /**
  * Draws and sets up a custom audio player with timed milestones.
@@ -171,7 +191,6 @@ function _onAudioPlayerSetUp(level) {
             });
 
             // Draw the milestones
-                log(level);
             let songDuration = audioPlayerOriginal[0].duration;
             level.levelMilestones.forEach(milestone => {
                 var milestoneAppended = $("<div class=\"audio-player-song-milestone\"></div>").appendTo('.audio-player-custom');
@@ -218,7 +237,7 @@ function _onAudioPlayerUpdate(level) {
                     let gestureIllustrationUrl = getGestureIllustrationUrl(milestoneToCheckWith.gestureId);
                     let gestureDuration = getGestureDuration(milestoneToCheckWith.gestureId);
                     _setGestureIllustration('.level-gestures .current-gesture', gestureIllustrationUrl);
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         _resetGestureIllustration('.level-gestures .current-gesture');
                     }, gestureDuration * SECOND_TO_MILLISECONDS);
 
@@ -298,7 +317,7 @@ function _setGestureIllustration(htmlIdentifier, gestureIllustrationUrl) {
  * Resets to blank the gesture illustration.
  * @param htmlIdentifier {string} The HTML DOM identifier.
  */
-function _resetGestureIllustration(htmlIdentifier){
+function _resetGestureIllustration(htmlIdentifier) {
     $(htmlIdentifier).html('<span></span>');
 }
 
