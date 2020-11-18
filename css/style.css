@@ -95,14 +95,37 @@
     font-size: 15pt;
 }
 
+
+/* Level gestures */
+
 .level-gestures {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 500px;
 }
 
-.previous-gesture, .next-gesture {
-    opacity: 0.5;
+.level-gestures img {
+    width: 70%;
 }
 
+.translucent {
+    opacity: 0.2;
+}
+
+/* Gesture feedback */
+
+.gesture-feedback{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 75px;
+}
+
+.gesture-feedback-current {
+    font-size: 30pt;
+}
 
 /* Level lives */
 
@@ -123,19 +146,23 @@
 
 .audio-player-custom {
     width: 100%;
-    height: 50px;
+    height: 58px;
     justify-content: flex-start !important;
 
     margin: 0 !important;
     padding: 0 !important;
 
     background-color: #000000;
+    border: 4px solid;
+
 }
 
 .audio-player-custom-progress-bar {
     height: 50px;
     transition: width 0.25s; /* 0.25 corresponds to the refresh time by the HTML audi player */
     transition-timing-function: linear;  /* The linear function is necessary for a constants smooth transition */
+
+    z-index: 2;
 
     background-color: #ffffff;
 }
@@ -145,7 +172,7 @@
     width: 10px;
 
     margin-left: -5px;
-    z-index: 2;
+    z-index: 3;
 
     background-color: #000000;
 }
