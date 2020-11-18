@@ -109,7 +109,9 @@ function drawLevelPage(level) {
             $('.song-title').text(level.levelSong.songTitle);
             $('.level-header').css("background-color", level.levelColor);
             $('.level-song-information').css("background-color", level.levelColor);
-            $('.audio-player-custom').css("background-color", level.levelColor);
+            let audioPlayerCustom = $('.audio-player-custom');
+            audioPlayerCustom.css("background-color", level.levelColor);
+            audioPlayerCustom.css("border-color", level.levelColor);
             resetLevelLives(level.levelId);
             _updateLevelLives(getLevelLive(level.levelId));
             _onAudioPlayerSetUp(level);
@@ -141,21 +143,15 @@ function _updateLevelLives(levelLives) {
     $('.level-lives').html(levelLivesNumberHtml);
 }
 
-let musicNote = "<span class='music-note'>" +
-    "<svg width=\"3em\" height=\"3em\" viewBox=\"0 0 16 16\" class=\"bi bi-music-note\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
+let musicNoteSVG = "<svg width=\"3em\" height=\"3em\" viewBox=\"0 0 16 16\" class=\"bi bi-music-note\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
     "  <path d=\"M9 13c0 1.105-1.12 2-2.5 2S4 14.105 4 13s1.12-2 2.5-2 2.5.895 2.5 2z\"/>\n" +
     "  <path fill-rule=\"evenodd\" d=\"M9 3v10H8V3h1z\"/>\n" +
     "  <path d=\"M8 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 13 2.22V4L8 5V2.82z\"/>\n" +
-    "</svg>" +
-    "</span>";
+    "</svg>";
 
-let musicNoteTranslucent = "<span class='music-note-translucent'>" +
-    "<svg width=\"3em\" height=\"3em\" viewBox=\"0 0 16 16\" class=\"bi bi-music-note\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
-    "  <path d=\"M9 13c0 1.105-1.12 2-2.5 2S4 14.105 4 13s1.12-2 2.5-2 2.5.895 2.5 2z\"/>\n" +
-    "  <path fill-rule=\"evenodd\" d=\"M9 3v10H8V3h1z\"/>\n" +
-    "  <path d=\"M8 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 13 2.22V4L8 5V2.82z\"/>\n" +
-    "</svg>" +
-    "</span>";
+let musicNote = "<span class='music-note'>" + musicNoteSVG + "</span>";
+
+let musicNoteTranslucent = "<span class='music-note-translucent'>" + musicNoteSVG + "</span>";
 
 /**
  * Draws and sets up a custom audio player with timed milestones.
@@ -193,8 +189,10 @@ function _onAudioPlayerSetUp(level) {
             // Draw the milestones
             let songDuration = audioPlayerOriginal[0].duration;
             level.levelMilestones.forEach(milestone => {
-                var milestoneAppended = $("<div class=\"audio-player-song-milestone\"></div>").appendTo('.audio-player-custom');
-                milestoneAppended.css("left", milestone.levelMilestoneTimestampStart / songDuration * 100 + '%');
+                let gestureDuration = getGestureDuration(milestone.gestureId);
+                let milestoneAppended = $("<div class=\"audio-player-song-milestone\"></div>").appendTo('.audio-player-custom');
+                milestoneAppended.css("left", (milestone.levelMilestoneTimestampStart / songDuration) * 100 + '%');
+                milestoneAppended.css("width", (gestureDuration / songDuration) * 100 + '%');
             });
 
             _onAudioPlayerUpdate(level);
@@ -257,6 +255,14 @@ function _onAudioPlayerUpdate(level) {
             }
         };
     }
+}
+
+/**
+ * @return {[string]}The the level's gestures ids.
+ */
+function _getLevelMilestoneGesturesId(levelMilestones) {
+    let gesturesIds = levelMilestones.map(milestone => milestone.gestureId);
+    return gesturesIds;
 }
 
 /**
