@@ -153,6 +153,8 @@
     transition: width 0.25s; /* 0.25 corresponds to the refresh time by the HTML audi player */
     transition-timing-function: linear;  /* The linear function is necessary for a constants smooth transition */
 
+    z-index: 2;
+
     background-color: #ffffff;
 }
 
@@ -161,7 +163,7 @@
     width: 10px;
 
     margin-left: -5px;
-    z-index: 2;
+    z-index: 3;
 
     background-color: #000000;
 }
@@ -173,7 +175,7 @@
 
     z-index: 1;
 
-    background-color: #ffffff;
+    background-color: #f7ff16;
 }
 
 .audio-player-custom-play-control {
