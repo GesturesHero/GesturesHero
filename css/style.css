@@ -1,17 +1,17 @@
-/* Navbar */
+/* ---- Navbar ---- */
 .brand-name {
     line-height: 50px;
     color: #33cccc;
 }
 
-/* Page > General */
+/* ---- Page > General ---- */
 
 .general {
     margin-top: 30px;
     max-width: 1440px !important;
 }
 
-/* Page > Menu */
+/* ---- Page > Menu ---- */
 
 .menu {
     display: flex;
@@ -49,13 +49,14 @@
     cursor: not-allowed;
 }
 
-/* Page > Level */
+/* ---- Page > Level ---- */
 
 .level div {
     display: flex;
     justify-content: center;
 }
 
+/* Level header */
 .level-header {
     padding-top: 10px;
 
@@ -70,6 +71,8 @@
     margin: 0;
 }
 
+/* Level song information */
+
 .level-song-information {
     padding-top: 10px;
     margin-bottom: 20px;
@@ -79,6 +82,9 @@
     color: #ffffff;
     background-color: #000000;
 }
+
+
+/* Level gestures title */
 
 .level-gestures-title h2 {
     font-size: 30pt;
@@ -97,10 +103,19 @@
     opacity: 0.5;
 }
 
+
+/* Level lives */
+
 .level-lives {
     height: 75px;
     padding: 10px;
 }
+
+.level-lives .music-note-translucent{
+    opacity: 0.2;
+}
+
+/* Level audio player */
 
 .level-song-player {
     height: 50px;
@@ -119,8 +134,8 @@
 
 .audio-player-custom-progress-bar {
     height: 50px;
-    transition: width 0.25s;
-    transition-timing-function: linear;
+    transition: width 0.25s; /* 0.25 corresponds to the refresh time by the HTML audi player */
+    transition-timing-function: linear;  /* The linear function is necessary for a constants smooth transition */
 
     background-color: #ffffff;
 }
@@ -164,7 +179,7 @@
     cursor: not-allowed;
 }
 
-/* Page > End */
+/* ---- Page > End ---- */
 
 .end {
     display: flex;
@@ -177,7 +192,7 @@
     color: #ffc107;
 }
 
-/* Page > Level completed */
+/* ---- Page > Level completed ---- */
 
 .level-completed {
     display: flex;
@@ -196,7 +211,7 @@
 }
 
 
-/* Page > Level failed */
+/* ---- Page > Level failed ---- */
 
 .level-failed {
     display: flex;
@@ -221,5 +236,3 @@
     top: 100px;
     right: 20px;
 }
-
-
