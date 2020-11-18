@@ -8,7 +8,9 @@ $(document).ready(function () {
     initializeGame();
 });
 
-// ------------------------------------------------------------------------------------------------------------------------------ DRAWERS
+
+// ------------------------------------------------------------------------------------------------------------------------------ NAVIGATION
+
 let _currentView = view.MENU;
 let _currentLevelViewId = undefined;
 
@@ -51,6 +53,8 @@ function refreshView(game) {
             alertUserView("Target page not found");
     }
 }
+
+// ------------------------------------------------------------------------------------------------------------------------------ DRAWERS
 
 /**
  * Draws the (main) menu page (list of levels that are available or not).
@@ -115,12 +119,90 @@ function drawLevelPage(level) {
             resetLevelLives(level.levelId);
             _updateLevelLives(getLevelLive(level.levelId));
             _onAudioPlayerSetUp(level);
+            _initGestures(level);
+            _renderGestures();
         });
     } else {
         alertUserView("An issue occurred while displaying the level. Please try again.");
     }
 }
 
+// Gestures display
+let gestureIllustrationsUrl;
+let currentGestureIndex;
+let previousGestureIndex;
+let nextGestureIndex;
+
+/**
+ * Init the gesture displaying.
+ * @param level {Object} The object representing the level.
+ */
+function _initGestures(level) {
+    let levelGesturesId = _getLevelGesturesIds(level.levelMilestones);
+    gestureIllustrationsUrl = _getGesturesIllustrationsUrl(levelGesturesId);
+    currentGestureIndex = -1;
+    previousGestureIndex = -2;
+    nextGestureIndex = 0;
+}
+
+/**
+ * Sets the gestures positions to the next ones.
+ */
+function _goToNextGesture() {
+    currentGestureIndex++;
+    previousGestureIndex++;
+    nextGestureIndex++;
+}
+
+/**
+ * Renders the gesture displaying.
+ */
+function _renderGestures() {
+
+    const htmlIdentifierNextGesture = '.level-gestures .next-gesture';
+    const htmlIdentifierCurrentGesture = '.level-gestures .current-gesture';
+    const htmlIdentifierPreviousGesture = '.level-gestures .previous-gesture';
+
+    // Next
+    if(nextGestureIndex >= 0 && nextGestureIndex < gestureIllustrationsUrl.length) {
+        let gestureIllustrationUrlNext = gestureIllustrationsUrl[nextGestureIndex];
+        _setGestureIllustration(htmlIdentifierNextGesture, gestureIllustrationUrlNext);
+    } else {
+        _resetGestureIllustration(htmlIdentifierNextGesture);
+    }
+
+    // Current gesture
+    if(currentGestureIndex >= 0 && currentGestureIndex < gestureIllustrationsUrl.length) {
+        let gestureIllustrationUrlCurrent = gestureIllustrationsUrl[currentGestureIndex];
+        _setGestureIllustration(htmlIdentifierCurrentGesture, gestureIllustrationUrlCurrent);
+    } else {
+        _resetGestureIllustration(htmlIdentifierCurrentGesture);
+    }
+
+    // Previous
+    if(previousGestureIndex >= 0 && previousGestureIndex < gestureIllustrationsUrl.length) {
+        let gestureIllustrationUrlPrevious = gestureIllustrationsUrl[previousGestureIndex];
+        _setGestureIllustration(htmlIdentifierPreviousGesture, gestureIllustrationUrlPrevious);
+    } else {
+        _resetGestureIllustration(htmlIdentifierPreviousGesture);
+    }
+}
+
+/**
+ * @return {[string]}The gestures' ids of the given level.
+ */
+function _getLevelGesturesIds(levelMilestones) {
+    return levelMilestones.map(milestone => milestone.gestureId);
+}
+
+/**
+ * @retun {[string]} The gestures' illustrations URL of given level ids.
+ */
+function _getGesturesIllustrationsUrl(levelIds) {
+    return levelIds.map(id => getGestureIllustrationUrl(id));
+}
+
+// End of gesture display
 
 /**
  * Updates on the view the amount of level lives.
@@ -230,19 +312,9 @@ function _onAudioPlayerUpdate(level) {
 
                 if (milestoneToCheckWith !== undefined) {
 
-                    // GESTURE ILLUSTRATION > CURRENT
-
-                    let gestureIllustrationUrl = getGestureIllustrationUrl(milestoneToCheckWith.gestureId);
-                    let gestureDuration = getGestureDuration(milestoneToCheckWith.gestureId);
-                    _setGestureIllustration('.level-gestures .current-gesture', gestureIllustrationUrl);
-                    setTimeout(() => {
-                        _resetGestureIllustration('.level-gestures .current-gesture');
-                    }, gestureDuration * SECOND_TO_MILLISECONDS);
-
-                    // GESTURE ILLUSTRATION > NEXT
-                    // TODO
-                    // GESTURE ILLUSTRATION > PREVIOUS
-                    // TODO
+                    // Update gesture display.
+                    _goToNextGesture();
+                    _renderGestures();
 
                     // Recognition.
                     checkGestureNow(milestoneToCheckWith.gestureId, (recognitionState) => {
@@ -250,19 +322,12 @@ function _onAudioPlayerUpdate(level) {
                         if (recognitionState === false) {
                             decreaseLevelLive(level.levelId);
                         }
+                        _updateGestureFeedback(recognitionState); // Make a timeout after ... sec with transition. TIMEOUT_FEEDBACK
                     });
                 }
             }
         };
     }
-}
-
-/**
- * @return {[string]}The the level's gestures ids.
- */
-function _getLevelMilestoneGesturesId(levelMilestones) {
-    let gesturesIds = levelMilestones.map(milestone => milestone.gestureId);
-    return gesturesIds;
 }
 
 /**
@@ -325,6 +390,17 @@ function _setGestureIllustration(htmlIdentifier, gestureIllustrationUrl) {
  */
 function _resetGestureIllustration(htmlIdentifier) {
     $(htmlIdentifier).html('<span></span>');
+}
+
+/**
+ * Updates the feedback sent to the user regarding its gesture performance.
+ * @param recognitionState {boolean} The recognition state.
+ */
+function _updateGestureFeedback(recognitionState) {
+    $('.gesture-feedback-current').html('<span>' + (recognitionState === true ? '✔' : '❌') + '</span>');
+    setTimeout(() => {
+        $('.gesture-feedback-current').html('<span></span>');
+    }, (FEEDBACK_TIMEOUT_IN_SEC * SECOND_TO_MILLISECONDS));
 }
 
 /**

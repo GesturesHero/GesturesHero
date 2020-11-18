@@ -35,7 +35,6 @@ class LeapMotionGestureService extends GestureService {
      */
     constructor() {
         super();
-        // TODO : Manage the LeapMotion connexion.
         this.controller = new Leap.Controller();
         this.controller.connect();
 

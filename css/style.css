@@ -99,10 +99,24 @@
     height: 500px;
 }
 
+.level-gestures img {
+    width: 50%;
+    height: 50%;
+}
+
 .previous-gesture, .next-gesture {
     opacity: 0.5;
 }
 
+/* Gesture feedback */
+
+.gesture-feedback{
+    min-height: 50px;
+}
+
+.gesture-feedback-current {
+    font-size: 20pt;
+}
 
 /* Level lives */
 
