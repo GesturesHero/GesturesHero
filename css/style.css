@@ -95,27 +95,36 @@
     font-size: 15pt;
 }
 
+
+/* Level gestures */
+
 .level-gestures {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 500px;
 }
 
 .level-gestures img {
-    width: 50%;
-    height: 50%;
+    width: 70%;
 }
 
-.previous-gesture, .next-gesture {
-    opacity: 0.5;
+.translucent {
+    opacity: 0.2;
 }
 
 /* Gesture feedback */
 
 .gesture-feedback{
-    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 75px;
 }
 
 .gesture-feedback-current {
-    font-size: 20pt;
+    font-size: 30pt;
 }
 
 /* Level lives */
@@ -175,7 +184,7 @@
 
     z-index: 1;
 
-    background-color: #f7ff16;
+    background-color: #ffffff;
 }
 
 .audio-player-custom-play-control {

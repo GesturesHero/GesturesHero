@@ -164,7 +164,7 @@ function _renderGestures() {
     const htmlIdentifierPreviousGesture = '.level-gestures .previous-gesture';
 
     // Next
-    if(nextGestureIndex >= 0 && nextGestureIndex < gestureIllustrationsUrl.length) {
+    if (nextGestureIndex >= 0 && nextGestureIndex < gestureIllustrationsUrl.length) {
         let gestureIllustrationUrlNext = gestureIllustrationsUrl[nextGestureIndex];
         _setGestureIllustration(htmlIdentifierNextGesture, gestureIllustrationUrlNext);
     } else {
@@ -172,7 +172,7 @@ function _renderGestures() {
     }
 
     // Current gesture
-    if(currentGestureIndex >= 0 && currentGestureIndex < gestureIllustrationsUrl.length) {
+    if (currentGestureIndex >= 0 && currentGestureIndex < gestureIllustrationsUrl.length) {
         let gestureIllustrationUrlCurrent = gestureIllustrationsUrl[currentGestureIndex];
         _setGestureIllustration(htmlIdentifierCurrentGesture, gestureIllustrationUrlCurrent);
     } else {
@@ -180,7 +180,7 @@ function _renderGestures() {
     }
 
     // Previous
-    if(previousGestureIndex >= 0 && previousGestureIndex < gestureIllustrationsUrl.length) {
+    if (previousGestureIndex >= 0 && previousGestureIndex < gestureIllustrationsUrl.length) {
         let gestureIllustrationUrlPrevious = gestureIllustrationsUrl[previousGestureIndex];
         _setGestureIllustration(htmlIdentifierPreviousGesture, gestureIllustrationUrlPrevious);
     } else {
@@ -315,14 +315,16 @@ function _onAudioPlayerUpdate(level) {
                     // Update gesture display.
                     _goToNextGesture();
                     _renderGestures();
+                    _isCurrentGestureTranslucent(false);
 
                     // Recognition.
                     checkGestureNow(milestoneToCheckWith.gestureId, (recognitionState) => {
-                        log.debug(`gameView._onAudioPlayerUpdate : ${recognitionState}`);
+                        log.debug(`gameView._onAudioPlayerUpdate : recognition : ${recognitionState}`);
                         if (recognitionState === false) {
                             decreaseLevelLive(level.levelId);
+                            _isCurrentGestureTranslucent(true);
                         }
-                        _updateGestureFeedback(recognitionState); // Make a timeout after ... sec with transition. TIMEOUT_FEEDBACK
+                        _updateGestureFeedback(recognitionState);
                     });
                 }
             }
@@ -390,6 +392,18 @@ function _setGestureIllustration(htmlIdentifier, gestureIllustrationUrl) {
  */
 function _resetGestureIllustration(htmlIdentifier) {
     $(htmlIdentifier).html('<span></span>');
+}
+
+/**
+ * Set the translucency of the current gesture.
+ * @param isTranslucent {boolean} True if the current gesture must be translucent ; false otherwise.
+ */
+function _isCurrentGestureTranslucent(isTranslucent) {
+    if (isTranslucent) {
+        $('.current-gesture').addClass('translucent');
+    } else {
+        $('.current-gesture').removeClass('translucent');
+    }
 }
 
 /**

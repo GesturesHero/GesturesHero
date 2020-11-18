@@ -29,7 +29,7 @@
   {
     "levelId": "Prepa2",
     "levelName": "Music Theory : Preparatory #2",
-    "levelIndexOrder": 1.2,
+    "levelIndexOrder": 1.0,
     "levelDifficulty": 1,
     "levelColor": "#00cc66",
     "levelSong": {
@@ -61,24 +61,18 @@
         "levelMilestoneId": 4,
         "gestureId": "HAMMER_FAST",
         "levelMilestoneIndexOrder": 4,
-        "levelMilestoneTimestampStart": 14
-      },
-      {
-        "levelMilestoneId": 5,
-        "gestureId": "HAMMER_FAST",
-        "levelMilestoneIndexOrder": 5,
         "levelMilestoneTimestampStart": 19
       },
       {
-        "levelMilestoneId": 6,
+        "levelMilestoneId": 5,
         "gestureId": "ROTATION",
-        "levelMilestoneIndexOrder": 6,
+        "levelMilestoneIndexOrder": 5,
         "levelMilestoneTimestampStart": 23.5
       },
       {
-        "levelMilestoneId": 7,
+        "levelMilestoneId": 6,
         "gestureId": "HAMMER_FAST",
-        "levelMilestoneIndexOrder": 7,
+        "levelMilestoneIndexOrder": 6,
         "levelMilestoneTimestampStart": 29.5
       }
     ]
