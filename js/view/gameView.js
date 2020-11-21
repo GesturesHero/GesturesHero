@@ -322,8 +322,8 @@ function _onAudioPlayerUpdate(level) {
                         log.debug(`gameView._onAudioPlayerUpdate : recognition : ${recognitionState}`);
                         if (recognitionState === false) {
                             decreaseLevelLive(level.levelId);
-                            _isCurrentGestureTranslucent(true);
                         }
+                         _isCurrentGestureTranslucent(true);
                         _updateGestureFeedback(recognitionState);
                     });
                 }
