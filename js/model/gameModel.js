@@ -669,7 +669,7 @@ class GestureRotationPart extends GesturePart {
             }
 
             // Grab
-            if (hand.grabStrength !== 0) {
+            if (hand.grabStrength == 1) {
                 return false;
             }
 

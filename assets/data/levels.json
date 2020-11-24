@@ -14,9 +14,9 @@
     "levelMilestones": [
       {
         "levelMilestoneId": 1,
-        "gestureId": "HAMMER",
+        "gestureId": "HAMMER_FAST",
         "levelMilestoneIndexOrder": 1,
-        "levelMilestoneTimestampStart": 12
+        "levelMilestoneTimestampStart": 12.5
       },
       {
         "levelMilestoneId": 2,
@@ -43,7 +43,7 @@
         "levelMilestoneId": 1,
         "gestureId": "HAMMER_FAST",
         "levelMilestoneIndexOrder": 1,
-        "levelMilestoneTimestampStart": 2.25
+        "levelMilestoneTimestampStart": 1.95
       },
       {
         "levelMilestoneId": 2,
@@ -61,18 +61,24 @@
         "levelMilestoneId": 4,
         "gestureId": "HAMMER_FAST",
         "levelMilestoneIndexOrder": 4,
-        "levelMilestoneTimestampStart": 19
+        "levelMilestoneTimestampStart": 14.1
       },
       {
         "levelMilestoneId": 5,
-        "gestureId": "ROTATION",
+        "gestureId": "HAMMER_FAST",
         "levelMilestoneIndexOrder": 5,
-        "levelMilestoneTimestampStart": 23.5
+        "levelMilestoneTimestampStart": 18.8
       },
       {
         "levelMilestoneId": 6,
-        "gestureId": "HAMMER_FAST",
+        "gestureId": "ROTATION",
         "levelMilestoneIndexOrder": 6,
+        "levelMilestoneTimestampStart": 23.4
+      },
+      {
+        "levelMilestoneId": 7,
+        "gestureId": "HAMMER_FAST",
+        "levelMilestoneIndexOrder": 7,
         "levelMilestoneTimestampStart": 29.5
       }
     ]
