@@ -149,8 +149,8 @@ function _initGestures(level) {
  * Sets the gestures positions to the next ones.
  */
 function _goToNextGesture() {
-    currentGestureIndex++;
-    previousGestureIndex++;
+    currentGestureIndex=nextGestureIndex;
+    //previousGestureIndex++;
     nextGestureIndex++;
 }
 
@@ -318,14 +318,22 @@ function _onAudioPlayerUpdate(level) {
                     _isCurrentGestureTranslucent(false);
 
                     // Recognition.
-                    checkGestureNow(milestoneToCheckWith.gestureId, (recognitionState) => {
-                        log.debug(`gameView._onAudioPlayerUpdate : recognition : ${recognitionState}`);
-                        if (recognitionState === false) {
-                            decreaseLevelLive(level.levelId);
-                        }
-                         _isCurrentGestureTranslucent(true);
-                        _updateGestureFeedback(recognitionState);
-                    });
+                    (function (gestureIndex) {
+                        checkGestureNow(milestoneToCheckWith.gestureId, (recognitionState) => {
+                            log.debug(`gameView._onAudioPlayerUpdate : recognition : ${recognitionState}`);
+                            if (recognitionState === false) {
+                                decreaseLevelLive(level.levelId);
+                            }
+                            //_isCurrentGestureTranslucent(true);
+                            _updateGestureFeedback(recognitionState);
+                            
+                            previousGestureIndex = currentGestureIndex;
+                            if(currentGestureIndex == gestureIndex){
+                                currentGestureIndex = -1;
+                                _renderGestures();
+                            }
+                        });
+                    })(currentGestureIndex);
                 }
             }
         };
@@ -410,9 +418,11 @@ function _isCurrentGestureTranslucent(isTranslucent) {
  * Updates the feedback sent to the user regarding its gesture performance.
  * @param recognitionState {boolean} The recognition state.
  */
+let timeout;
 function _updateGestureFeedback(recognitionState) {
+    clearTimeout(timeout);
     $('.gesture-feedback-current').html('<span>' + (recognitionState === true ? '✔' : '❌') + '</span>');
-    setTimeout(() => {
+    timeout = setTimeout(() => {
         $('.gesture-feedback-current').html('<span></span>');
     }, (FEEDBACK_TIMEOUT_IN_SEC * SECOND_TO_MILLISECONDS));
 }
