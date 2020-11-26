@@ -35,8 +35,17 @@ class LeapMotionGestureService extends GestureService {
      */
     constructor() {
         super();
+        let camera = new THREE.PerspectiveCamera(45 , window.innerWidth / window.innerHeight, 1, 1000);
+        camera.position.fromArray([0, 200, 500]);
+        camera.lookAt(new THREE.Vector3(0, 200, 0));
         this.controller = new Leap.Controller();
-        this.controller.connect();
+        this.controller.use('riggedHand', {
+            positionScale:1
+        }).connect();
+
+        let scope = this.controller.plugins.riggedHand; 
+
+        scope.camera = camera;
 
         this.recognizableGestures = new Map();
         this.recognizableGestures.set("HAMMER", new GestureHammerLeapMotion("HAMMER", 3, "/assets/data/gestures-illustrations/hammer.gif", []));
