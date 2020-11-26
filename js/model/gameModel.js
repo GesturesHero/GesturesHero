@@ -538,6 +538,8 @@ class GestureHammerPart extends GesturePart {
                     && this._isHandGoingDown(this.posPrev, pos)) {
                     this.posPeak = this.posPrev;
                     this.etape++;
+                } else if(this.posPrev && this._isHandGoingUp(this.posPrev, pos)){
+                    this.posPrev = pos;
                 }
                 break;
 
@@ -553,7 +555,8 @@ class GestureHammerPart extends GesturePart {
             case 2: // Check if finger/hand went back to the initial position.
                 if (this._isCheckFistWithIndexFinger(hand)
                     && this._hasHandTraveledUp(this.posPeak, pos)
-                    && this._isHandGoingDown(this.posPrev, pos)) {
+                    //&& this._isHandGoingDown(this.posPrev, pos) //Justification
+                    ) {
                     this.posPeak = this.posPrev;
                     this.etape++;
                 }
@@ -659,35 +662,41 @@ class GestureRotationPart extends GesturePart {
 
             // Normal
             if (normalY < this.previousNormals[i] - 0.1) {
+                log.debug("GestureRotationPart.isRecognizedFrame : Miss gesturing : Hands turning backward");
                 return false;
             }
 
             this.previousNormals[i] = Math.max(normalY, this.previousNormals[i]);
 
-            if (normalZ < -0.3 || normalZ > 0.3) {
+            /*if (normalZ < -0.3 || normalZ > 0.3) {
+                log.debug("Miss gesturing : Hands not pointing right in front (verticaly) : Normal");
                 return false;
-            }
+            }*/
 
             // Grab
             if (hand.grabStrength == 1) {
+                log.debug("GestureRotationPart.isRecognizedFrame : Miss gesturing : Hands not open enough");
                 return false;
             }
 
             // Direction
             const [x, y, z] = hand.direction;
-            if (hand.type === 'left') {
+            /*if (hand.type === 'left') {
                 if (x < -0.2 || x > 0.5) {
+                    log.debug("GestureRotationPart.isRecognizedFrame : Miss gesturing : Left hand not pointing right in front (horizontaly)");
                     return false;
                 }
             } else {
                 if (x < -0.5 || x > 0.2) {
+                    log.debug("GestureRotationPart.isRecognizedFrame : Miss gesturing : Right hand not pointing right in front (horizontaly)");
                     return false;
                 }
-            }
+            }*/
 
-            if (y < -0.3 || y > 0.3 || z > -0.8) {
+            /*if (y < -0.3 || y > 0.3 || z > -0.8) {
+                log.debug("Miss gesturing : Hands not pointing right in front (verticaly) : Direction");
                 return false;
-            }
+            }*/
         }
 
         return this.isRecognizedEnd(frame);
