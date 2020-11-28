@@ -146,12 +146,22 @@ function _initGestures(level) {
 }
 
 /**
- * Sets the gestures positions to the next ones.
+ * Move the next gesture to the current gesture (new value for currentGestureIndex & incrementation for nextGestureIndex).
  */
-function _goToNextGesture() {
+function _revealNewCurrentGesture() {
     currentGestureIndex=nextGestureIndex;
-    //previousGestureIndex++;
     nextGestureIndex++;
+}
+
+/**
+ * Move the current gesture to the previous gesture (undefined for currentGestureIndex & new value for previousGestureIndex).
+ * @param supposedCurrentGestureIndex {int} The index of the gesture that needs to become the previous gesture.
+ */
+function _hideCurrentGesture(supposedCurrentGestureIndex){
+    previousGestureIndex = supposedCurrentGestureIndex;
+    if(currentGestureIndex == supposedCurrentGestureIndex){
+        currentGestureIndex = -1;
+    }
 }
 
 /**
@@ -313,24 +323,21 @@ function _onAudioPlayerUpdate(level) {
                 if (milestoneToCheckWith !== undefined) {
 
                     // Update gesture display.
-                    _goToNextGesture();
+                    _revealNewCurrentGesture();
                     _renderGestures();
 
                     // Recognition.
-                    (function (gestureIndex) {
+                    (function (hypotheticCurrentGestureIndex) {
                         checkGestureNow(milestoneToCheckWith.gestureId, (recognitionState) => {
                             log.debug(`gameView._onAudioPlayerUpdate : recognition : ${recognitionState}`);
                             if (recognitionState === false) {
                                 decreaseLevelLive(level.levelId);
                             }
-                            //_isCurrentGestureTranslucent(true);
+                            
                             _updateGestureFeedback(recognitionState);
                             
-                            previousGestureIndex = currentGestureIndex;
-                            if(currentGestureIndex == gestureIndex){
-                                currentGestureIndex = -1;
-                                _renderGestures();
-                            }
+                            _hideCurrentGesture(hypotheticCurrentGestureIndex);
+                            _renderGestures();
                         });
                     })(currentGestureIndex);
                 }
