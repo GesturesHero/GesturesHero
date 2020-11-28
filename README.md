@@ -47,6 +47,8 @@ npm run start
 * [MomentJS](https://momentjs.com/)
 * [Bootstrap](https://getbootstrap.com/)
 * [Bootstrap Icons](https://icons.getbootstrap.com/)
+* [Rigged Hands](https://github.com/leapmotion/leapjs-rigged-hand)
+* [Three.js](https://threejs.org/)
 
 ## Technologies
 * HTML5, CSS3, JavaScript
