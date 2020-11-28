@@ -146,12 +146,22 @@ function _initGestures(level) {
 }
 
 /**
- * Sets the gestures positions to the next ones.
+ * Move the next gesture to the current gesture (new value for currentGestureIndex & incrementation for nextGestureIndex).
  */
-function _goToNextGesture() {
-    currentGestureIndex++;
-    previousGestureIndex++;
+function _revealNewCurrentGesture() {
+    currentGestureIndex=nextGestureIndex;
     nextGestureIndex++;
+}
+
+/**
+ * Move the current gesture to the previous gesture (undefined for currentGestureIndex & new value for previousGestureIndex).
+ * @param supposedCurrentGestureIndex {int} The index of the gesture that needs to become the previous gesture.
+ */
+function _hideCurrentGesture(supposedCurrentGestureIndex){
+    previousGestureIndex = supposedCurrentGestureIndex;
+    if(currentGestureIndex == supposedCurrentGestureIndex){
+        currentGestureIndex = -1;
+    }
 }
 
 /**
@@ -313,19 +323,23 @@ function _onAudioPlayerUpdate(level) {
                 if (milestoneToCheckWith !== undefined) {
 
                     // Update gesture display.
-                    _goToNextGesture();
+                    _revealNewCurrentGesture();
                     _renderGestures();
-                    _isCurrentGestureTranslucent(false);
 
                     // Recognition.
-                    checkGestureNow(milestoneToCheckWith.gestureId, (recognitionState) => {
-                        log.debug(`gameView._onAudioPlayerUpdate : recognition : ${recognitionState}`);
-                        if (recognitionState === false) {
-                            decreaseLevelLive(level.levelId);
-                        }
-                         _isCurrentGestureTranslucent(true);
-                        _updateGestureFeedback(recognitionState);
-                    });
+                    (function (hypotheticCurrentGestureIndex) {
+                        checkGestureNow(milestoneToCheckWith.gestureId, (recognitionState) => {
+                            log.debug(`gameView._onAudioPlayerUpdate : recognition : ${recognitionState}`);
+                            if (recognitionState === false) {
+                                decreaseLevelLive(level.levelId);
+                            }
+                            
+                            _updateGestureFeedback(recognitionState);
+                            
+                            _hideCurrentGesture(hypotheticCurrentGestureIndex);
+                            _renderGestures();
+                        });
+                    })(currentGestureIndex);
                 }
             }
         };
@@ -395,24 +409,14 @@ function _resetGestureIllustration(htmlIdentifier) {
 }
 
 /**
- * Set the translucency of the current gesture.
- * @param isTranslucent {boolean} True if the current gesture must be translucent ; false otherwise.
- */
-function _isCurrentGestureTranslucent(isTranslucent) {
-    if (isTranslucent) {
-        $('.current-gesture').addClass('translucent');
-    } else {
-        $('.current-gesture').removeClass('translucent');
-    }
-}
-
-/**
  * Updates the feedback sent to the user regarding its gesture performance.
  * @param recognitionState {boolean} The recognition state.
  */
+let timeout;
 function _updateGestureFeedback(recognitionState) {
+    clearTimeout(timeout);
     $('.gesture-feedback-current').html('<span>' + (recognitionState === true ? '✔' : '❌') + '</span>');
-    setTimeout(() => {
+    timeout = setTimeout(() => {
         $('.gesture-feedback-current').html('<span></span>');
     }, (FEEDBACK_TIMEOUT_IN_SEC * SECOND_TO_MILLISECONDS));
 }

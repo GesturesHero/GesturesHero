@@ -263,3 +263,7 @@
     top: 100px;
     right: 20px;
 }
+
+canvas{
+    pointer-events: none;
+}

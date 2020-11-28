@@ -2,7 +2,7 @@
  * @overview This file contains the available gesture services.
  */
 
-// ---------------------------------------------------------------------------------------------------GESTURE RECOGNIZER
+// ---------------------------------------------------------------------------------------------------GESTURE SERVICE
 
 /**
  * @overview Represents an abstract gesture service.
@@ -36,12 +36,40 @@ class LeapMotionGestureService extends GestureService {
     constructor() {
         super();
         this.controller = new Leap.Controller();
-        this.controller.connect();
+        /* The "riggedHand" plugin add a canvas covering the entire browser. 
+        It creates a virtual 3D scene in which the plugin will display 3D models of hands base on the real position got by the leapMotion. */
+        this.controller.use('riggedHand').connect();
+        this._setup3DScene();
 
         this.recognizableGestures = new Map();
         this.recognizableGestures.set("HAMMER", new GestureHammerLeapMotion("HAMMER", 3, "/assets/data/gestures-illustrations/hammer.gif", []));
         this.recognizableGestures.set("HAMMER_FAST", new GestureHammerLeapMotion("HAMMER_FAST", 1.5, "/assets/data/gestures-illustrations/hammer.gif", []));
         this.recognizableGestures.set("ROTATION", new GestureRotationLeapMotion("ROTATION", 1.5, "/assets/data/gestures-illustrations/rotation.gif", []));
+    }
+
+    /**
+     * Setup the 3D scene. Place camera and add lights.
+     */
+    _setup3DScene(){
+        // We create the camera that will be in the 3D scene to "record" the hands
+        let camera = new THREE.PerspectiveCamera(45 , window.innerWidth / window.innerHeight, 1, 1000);
+        camera.position.fromArray([0, 200, 500]); // Setup the position of the camera in the scene. Where (0, 0, 0) is the leapmotion
+        camera.lookAt(new THREE.Vector3(0, 200, 0)); // Setup the point which the camera is pointing on
+        // Link the camera and the 3D scene
+        let scope = this.controller.plugins.riggedHand; 
+        scope.camera = camera;
+        
+        const light = new THREE.PointLight( 0x33cccc, 1, 10000 );
+        light.position.set( 0, 200, 500 );
+        scope.scene.add( light );
+
+        const light1 = new THREE.PointLight( 0xff0000, 1, 10000 );
+        light1.position.set( 0, 0, 250 );
+        scope.scene.add( light1 );
+
+        const light2 = new THREE.PointLight( 0x00ff00, 1, 10000 );
+        light2.position.set( 0, 200, -500 );
+        scope.scene.add( light2 );
     }
 
     /**
