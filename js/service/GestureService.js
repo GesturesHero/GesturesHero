@@ -46,6 +46,18 @@ class LeapMotionGestureService extends GestureService {
         // Link the camera and the 3D scene
         let scope = this.controller.plugins.riggedHand; 
         scope.camera = camera;
+        
+        const light = new THREE.PointLight( 0x33cccc, 1, 10000 );
+        light.position.set( 0, 200, 500 );
+        scope.scene.add( light );
+
+        const light1 = new THREE.PointLight( 0xff0000, 1, 10000 );
+        light1.position.set( 0, 0, 250 );
+        scope.scene.add( light1 );
+
+        const light2 = new THREE.PointLight( 0x00ff00, 1, 10000 );
+        light2.position.set( 0, 200, -500 );
+        scope.scene.add( light2 );
 
         this.recognizableGestures = new Map();
         this.recognizableGestures.set("HAMMER", new GestureHammerLeapMotion("HAMMER", 3, "/assets/data/gestures-illustrations/hammer.gif", []));
