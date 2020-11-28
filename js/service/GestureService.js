@@ -2,7 +2,7 @@
  * @overview This file contains the available gesture services.
  */
 
-// ---------------------------------------------------------------------------------------------------GESTURE RECOGNIZER
+// ---------------------------------------------------------------------------------------------------GESTURE SERVICE
 
 /**
  * @overview Represents an abstract gesture service.
