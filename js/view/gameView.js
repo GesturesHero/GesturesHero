@@ -315,7 +315,6 @@ function _onAudioPlayerUpdate(level) {
                     // Update gesture display.
                     _goToNextGesture();
                     _renderGestures();
-                    _isCurrentGestureTranslucent(false);
 
                     // Recognition.
                     (function (gestureIndex) {
@@ -400,18 +399,6 @@ function _setGestureIllustration(htmlIdentifier, gestureIllustrationUrl) {
  */
 function _resetGestureIllustration(htmlIdentifier) {
     $(htmlIdentifier).html('<span></span>');
-}
-
-/**
- * Set the translucency of the current gesture.
- * @param isTranslucent {boolean} True if the current gesture must be translucent ; false otherwise.
- */
-function _isCurrentGestureTranslucent(isTranslucent) {
-    if (isTranslucent) {
-        $('.current-gesture').addClass('translucent');
-    } else {
-        $('.current-gesture').removeClass('translucent');
-    }
 }
 
 /**
