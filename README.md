@@ -38,7 +38,7 @@ npm run start
 
 ## Authors
 
-* ANDRE Maxime ([@maxiandrunamur](https://github.com/maxiandrunamur))
+* ANDRE Maxime ([@mxmadr](https://github.com/mxmadr))
 * BAYET Anthony ([@abayet](https://github.com/abayet))
 * JETZEN Tobias ([@tjetzen](https://github.com/tjetzen))
 * LUYCX Pierre ([@tarhses](https://github.com/tarhses))
@@ -46,7 +46,9 @@ npm run start
 ## Libraries used
 * [MomentJS](https://momentjs.com/)
 * [Bootstrap](https://getbootstrap.com/)
+* [JQuery](https://code.jquery.com/jquery-3.1.0.js)
 * [Bootstrap Icons](https://icons.getbootstrap.com/)
+* [Leap](https://developer-archive.leapmotion.com/javascript)
 * [Rigged Hands](https://github.com/leapmotion/leapjs-rigged-hand)
 * [Three.js](https://threejs.org/)
 

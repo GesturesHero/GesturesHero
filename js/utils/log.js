@@ -1,3 +1,7 @@
+/**
+ * @overview This file contains utils methods for making logs.
+ */
+
 function _makeLogFunction(log) {
     return (text) => {
         const now = new Date();
