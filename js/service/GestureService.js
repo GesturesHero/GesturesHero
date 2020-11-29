@@ -45,6 +45,8 @@ class LeapMotionGestureService extends GestureService {
         this.recognizableGestures.set("HAMMER", new GestureHammerLeapMotion("HAMMER", 3, "/assets/data/gestures-illustrations/hammer.gif", []));
         this.recognizableGestures.set("HAMMER_FAST", new GestureHammerLeapMotion("HAMMER_FAST", 1.5, "/assets/data/gestures-illustrations/hammer.gif", []));
         this.recognizableGestures.set("ROTATION", new GestureRotationLeapMotion("ROTATION", 1.5, "/assets/data/gestures-illustrations/rotation.gif", []));
+        
+        this.light;
     }
 
     /**
@@ -59,17 +61,17 @@ class LeapMotionGestureService extends GestureService {
         let scope = this.controller.plugins.riggedHand; 
         scope.camera = camera;
         
-        const light = new THREE.PointLight( 0x33cccc, 1, 10000 );
-        light.position.set( 0, 200, 500 );
-        scope.scene.add( light );
+        this.light = new THREE.PointLight( 0x33cccc, 1, 10000 );
+        this.light.position.set( 0, 0, 250 );
+        scope.scene.add( this.light );
+    }
 
-        const light1 = new THREE.PointLight( 0xff0000, 1, 10000 );
-        light1.position.set( 0, 0, 250 );
-        scope.scene.add( light1 );
-
-        const light2 = new THREE.PointLight( 0x00ff00, 1, 10000 );
-        light2.position.set( 0, 200, -500 );
-        scope.scene.add( light2 );
+    /**
+     * Sets the color of the hands that are shown in real time.
+     * @param color {String} A hexadecimal color code. 
+     */
+    setHandsColor(color){
+        this.light.color = new THREE.Color(color);
     }
 
     /**
