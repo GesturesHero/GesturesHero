@@ -55,3 +55,9 @@ npm run start
 ## Technologies
 * HTML5, CSS3, JavaScript
 * LeapMotion
+
+## Musics
+Disclaimer : The rights belong to the authors of the music.
+* [Wii - Mii Channel Theme](https://www.youtube.com/watch?v=po-0n1BKW2w)
+* [John Williams - Cantina Band](https://www.youtube.com/watch?v=EsvfptdFXf4)
+* [C2C - F.U.Y.A](https://www.youtube.com/watch?v=1KOaT1vdLmc)
