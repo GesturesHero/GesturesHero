@@ -16,7 +16,8 @@ class Game {
     constructor(levels = []) {
         this.levels = levels.sort((levelA, levelB) => levelA.levelIndexOrder > levelB.levelIndexOrder ? 1 : -1);
         if (levels !== undefined && levels.length !== 0) {
-            this.currentLevel = levels[0];
+            //this.currentLevel = levels[0];
+            this.currentLevel = levels[levels.length-1];
         } else {
             this.currentLevel = undefined;
         }
@@ -413,7 +414,8 @@ class Gesture {
     }
 }
 
-class GestureHammerLeapMotion extends Gesture {
+
+class GestureHammer1LeapMotion extends Gesture {
 
     constructor(gestureId, durationInSec, illustrationUrl, gestureParts) {
         super(gestureId, durationInSec, illustrationUrl, gestureParts);
@@ -424,9 +426,7 @@ class GestureHammerLeapMotion extends Gesture {
      */
     init() {
         this.gestureParts = [
-            [new GestureHammerPart(1, 0), new GestureHammerPart(2, 1)],
-            [new GestureHammerPart(3, 0), new GestureHammerPart(4, 1)],
-            [new GestureHammerPart(5, 0), new GestureHammerPart(6, 1)],
+            [new GestureHammerPart(1, 0), new GestureHammerPart(2, 1)]
         ];
         this.gestureCount = this.gestureParts.length;
         this.hand1Index = 0;
@@ -452,6 +452,29 @@ class GestureHammerLeapMotion extends Gesture {
         this.recognized = this.hand1Index + this.hand2Index === this.gestureCount * 2;
     }
 }
+
+class GestureHammer3LeapMotion extends GestureHammer1LeapMotion {
+
+    constructor(gestureId, durationInSec, illustrationUrl, gestureParts) {
+        super(gestureId, durationInSec, illustrationUrl, gestureParts);
+    }
+
+    /**
+     * @override
+     */
+    init() {
+        this.gestureParts = [
+            [new GestureHammerPart(1, 0), new GestureHammerPart(2, 1)],
+            [new GestureHammerPart(3, 0), new GestureHammerPart(4, 1)],
+            [new GestureHammerPart(5, 0), new GestureHammerPart(6, 1)],
+        ];
+        this.gestureCount = this.gestureParts.length;
+        this.hand1Index = 0;
+        this.hand2Index = 0;
+        this.recognized = false;
+    }
+}
+
 
 class GestureRotationLeapMotion extends Gesture {
 
@@ -676,7 +699,7 @@ class GestureRotationPartStart extends GesturePart {
     isRecognizedStart(frame) {
         for (const hand of frame.hands) {
             const normal = hand.palmNormal[1] * this.direction;
-            if (normal > -0.9) {
+            if (normal > -0.8) {
                 return false;
             }
         }
@@ -732,7 +755,7 @@ class GestureRotationPart extends GesturePart {
     isRecognizedEnd(frame) {
         for (const hand of frame.hands) {
             const normal = hand.palmNormal[1] * this.direction;
-            if (normal < 0.9) {
+            if (normal < 0.8) {
                 return false;
             }
         }
