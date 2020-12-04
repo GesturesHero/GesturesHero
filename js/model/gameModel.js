@@ -538,7 +538,7 @@ class GestureScratchLeapMotion extends Gesture {
      * @override
      */
     check(frame) {
-        if(frame.hand.length !== 1) return;
+        if(frame.hands.length !== 1) return;
         if (this.gestureIndex < this.gestureCount && this.gestureParts[this.gestureIndex].isRecognized(frame)){
             this.gestureIndex++;
             log.debug("scratch " + this.gestureIndex + "/" + this.gestureCount);
