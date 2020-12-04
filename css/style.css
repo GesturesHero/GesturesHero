@@ -2,6 +2,7 @@
 .brand-name {
     line-height: 50px;
     color: #33cccc;
+    font-family: "Luckiest Guy", Arial, sans-serif;
 }
 
 /* ---- Page > General ---- */
@@ -21,20 +22,29 @@
 
 .level-access {
     display: flex;
-    width: 300px;
+    flex-direction: column;
+    width: 400px;
     height: 200px;
-    max-width: 300px;
+    max-width: 400px;
     max-height: 200px;
     overflow: hidden;
 
     margin: 20px;
     padding: 10px;
 
-    font-size: 30pt;
-    font-family: "Luckiest Guy", Arial, sans-serif;
     color: #ffffff;
     text-align: center;
     align-items: center;
+}
+
+.level-access .level-title {
+    font-size: 30pt;
+    font-family: "Luckiest Guy", Arial, sans-serif;
+}
+
+.level-access .song-title {
+    font-size: 15pt;
+    font-family: Arial, sans-serif;
 }
 
 .level-access:hover {

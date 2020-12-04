@@ -85,7 +85,8 @@ function _drawLevelAccess(level, currentLevel) {
                 "<div class=\"level-access non-accessible\"" +
                 "id=\"" + level.levelId + "\"" +
                 "style=\"background-color: " + level.levelColor + "\">" +
-                level.levelName +
+                "<span class=\"level-title\">" + level.levelName + "</span>" +
+                "<span class=\"song-title\">" + level.levelSong.songAuthor + " - " + level.levelSong.songTitle + "</span>" +
                 "</div>");
         } else { // ACCESSIBLE LEVEL
             $('.menu').append("" +
@@ -93,7 +94,8 @@ function _drawLevelAccess(level, currentLevel) {
                 "id=\"" + level.levelId + "\"" +
                 "style=\"background-color: " + level.levelColor + "\"" +
                 "onclick=\"switchView(view.LEVEL, '" + level.levelId + "')\">\n" +
-                level.levelName +
+                "<span class=\"level-title\">" + level.levelName + "</span>" +
+                "<span class=\"song-title\">" + level.levelSong.songAuthor + " - " + level.levelSong.songTitle + "</span>" +
                 "</div>");
         }
     } else {
@@ -150,7 +152,7 @@ function _initGestures(level) {
  * Move the next gesture to the current gesture (new value for currentGestureIndex & incrementation for nextGestureIndex).
  */
 function _revealNewCurrentGesture() {
-    currentGestureIndex=nextGestureIndex;
+    currentGestureIndex = nextGestureIndex;
     nextGestureIndex++;
 }
 
@@ -158,9 +160,9 @@ function _revealNewCurrentGesture() {
  * Move the current gesture to the previous gesture (undefined for currentGestureIndex & new value for previousGestureIndex).
  * @param supposedCurrentGestureIndex {int} The index of the gesture that needs to become the previous gesture.
  */
-function _hideCurrentGesture(supposedCurrentGestureIndex){
+function _hideCurrentGesture(supposedCurrentGestureIndex) {
     previousGestureIndex = supposedCurrentGestureIndex;
-    if(currentGestureIndex == supposedCurrentGestureIndex){
+    if (currentGestureIndex == supposedCurrentGestureIndex) {
         currentGestureIndex = -1;
     }
 }
@@ -334,9 +336,9 @@ function _onAudioPlayerUpdate(level) {
                             if (recognitionState === false) {
                                 decreaseLevelLive(level.levelId);
                             }
-                            
+
                             _updateGestureFeedback(recognitionState);
-                            
+
                             _hideCurrentGesture(hypotheticCurrentGestureIndex);
                             _renderGestures();
                         });
@@ -414,6 +416,7 @@ function _resetGestureIllustration(htmlIdentifier) {
  * @param recognitionState {boolean} The recognition state.
  */
 let timeout;
+
 function _updateGestureFeedback(recognitionState) {
     clearTimeout(timeout);
     $('.gesture-feedback-current').html('<span>' + (recognitionState === true ? '✔' : '❌') + '</span>');
