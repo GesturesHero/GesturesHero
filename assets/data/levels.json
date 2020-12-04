@@ -14,9 +14,9 @@
     "levelMilestones": [
       {
         "levelMilestoneId": 1,
-        "gestureId": "HAMMER_FAST",
+        "gestureId": "SCRATCH",
         "levelMilestoneIndexOrder": 1,
-        "levelMilestoneTimestampStart": 12.5
+        "levelMilestoneTimestampStart": 3
       },
       {
         "levelMilestoneId": 2,
