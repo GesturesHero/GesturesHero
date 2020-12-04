@@ -455,8 +455,9 @@ class GestureHammerLeapMotion extends Gesture {
 
 class GestureRotationLeapMotion extends Gesture {
 
-    constructor(gestureId, durationInSec, illustrationUrl, gestureParts) {
+    constructor(gestureId, durationInSec, illustrationUrl, gestureParts, clockwise) {
         super(gestureId, durationInSec, illustrationUrl, gestureParts);
+        this.clockwise = clockwise;
     }
 
     /**
@@ -464,8 +465,8 @@ class GestureRotationLeapMotion extends Gesture {
      */
     init() {
         this.gestureParts = [
-            new GestureRotationPartStart(1),
-            new GestureRotationPart(2)
+            new GestureRotationPartStart(1, this.clockwise),
+            new GestureRotationPart(2, this.clockwise)
         ];
         this.gestureIndex = 0;
         this.gestureCount = this.gestureParts.length;
@@ -622,8 +623,9 @@ class GestureRotationPartStart extends GesturePart {
     /**
      * @override
      */
-    constructor(gesturePartId) {
+    constructor(gesturePartId, clockwise) {
         super(gesturePartId);
+        this.direction = clockwise ? 1 : -1;
     }
 
     /**
@@ -638,8 +640,8 @@ class GestureRotationPartStart extends GesturePart {
     }
 
     isRecognizedStart(frame) {
-        for (const [i, hand] of frame.hands.entries()) {
-            const normal = hand.palmNormal[1];
+        for (const hand of frame.hands) {
+            const normal = hand.palmNormal[1] * this.direction;
             if (normal > -0.9) {
                 return false;
             }
@@ -655,8 +657,9 @@ class GestureRotationPart extends GesturePart {
     /**
      * @override
      */
-    constructor(gesturePartId) {
+    constructor(gesturePartId, clockwise) {
         super(gesturePartId);
+        this.direction = clockwise ? 1 : -1;
         this.previousNormals = [-1, -1];
     }
 
@@ -673,15 +676,14 @@ class GestureRotationPart extends GesturePart {
 
     isRecognizedFrame(frame) {
         for (const [i, hand] of frame.hands.entries()) {
-            const [_, normalY, normalZ] = hand.palmNormal;
-
             // Normal
-            if (normalY < this.previousNormals[i] - 0.1) {
+            const normal = hand.palmNormal[1] * this.direction;
+            if (normal < this.previousNormals[i] - 0.1) {
                 log.debug("GestureRotationPart.isRecognizedFrame : Miss gesturing : Hands turning backward");
                 return false;
             }
 
-            this.previousNormals[i] = Math.max(normalY, this.previousNormals[i]);
+            this.previousNormals[i] = Math.max(normal, this.previousNormals[i]);
 
             // Grab
             if (hand.grabStrength == 1) {
@@ -695,7 +697,8 @@ class GestureRotationPart extends GesturePart {
 
     isRecognizedEnd(frame) {
         for (const hand of frame.hands) {
-            if (hand.palmNormal[1] < 0.9) {
+            const normal = hand.palmNormal[1] * this.direction;
+            if (normal < 0.9) {
                 return false;
             }
         }
