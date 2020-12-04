@@ -493,10 +493,10 @@ class GestureStairsLeapMotion extends Gesture {
      */
     init() {
         this.gestureParts = [
-            new GestureStairPart(1, 0),
-            new GestureStairPart(2, 1),
-            new GestureStairPart(3, 0),
-            new GestureStairPart(4, 1),
+            new GestureStairsPart(1, 0),
+            new GestureStairsPart(2, 1),
+            new GestureStairsPart(3, 0),
+            new GestureStairsPart(4, 1),
         ];
         this.gestureIndex = 0;
         this.gestureCount = this.gestureParts.length;
@@ -722,7 +722,7 @@ class GestureRotationPart extends GesturePart {
     }
 }
 
-class GestureStairPart extends GesturePart {
+class GestureStairsPart extends GesturePart {
     /**
      * @override
      */
