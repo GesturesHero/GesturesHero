@@ -225,19 +225,19 @@
       },
       {
         "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 19.35
+        "levelMilestoneTimestampStart": 19.1
       },
       {
         "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 21.10
+        "levelMilestoneTimestampStart": 21.00
       },
       {
         "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 22.90
+        "levelMilestoneTimestampStart": 22.60
       },
       {
         "gestureId": "STAIRS",
-        "levelMilestoneTimestampStart": 32.5
+        "levelMilestoneTimestampStart": 32.6
       }
     ]
   }
