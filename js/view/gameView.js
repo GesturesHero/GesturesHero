@@ -108,6 +108,7 @@ function _drawLevelAccess(level, currentLevel) {
 function drawLevelPage(level) {
     if (level !== undefined) {
         $(".general").load("html/level.html", function () {
+            setHandsColor(level.levelColor);
             $('.level-name').text(level.levelName);
             $('.song-author').text(level.levelSong.songAuthor);
             $('.song-title').text(level.levelSong.songTitle);
