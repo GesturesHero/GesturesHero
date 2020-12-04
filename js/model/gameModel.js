@@ -565,8 +565,7 @@ class GestureHammerPart extends GesturePart {
 
         switch (this.etape) {
             case 0: // Check the initial position.
-                if (this._isCheckFistWithIndexFinger(hand)
-                    && this.posPrev
+                if (this.posPrev
                     && this._isHandGoingDown(this.posPrev, pos)) {
                     this.posPeak = this.posPrev;
                     this.etape++;
@@ -576,8 +575,7 @@ class GestureHammerPart extends GesturePart {
                 break;
 
             case 1: // Check if the finger went down.
-                if (this._isCheckFistWithIndexFinger(hand)
-                    && this._hasHandTraveledDown(this.posPeak, pos)
+                if (this._hasHandTraveledDown(this.posPeak, pos)
                     && this._isHandGoingUp(this.posPrev, pos)) {
                     this.posPeak = this.posPrev;
                     this.etape++;
@@ -585,10 +583,7 @@ class GestureHammerPart extends GesturePart {
                 break;
 
             case 2: // Check if finger/hand went back to the initial position.
-                if (this._isCheckFistWithIndexFinger(hand)
-                    && this._hasHandTraveledUp(this.posPeak, pos)
-                    //&& this._isHandGoingDown(this.posPrev, pos) //Justification
-                    ) {
+                if (this._hasHandTraveledUp(this.posPeak, pos)) {
                     this.posPeak = this.posPrev;
                     this.etape++;
                 }
@@ -601,18 +596,6 @@ class GestureHammerPart extends GesturePart {
         this.posPrev = pos;
 
         return false;
-    }
-
-    _isCheckFistWithIndexFinger(hand) {
-        if (hand.indexFinger.extended
-            && !hand.thumb.extended
-            && !hand.middleFinger.extended
-            && !hand.ringFinger.extended
-            && !hand.pinky.extended) {
-            return true;
-        } else {
-            return true;
-        }
     }
 
     _hasHandTraveledDown(before, after) {
