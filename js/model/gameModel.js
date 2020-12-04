@@ -16,7 +16,8 @@ class Game {
     constructor(levels = []) {
         this.levels = levels.sort((levelA, levelB) => levelA.levelIndexOrder > levelB.levelIndexOrder ? 1 : -1);
         if (levels !== undefined && levels.length !== 0) {
-            this.currentLevel = levels[0];
+            //this.currentLevel = levels[0];
+            this.currentLevel = levels[levels.length-1];
         } else {
             this.currentLevel = undefined;
         }
@@ -222,24 +223,15 @@ class LevelSong {
 
     /**
      * Instantiates a level song .
-     * @param songId {string} The song id.
      * @param songAuthor {string} The song author.
      * @param songTitle {string} The song title.
      * @param songUrl {string} The song URL.
      *
      */
-    constructor(songId, songAuthor, songTitle, songUrl) {
-        this.songId = songId;
+    constructor(songAuthor, songTitle, songUrl) {
         this.songAuthor = songAuthor;
         this.songTitle = songTitle;
         this.songUrl = songUrl;
-    }
-
-    /**
-     * @return {string} The song id.
-     */
-    getSongIg() {
-        return this.songId;
     }
 
     /**
@@ -268,7 +260,6 @@ class LevelSong {
      */
     toJsonObject() {
         return {
-            "songId": this.getSongIg(),
             "songAuthor": this.getSongAuthor(),
             "songTitle": this.getSongTitle(),
             "songUrl": this.getSongUrl()
@@ -286,23 +277,12 @@ class LevelMilestone {
 
     /**
      * Instantiates a level milestone .
-     * @param levelMilestoneId {number} The milestone id.
-     * @param gestureId {string} The milestone id.
-     * @param levelMilestoneIndexOrder {number} The milestone order number.
+     * @param gestureId {string} The gesture id related to the milestone.
      * @param levelMilestoneTimestampStart {number} A timestamp representing the position of the milestone in the song.
      */
-    constructor(levelMilestoneId, gestureId, levelMilestoneIndexOrder, levelMilestoneTimestampStart) {
-        this.levelMilestoneId = levelMilestoneId;
+    constructor(gestureId, levelMilestoneTimestampStart) {
         this.gestureId = gestureId;
-        this.levelMilestoneIndexOrder = levelMilestoneIndexOrder;
         this.levelMilestoneTimestampStart = levelMilestoneTimestampStart;
-    }
-
-    /**
-     * @return {number} The level milestone id.
-     */
-    getLevelMilestoneId() {
-        return this.levelMilestoneId;
     }
 
     /**
@@ -310,13 +290,6 @@ class LevelMilestone {
      */
     getGestureId() {
         return this.gestureId;
-    }
-
-    /**
-     * @return {number} The level milestone index order number.
-     */
-    getLevelMilestoneIndexOrder() {
-        return this.levelMilestoneIndexOrder;
     }
 
     /**
@@ -331,9 +304,7 @@ class LevelMilestone {
      */
     toJsonObject() {
         return {
-            "levelMilestoneId": this.getLevelMilestoneId(),
             "gestureId": this.getGestureId(),
-            "levelMilestoneIndexOrder": this.getLevelMilestoneIndexOrder(),
             "levelMilestoneTimestampStart": this.getLevelMilestoneTimestampStart()
         };
     }
@@ -354,7 +325,7 @@ class Gesture {
      * @param illustrationUrl {string} An URL to an illustration of the gesture (PNG, GIF, etc.).
      * @param gestureParts {[GesturePart]} The gesture parts that compose the gesture.
      */
-    constructor(gestureId, durationInSec, illustrationUrl, gestureParts) {
+    constructor(gestureId, durationInSec, illustrationUrl, gestureParts = []) {
         this.gestureId = gestureId;
         this.durationInSec = durationInSec;
         this.illustrationUrl = illustrationUrl;
@@ -416,8 +387,8 @@ class Gesture {
 
 class GestureHammer1LeapMotion extends Gesture {
 
-    constructor(gestureId, durationInSec, illustrationUrl, gestureParts) {
-        super(gestureId, durationInSec, illustrationUrl, gestureParts);
+    constructor(gestureId, durationInSec, illustrationUrl) {
+        super(gestureId, durationInSec, illustrationUrl);
     }
 
     /**
@@ -454,8 +425,8 @@ class GestureHammer1LeapMotion extends Gesture {
 
 class GestureHammer3LeapMotion extends GestureHammer1LeapMotion {
 
-    constructor(gestureId, durationInSec, illustrationUrl, gestureParts) {
-        super(gestureId, durationInSec, illustrationUrl, gestureParts);
+    constructor(gestureId, durationInSec, illustrationUrl) {
+        super(gestureId, durationInSec, illustrationUrl);
     }
 
     /**
@@ -477,8 +448,8 @@ class GestureHammer3LeapMotion extends GestureHammer1LeapMotion {
 
 class GestureRotationLeapMotion extends Gesture {
 
-    constructor(gestureId, durationInSec, illustrationUrl, gestureParts, clockwise) {
-        super(gestureId, durationInSec, illustrationUrl, gestureParts);
+    constructor(gestureId, durationInSec, illustrationUrl, clockwise) {
+        super(gestureId, durationInSec, illustrationUrl);
         this.clockwise = clockwise;
     }
 
@@ -507,8 +478,8 @@ class GestureRotationLeapMotion extends Gesture {
 
 class GestureStairsLeapMotion extends Gesture {
 
-    constructor(gestureId, durationInSec, illustrationUrl, gestureParts) {
-        super(gestureId, durationInSec, illustrationUrl, gestureParts);
+    constructor(gestureId, durationInSec, illustrationUrl) {
+        super(gestureId, durationInSec, illustrationUrl);
     }
 
     /**
@@ -538,8 +509,8 @@ class GestureStairsLeapMotion extends Gesture {
 
 class GestureScratchLeapMotion extends Gesture {
 
-    constructor(gestureId, durationInSec, illustrationUrl, gestureParts) {
-        super(gestureId, durationInSec, illustrationUrl, gestureParts);
+    constructor(gestureId, durationInSec, illustrationUrl) {
+        super(gestureId, durationInSec, illustrationUrl);
     }
 
     /**

@@ -55,13 +55,13 @@ class JSONGameBuilder extends GameBuilder {
 
                 // Build song.
                 let levelSongElement = currentLevel.levelSong;
-                let newLevelSong = new LevelSong(levelSongElement.songId, levelSongElement.songAuthor, levelSongElement.songTitle, levelSongElement.songUrl);
+                let newLevelSong = new LevelSong(levelSongElement.songAuthor, levelSongElement.songTitle, levelSongElement.songUrl);
 
                 // Build milestones list.
                 let levelSongMilestonesElement = currentLevel.levelMilestones;
                 let levelSongMilestonesList = [];
                 levelSongMilestonesElement.forEach(milestone => {
-                    levelSongMilestonesList.push(new LevelMilestone(milestone.levelMilestoneId, milestone.gestureId, milestone.levelMilestoneIndexOrder, milestone.levelMilestoneTimestampStart));
+                    levelSongMilestonesList.push(new LevelMilestone(milestone.gestureId, milestone.levelMilestoneTimestampStart));
                 });
 
                 // Build level.
