@@ -476,6 +476,7 @@ class GestureRotationLeapMotion extends Gesture {
      * @override
      */
     check(frame) {
+        if (frame.hands.length !== 2) return;
         if (this.gestureIndex < this.gestureCount && this.gestureParts[this.gestureIndex].isRecognized(frame)) this.gestureIndex++;
         this.recognized = this.gestureIndex === this.gestureCount;
     }
@@ -492,10 +493,10 @@ class GestureStairsLeapMotion extends Gesture {
      */
     init() {
         this.gestureParts = [
-            new GestureStairPart(1, 1),
-            new GestureStairPart(2, 0),
-            new GestureStairPart(3, 1),
-            new GestureStairPart(4, 0),
+            new GestureStairPart(1, 0),
+            new GestureStairPart(2, 1),
+            new GestureStairPart(3, 0),
+            new GestureStairPart(4, 1),
         ];
         this.gestureIndex = 0;
         this.gestureCount = this.gestureParts.length;
@@ -506,6 +507,7 @@ class GestureStairsLeapMotion extends Gesture {
      * @override
      */
     check(frame) {
+        if (frame.hands.length !== 2) return;
         if (this.gestureIndex < this.gestureCount && this.gestureParts[this.gestureIndex].isRecognized(frame)) this.gestureIndex++;
         this.recognized = this.gestureIndex === this.gestureCount;
     }
@@ -724,26 +726,41 @@ class GestureStairPart extends GesturePart {
     /**
      * @override
      */
-    constructor(gesturePartId, handIndex) {
+    constructor(gesturePartId, handMovingIndex) {
         super(gesturePartId);
-        this.handIndex = handIndex;
-        this.lowestPosition = null;
+        this.handMovingIndex = handMovingIndex;
+        this.handStillIndex = 0;
+        if(this.handMovingIndex == 0){
+            this.handStillIndex = 1;
+        }
+        this.lowestPositions = null;
     }
 
     /**
      * @override
      */
     isRecognized(frame) {
-        let hand = frame.hands[this.handIndex];
-        if(!hand){
-            return false;
-        }
-        let position = hand.palmPosition;
+        let handMoving = frame.hands[this.handMovingIndex];
+        let handStill = frame.hands[this.handStillIndex];
 
-        if(!this.lowestPosition || this._isHandGoingDown(this.lowestPosition, position)){
-            this.lowestPosition = position;
-        } else if(this._hasHandTraveledUp(this.lowestPosition, position)){
-            log.debug(`gameModel.GestureStairPart.isRecognized : ${this.handIndex} OK`);
+        let positions = [0, 0];
+        positions[this.handMovingIndex] = handMoving.palmPosition;
+        positions[this.handStillIndex] = handStill.palmPosition;
+
+        if(!this.lowestPositions){
+            this.lowestPositions = positions;
+
+        } else if (this._hasHandNotMove(this.lowestPositions[this.handMovingIndex], positions[this.handMovingIndex])){
+            // If the "moving hand" has not move yet, it can be that the other hand is still doing is movement.
+            // Therefore, we take it into account by updating the initial positon of the "still hand" until the "moving hand" starts moving.
+            this.lowestPositions[this.handStillIndex] = positions[this.handStillIndex];
+
+        } else if (!this._hasHandNotMove(this.lowestPositions[this.handStillIndex], positions[this.handStillIndex])){
+            // Force the still hand to stay still during the movement of the other one
+            log.debug(`gameModel.GestureStairPart.isRecognized : ${this.handStillIndex} has moved`);
+
+        } else if(this._hasHandTraveledUp(this.lowestPositions[this.handMovingIndex], positions[this.handMovingIndex])){
+            log.debug(`gameModel.GestureStairPart.isRecognized : ${this.handMovingIndex} OK`);
             return true;
         }
 
@@ -752,15 +769,12 @@ class GestureStairPart extends GesturePart {
 
     _hasHandTraveledUp(before, after) {
         let diff = after[1] - before[1];
-        return diff > 30;
+        return diff > 50;
     }
 
-    _isHandGoingUp(before, after) {
-        return before[1] < after[1];
-    }
-
-    _isHandGoingDown(before, after) {
-        return before[1] > after[1];
+    _hasHandNotMove(before, after) {
+        let diff = Math.abs(after[1] - before[1]);
+        return diff < 10;
     }
 }
 // ----------------------------------------------------------------------------------------------------------------LEVEL

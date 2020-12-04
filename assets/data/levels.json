@@ -14,9 +14,9 @@
     "levelMilestones": [
       {
         "levelMilestoneId": 1,
-        "gestureId": "STAIRS",
+        "gestureId": "ROTATION",
         "levelMilestoneIndexOrder": 1,
-        "levelMilestoneTimestampStart": 6.5
+        "levelMilestoneTimestampStart": 6.3
       },
       {
         "levelMilestoneId": 2,

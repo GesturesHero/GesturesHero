@@ -72,7 +72,7 @@ class LeapMotionGestureService extends GestureService {
      * @param color {String} A hexadecimal color code. 
      */
     setHandsColor(color){
-        this.light.color = new THREE.Color(color);
+        if(this.light) this.light.color = new THREE.Color(color);
     }
 
     /**
