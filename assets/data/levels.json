@@ -188,10 +188,16 @@
     "levelSong": {
       "songId": 1,
       "songAuthor": "C2C",
-      "songTitle" : "F.U.Y.A",
-      "songUrl": "/assets/data/songs/C2C_-_FUYA.mp3"
+      "songTitle" : "Down The Road",
+      "songUrl": "/assets/data/songs/C2C_-_Down_The_Road.mp3"
     },
     "levelMilestones": [
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 1.00
+      },
       {
         "levelMilestoneId": 1,
         "gestureId": "HAMMER1",

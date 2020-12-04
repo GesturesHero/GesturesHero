@@ -44,7 +44,7 @@ class LeapMotionGestureService extends GestureService {
 
         this.recognizableGestures = new Map();
         this.recognizableGestures.set("HAMMER1", new GestureHammer1LeapMotion("HAMMER1", 0.7, "/assets/data/gestures-illustrations/hammer.gif", []));
-        this.recognizableGestures.set("HAMMER3", new GestureHammer3LeapMotion("HAMMER3", 1.5, "/assets/data/gestures-illustrations/hammer.gif", []));
+        this.recognizableGestures.set("HAMMER3", new GestureHammer3LeapMotion("HAMMER3", 1.5, "/assets/data/gestures-illustrations/hammer3.gif", []));
         this.recognizableGestures.set("ROTATION", new GestureRotationLeapMotion("ROTATION", 1.5, "/assets/data/gestures-illustrations/rotation.gif", [], true));
         this.recognizableGestures.set("REVERSED_ROTATION", new GestureRotationLeapMotion("REVERSED_ROTATION", 1.5, "/assets/data/gestures-illustrations/reversed-rotation.gif", [], false));
         this.recognizableGestures.set("STAIRS", new GestureStairsLeapMotion("STAIRS", 2.8, "/assets/data/gestures-illustrations/stairs.gif", []));
