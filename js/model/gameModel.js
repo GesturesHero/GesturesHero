@@ -464,8 +464,8 @@ class GestureRotationLeapMotion extends Gesture {
      */
     init() {
         this.gestureParts = [
-            new GestureRotationPartStart(),
-            new GestureRotationPart()
+            new GestureRotationPartStart(1),
+            new GestureRotationPart(2)
         ];
         this.gestureIndex = 0;
         this.gestureCount = this.gestureParts.length;
@@ -476,6 +476,38 @@ class GestureRotationLeapMotion extends Gesture {
      * @override
      */
     check(frame) {
+        if (frame.hands.length !== 2) return;
+        if (this.gestureIndex < this.gestureCount && this.gestureParts[this.gestureIndex].isRecognized(frame)) this.gestureIndex++;
+        this.recognized = this.gestureIndex === this.gestureCount;
+    }
+}
+
+class GestureStairsLeapMotion extends Gesture {
+
+    constructor(gestureId, durationInSec, illustrationUrl, gestureParts) {
+        super(gestureId, durationInSec, illustrationUrl, gestureParts);
+    }
+
+    /**
+     * @override
+     */
+    init() {
+        this.gestureParts = [
+            new GestureStairsPart(1, 0),
+            new GestureStairsPart(2, 1),
+            new GestureStairsPart(3, 0),
+            new GestureStairsPart(4, 1),
+        ];
+        this.gestureIndex = 0;
+        this.gestureCount = this.gestureParts.length;
+        this.recognized = false;
+    }
+
+    /**
+     * @override
+     */
+    check(frame) {
+        if (frame.hands.length !== 2) return;
         if (this.gestureIndex < this.gestureCount && this.gestureParts[this.gestureIndex].isRecognized(frame)) this.gestureIndex++;
         this.recognized = this.gestureIndex === this.gestureCount;
     }
@@ -533,8 +565,7 @@ class GestureHammerPart extends GesturePart {
 
         switch (this.etape) {
             case 0: // Check the initial position.
-                if (this._isCheckFistWithIndexFinger(hand)
-                    && this.posPrev
+                if (this.posPrev
                     && this._isHandGoingDown(this.posPrev, pos)) {
                     this.posPeak = this.posPrev;
                     this.etape++;
@@ -544,8 +575,7 @@ class GestureHammerPart extends GesturePart {
                 break;
 
             case 1: // Check if the finger went down.
-                if (this._isCheckFistWithIndexFinger(hand)
-                    && this._hasHandTraveledDown(this.posPeak, pos)
+                if (this._hasHandTraveledDown(this.posPeak, pos)
                     && this._isHandGoingUp(this.posPrev, pos)) {
                     this.posPeak = this.posPrev;
                     this.etape++;
@@ -553,10 +583,7 @@ class GestureHammerPart extends GesturePart {
                 break;
 
             case 2: // Check if finger/hand went back to the initial position.
-                if (this._isCheckFistWithIndexFinger(hand)
-                    && this._hasHandTraveledUp(this.posPeak, pos)
-                    //&& this._isHandGoingDown(this.posPrev, pos) //Justification
-                    ) {
+                if (this._hasHandTraveledUp(this.posPeak, pos)) {
                     this.posPeak = this.posPrev;
                     this.etape++;
                 }
@@ -569,18 +596,6 @@ class GestureHammerPart extends GesturePart {
         this.posPrev = pos;
 
         return false;
-    }
-
-    _isCheckFistWithIndexFinger(hand) {
-        if (hand.indexFinger.extended
-            && !hand.thumb.extended
-            && !hand.middleFinger.extended
-            && !hand.ringFinger.extended
-            && !hand.pinky.extended) {
-            return true;
-        } else {
-            return true;
-        }
     }
 
     _hasHandTraveledDown(before, after) {
@@ -668,35 +683,11 @@ class GestureRotationPart extends GesturePart {
 
             this.previousNormals[i] = Math.max(normalY, this.previousNormals[i]);
 
-            /*if (normalZ < -0.3 || normalZ > 0.3) {
-                log.debug("Miss gesturing : Hands not pointing right in front (verticaly) : Normal");
-                return false;
-            }*/
-
             // Grab
             if (hand.grabStrength == 1) {
                 log.debug("GestureRotationPart.isRecognizedFrame : Miss gesturing : Hands not open enough");
                 return false;
             }
-
-            // Direction
-            const [x, y, z] = hand.direction;
-            /*if (hand.type === 'left') {
-                if (x < -0.2 || x > 0.5) {
-                    log.debug("GestureRotationPart.isRecognizedFrame : Miss gesturing : Left hand not pointing right in front (horizontaly)");
-                    return false;
-                }
-            } else {
-                if (x < -0.5 || x > 0.2) {
-                    log.debug("GestureRotationPart.isRecognizedFrame : Miss gesturing : Right hand not pointing right in front (horizontaly)");
-                    return false;
-                }
-            }*/
-
-            /*if (y < -0.3 || y > 0.3 || z > -0.8) {
-                log.debug("Miss gesturing : Hands not pointing right in front (verticaly) : Direction");
-                return false;
-            }*/
         }
 
         return this.isRecognizedEnd(frame);
@@ -714,6 +705,61 @@ class GestureRotationPart extends GesturePart {
     }
 }
 
+class GestureStairsPart extends GesturePart {
+    /**
+     * @override
+     */
+    constructor(gesturePartId, handMovingIndex) {
+        super(gesturePartId);
+        this.handMovingIndex = handMovingIndex;
+        this.handStillIndex = 0;
+        if(this.handMovingIndex == 0){
+            this.handStillIndex = 1;
+        }
+        this.lowestPositions = null;
+    }
+
+    /**
+     * @override
+     */
+    isRecognized(frame) {
+        let handMoving = frame.hands[this.handMovingIndex];
+        let handStill = frame.hands[this.handStillIndex];
+
+        let positions = [0, 0];
+        positions[this.handMovingIndex] = handMoving.palmPosition;
+        positions[this.handStillIndex] = handStill.palmPosition;
+
+        if(!this.lowestPositions){
+            this.lowestPositions = positions;
+
+        } else if (this._hasHandNotMove(this.lowestPositions[this.handMovingIndex], positions[this.handMovingIndex])){
+            // If the "moving hand" has not move yet, it can be that the other hand is still doing is movement.
+            // Therefore, we take it into account by updating the initial positon of the "still hand" until the "moving hand" starts moving.
+            this.lowestPositions[this.handStillIndex] = positions[this.handStillIndex];
+
+        } else if (!this._hasHandNotMove(this.lowestPositions[this.handStillIndex], positions[this.handStillIndex])){
+            // Force the still hand to stay still during the movement of the other one
+            log.debug(`gameModel.GestureStairPart.isRecognized : ${this.handStillIndex} has moved`);
+
+        } else if(this._hasHandTraveledUp(this.lowestPositions[this.handMovingIndex], positions[this.handMovingIndex])){
+            log.debug(`gameModel.GestureStairPart.isRecognized : ${this.handMovingIndex} OK`);
+            return true;
+        }
+
+        return false;
+    }
+
+    _hasHandTraveledUp(before, after) {
+        let diff = after[1] - before[1];
+        return diff > 50;
+    }
+
+    _hasHandNotMove(before, after) {
+        let diff = Math.abs(after[1] - before[1]);
+        return diff < 10;
+    }
+}
 // ----------------------------------------------------------------------------------------------------------------LEVEL
 
 /**

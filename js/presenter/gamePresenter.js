@@ -131,6 +131,14 @@ function getGestureIllustrationUrl(gestureId) {
 }
 
 /**
+ * Sets the color of the hands that are shown in real time.
+ * @param color {String} A hexadecimal color code. 
+ */
+function setHandsColor(color){
+    gestureService.setHandsColor(color);
+}
+
+/**
  * Gets the gesture duration.
  * @param gestureId {string} The gesture id.
  */
