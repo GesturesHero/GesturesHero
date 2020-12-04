@@ -14,14 +14,20 @@
     "levelMilestones": [
       {
         "levelMilestoneId": 1,
-        "gestureId": "HAMMER_FAST",
+        "gestureId": "STAIRS",
         "levelMilestoneIndexOrder": 1,
-        "levelMilestoneTimestampStart": 12.5
+        "levelMilestoneTimestampStart": 6.5
       },
       {
         "levelMilestoneId": 2,
-        "gestureId": "ROTATION",
+        "gestureId": "HAMMER_FAST",
         "levelMilestoneIndexOrder": 2,
+        "levelMilestoneTimestampStart": 12.5
+      },
+      {
+        "levelMilestoneId": 3,
+        "gestureId": "ROTATION",
+        "levelMilestoneIndexOrder": 3,
         "levelMilestoneTimestampStart": 23
       }
     ]

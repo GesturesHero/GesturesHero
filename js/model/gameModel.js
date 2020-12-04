@@ -464,8 +464,38 @@ class GestureRotationLeapMotion extends Gesture {
      */
     init() {
         this.gestureParts = [
-            new GestureRotationPartStart(),
-            new GestureRotationPart()
+            new GestureRotationPartStart(1),
+            new GestureRotationPart(2)
+        ];
+        this.gestureIndex = 0;
+        this.gestureCount = this.gestureParts.length;
+        this.recognized = false;
+    }
+
+    /**
+     * @override
+     */
+    check(frame) {
+        if (this.gestureIndex < this.gestureCount && this.gestureParts[this.gestureIndex].isRecognized(frame)) this.gestureIndex++;
+        this.recognized = this.gestureIndex === this.gestureCount;
+    }
+}
+
+class GestureStairsLeapMotion extends Gesture {
+
+    constructor(gestureId, durationInSec, illustrationUrl, gestureParts) {
+        super(gestureId, durationInSec, illustrationUrl, gestureParts);
+    }
+
+    /**
+     * @override
+     */
+    init() {
+        this.gestureParts = [
+            new GestureStairPart(1, 1),
+            new GestureStairPart(2, 0),
+            new GestureStairPart(3, 1),
+            new GestureStairPart(4, 0),
         ];
         this.gestureIndex = 0;
         this.gestureCount = this.gestureParts.length;
@@ -668,35 +698,11 @@ class GestureRotationPart extends GesturePart {
 
             this.previousNormals[i] = Math.max(normalY, this.previousNormals[i]);
 
-            /*if (normalZ < -0.3 || normalZ > 0.3) {
-                log.debug("Miss gesturing : Hands not pointing right in front (verticaly) : Normal");
-                return false;
-            }*/
-
             // Grab
             if (hand.grabStrength == 1) {
                 log.debug("GestureRotationPart.isRecognizedFrame : Miss gesturing : Hands not open enough");
                 return false;
             }
-
-            // Direction
-            const [x, y, z] = hand.direction;
-            /*if (hand.type === 'left') {
-                if (x < -0.2 || x > 0.5) {
-                    log.debug("GestureRotationPart.isRecognizedFrame : Miss gesturing : Left hand not pointing right in front (horizontaly)");
-                    return false;
-                }
-            } else {
-                if (x < -0.5 || x > 0.2) {
-                    log.debug("GestureRotationPart.isRecognizedFrame : Miss gesturing : Right hand not pointing right in front (horizontaly)");
-                    return false;
-                }
-            }*/
-
-            /*if (y < -0.3 || y > 0.3 || z > -0.8) {
-                log.debug("Miss gesturing : Hands not pointing right in front (verticaly) : Direction");
-                return false;
-            }*/
         }
 
         return this.isRecognizedEnd(frame);
@@ -714,6 +720,45 @@ class GestureRotationPart extends GesturePart {
     }
 }
 
+class GestureStairPart extends GesturePart {
+    /**
+     * @override
+     */
+    constructor(gesturePartId, handIndex) {
+        super(gesturePartId);
+        this.handIndex = handIndex;
+        this.lowestPosition = null;
+    }
+
+    /**
+     * @override
+     */
+    isRecognized(frame) {
+        let hand = frame.hands[this.handIndex];
+        let position = hand.palmPosition;
+
+        if(!this.lowestPosition || this._isHandGoingDown(this.lowestPosition, position)){
+            this.lowestPosition = position;
+        } else if(this._hasHandTraveledUp(this.lowestPosition, position)){
+            return true;
+        }
+
+        return false;
+    }
+
+    _hasHandTraveledUp(before, after) {
+        let diff = after[1] - before[1];
+        return diff > 30;
+    }
+
+    _isHandGoingUp(before, after) {
+        return before[1] < after[1];
+    }
+
+    _isHandGoingDown(before, after) {
+        return before[1] > after[1];
+    }
+}
 // ----------------------------------------------------------------------------------------------------------------LEVEL
 
 /**
