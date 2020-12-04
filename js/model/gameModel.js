@@ -735,11 +735,15 @@ class GestureStairPart extends GesturePart {
      */
     isRecognized(frame) {
         let hand = frame.hands[this.handIndex];
+        if(!hand){
+            return false;
+        }
         let position = hand.palmPosition;
 
         if(!this.lowestPosition || this._isHandGoingDown(this.lowestPosition, position)){
             this.lowestPosition = position;
         } else if(this._hasHandTraveledUp(this.lowestPosition, position)){
+            log.debug(`gameModel.GestureStairPart.isRecognized : ${this.handIndex} OK`);
             return true;
         }
 
