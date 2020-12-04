@@ -20,7 +20,7 @@
       },
       {
         "levelMilestoneId": 2,
-        "gestureId": "HAMMER_FAST",
+        "gestureId": "HAMMER3",
         "levelMilestoneIndexOrder": 2,
         "levelMilestoneTimestampStart": 12.5
       },
@@ -47,7 +47,7 @@
     "levelMilestones": [
       {
         "levelMilestoneId": 1,
-        "gestureId": "HAMMER_FAST",
+        "gestureId": "HAMMER3",
         "levelMilestoneIndexOrder": 1,
         "levelMilestoneTimestampStart": 1.95
       },
@@ -59,19 +59,19 @@
       },
       {
         "levelMilestoneId": 3,
-        "gestureId": "HAMMER_FAST",
+        "gestureId": "HAMMER3",
         "levelMilestoneIndexOrder": 3,
         "levelMilestoneTimestampStart": 12.3
       },
       {
         "levelMilestoneId": 4,
-        "gestureId": "HAMMER_FAST",
+        "gestureId": "HAMMER3",
         "levelMilestoneIndexOrder": 4,
         "levelMilestoneTimestampStart": 14.1
       },
       {
         "levelMilestoneId": 5,
-        "gestureId": "HAMMER_FAST",
+        "gestureId": "HAMMER3",
         "levelMilestoneIndexOrder": 5,
         "levelMilestoneTimestampStart": 18.8
       },
@@ -83,7 +83,7 @@
       },
       {
         "levelMilestoneId": 7,
-        "gestureId": "HAMMER_FAST",
+        "gestureId": "HAMMER3",
         "levelMilestoneIndexOrder": 7,
         "levelMilestoneTimestampStart": 29.3
       }
@@ -104,9 +104,15 @@
     "levelMilestones": [
       {
         "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 5.00
+      },
+      {
+        "levelMilestoneId": 1,
         "gestureId": "STAIRS",
         "levelMilestoneIndexOrder": 1,
-        "levelMilestoneTimestampStart": 11.00
+        "levelMilestoneTimestampStart": 10.50
       },
       {
         "levelMilestoneId": 2,
@@ -183,9 +189,52 @@
       "songId": 1,
       "songAuthor": "Wii",
       "songTitle" : "Mii Chanel Theme",
-      "songUrl": "/assets/data/songs/Wii_-_Mii_Chanel_Theme.mp3"
+      "songUrl": "/assets/data/songs/C2C_-_FUYA.mp3"
     },
-    "levelMilestones": []
+    "levelMilestones": [
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 5.00
+      },
+      {
+        "levelMilestoneId": 2,
+        "gestureId": "ROTATION",
+        "levelMilestoneIndexOrder": 2,
+        "levelMilestoneTimestampStart": 5.9
+      },
+      {
+        "levelMilestoneId": 3,
+        "gestureId": "REVERSED_ROTATION",
+        "levelMilestoneIndexOrder": 3,
+        "levelMilestoneTimestampStart": 7.6
+      },
+      {
+        "levelMilestoneId": 4,
+        "gestureId": "STAIRS",
+        "levelMilestoneIndexOrder": 4,
+        "levelMilestoneTimestampStart": 9.3
+      },
+      {
+        "levelMilestoneId": 5,
+        "gestureId": "HAMMER3",
+        "levelMilestoneIndexOrder": 5,
+        "levelMilestoneTimestampStart": 12.3
+      },
+      {
+        "levelMilestoneId": 2,
+        "gestureId": "ROTATION",
+        "levelMilestoneIndexOrder": 2,
+        "levelMilestoneTimestampStart": 14.0
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 15.7
+      }
+    ]
   },
   {
     "levelId": "Orch1",

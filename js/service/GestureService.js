@@ -39,17 +39,16 @@ class LeapMotionGestureService extends GestureService {
         /* The "riggedHand" plugin add a canvas covering the entire browser. 
         It creates a virtual 3D scene in which the plugin will display 3D models of hands base on the real position got by the leapMotion. */
         this.controller.use('riggedHand').connect();
+        this.light = null;
         this._setup3DScene();
 
         this.recognizableGestures = new Map();
-        this.recognizableGestures.set("HAMMER", new GestureHammerLeapMotion("HAMMER", 3, "/assets/data/gestures-illustrations/hammer.gif", []));
-        this.recognizableGestures.set("HAMMER_FAST", new GestureHammerLeapMotion("HAMMER_FAST", 1.5, "/assets/data/gestures-illustrations/hammer.gif", []));
+        this.recognizableGestures.set("HAMMER1", new GestureHammer1LeapMotion("HAMMER", 0.7, "/assets/data/gestures-illustrations/hammer.gif", []));
+        this.recognizableGestures.set("HAMMER3", new GestureHammer3LeapMotion("HAMMER_FAST", 1.5, "/assets/data/gestures-illustrations/hammer.gif", []));
         this.recognizableGestures.set("ROTATION", new GestureRotationLeapMotion("ROTATION", 1.5, "/assets/data/gestures-illustrations/rotation.gif", [], true));
         this.recognizableGestures.set("REVERSED_ROTATION", new GestureRotationLeapMotion("REVERSED_ROTATION", 1.5, "/assets/data/gestures-illustrations/reversed-rotation.gif", [], false));
-        this.recognizableGestures.set("STAIRS", new GestureStairsLeapMotion("STAIRS", 3, "/assets/data/gestures-illustrations/stairs.gif", []));
+        this.recognizableGestures.set("STAIRS", new GestureStairsLeapMotion("STAIRS", 2.8, "/assets/data/gestures-illustrations/stairs.gif", []));
         this.recognizableGestures.set("SCRATCH", new GestureScratchLeapMotion("SCRATCH", 1.5, "/assets/data/gestures-illustrations/scratch.gif", []));
-        
-        this.light = null;
     }
 
     /**
