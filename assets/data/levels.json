@@ -131,7 +131,7 @@
   {
     "levelId": "Tran1",
     "levelName": "Music Theory : Transition #1",
-    "levelIndexOrder": 0.1,
+    "levelIndexOrder": 4.1,
     "levelDifficulty": 4,
     "levelColor": "#ff8100",
     "levelSong": {
@@ -145,13 +145,13 @@
         "levelMilestoneId": 1,
         "gestureId": "SCRATCH",
         "levelMilestoneIndexOrder": 1,
-        "levelMilestoneTimestampStart": 5.50
+        "levelMilestoneTimestampStart": 5.30
       },
       {
         "levelMilestoneId": 2,
         "gestureId": "SCRATCH",
         "levelMilestoneIndexOrder": 2,
-        "levelMilestoneTimestampStart": 13
+        "levelMilestoneTimestampStart": 12.75
       },
       {
         "levelMilestoneId": 3,
@@ -163,13 +163,13 @@
         "levelMilestoneId": 4,
         "gestureId": "SCRATCH",
         "levelMilestoneIndexOrder": 4,
-        "levelMilestoneTimestampStart": 20.5
+        "levelMilestoneTimestampStart": 20.2
       },
       {
         "levelMilestoneId": 5,
         "gestureId": "SCRATCH",
         "levelMilestoneIndexOrder": 5,
-        "levelMilestoneTimestampStart": 28
+        "levelMilestoneTimestampStart": 27.5
       }
     ]
   },
