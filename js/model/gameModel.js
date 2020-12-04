@@ -517,10 +517,10 @@ class GestureStairsLeapMotion extends Gesture {
      */
     init() {
         this.gestureParts = [
-            new GestureStairsPart(1, 0),
-            new GestureStairsPart(2, 1),
-            new GestureStairsPart(3, 0),
-            new GestureStairsPart(4, 1),
+            new GestureStairsPart(1, "right"),
+            new GestureStairsPart(2, "left"),
+            new GestureStairsPart(3, "right"),
+            new GestureStairsPart(4, "left"),
         ];
         this.gestureIndex = 0;
         this.gestureCount = this.gestureParts.length;
@@ -772,9 +772,9 @@ class GestureStairsPart extends GesturePart {
     constructor(gesturePartId, handMovingIndex) {
         super(gesturePartId);
         this.handMovingIndex = handMovingIndex;
-        this.handStillIndex = 0;
-        if(this.handMovingIndex == 0){
-            this.handStillIndex = 1;
+        this.handStillIndex = "left";
+        if(this.handMovingIndex == "left"){
+            this.handStillIndex = "right";
         }
         this.lowestPositions = null;
     }
@@ -786,7 +786,18 @@ class GestureStairsPart extends GesturePart {
         let handMoving = frame.hands[this.handMovingIndex];
         let handStill = frame.hands[this.handStillIndex];
 
-        let positions = [0, 0];
+        for (const hand of frame.hands) {
+            if (hand.type == this.handMovingIndex) {
+                handMoving = hand;
+            } else {
+                handStill = hand;
+            }
+        }
+
+        let positions = {
+            right:null,
+            left:null
+        };
         positions[this.handMovingIndex] = handMoving.palmPosition;
         positions[this.handStillIndex] = handStill.palmPosition;
 

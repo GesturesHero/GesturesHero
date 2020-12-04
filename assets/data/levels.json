@@ -187,8 +187,8 @@
     "levelColor": "#ff0000",
     "levelSong": {
       "songId": 1,
-      "songAuthor": "Wii",
-      "songTitle" : "Mii Chanel Theme",
+      "songAuthor": "C2C",
+      "songTitle" : "F.U.Y.A",
       "songUrl": "/assets/data/songs/C2C_-_FUYA.mp3"
     },
     "levelMilestones": [
@@ -218,7 +218,7 @@
       },
       {
         "levelMilestoneId": 5,
-        "gestureId": "HAMMER3",
+        "gestureId": "HAMMER1",
         "levelMilestoneIndexOrder": 5,
         "levelMilestoneTimestampStart": 12.3
       },
@@ -226,13 +226,13 @@
         "levelMilestoneId": 2,
         "gestureId": "ROTATION",
         "levelMilestoneIndexOrder": 2,
-        "levelMilestoneTimestampStart": 14.0
+        "levelMilestoneTimestampStart": 13.2
       },
       {
         "levelMilestoneId": 1,
         "gestureId": "HAMMER1",
         "levelMilestoneIndexOrder": 1,
-        "levelMilestoneTimestampStart": 15.7
+        "levelMilestoneTimestampStart": 14.9
       }
     ]
   },
