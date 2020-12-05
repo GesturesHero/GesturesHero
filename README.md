@@ -56,6 +56,11 @@ npm run start
 * HTML5, CSS3, JavaScript
 * LeapMotion
 
+## Tools
+The gestures has been recorded via [Leap Recorder](http://leapmotion.github.io/leapjs-playback/recorder/) and saved in GIF via [ScreenToGif](https://www.screentogif.com/).
+The music has been cropped via [Audacity](https://audacity.fr/).
+Special thanks to their designers for making them available freely.
+
 ## Musics
 Disclaimer : The rights belong to the authors of the music.
 * [Wii - Mii Channel Theme](https://www.youtube.com/watch?v=po-0n1BKW2w)

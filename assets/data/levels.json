@@ -262,6 +262,10 @@
     },
     "levelMilestones": [
       {
+        "gestureId": "PINCH3",
+        "levelMilestoneTimestampStart": 12.00
+      },
+      {
         "gestureId": "HAMMER1",
         "levelMilestoneTimestampStart": 24.00
       },
@@ -274,12 +278,8 @@
         "levelMilestoneTimestampStart": 31.00
       },
       {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 34.25
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 38.00
+        "gestureId": "PINCH3",
+        "levelMilestoneTimestampStart": 36.50
       },
       {
         "gestureId": "REVERSED_ROTATION",
