@@ -240,5 +240,55 @@
         "levelMilestoneTimestampStart": 32.6
       }
     ]
+  },
+  {
+    "levelId": "Orch2",
+    "levelName": "Music Theory : Orchestra #2",
+    "levelDifficulty": 7,
+    "levelIndexOrder": 7.1,
+    "levelColor": "#e61919",
+    "levelSong": {
+      "songAuthor": "The White Stripes",
+      "songTitle" : "Black Math",
+      "songUrl": "/assets/data/songs/The_White_Stripes_-_Black_Math.mp3"
+    },
+    "levelMilestones": [
+      {
+        "gestureId": "STAIRS",
+        "levelMilestoneTimestampStart": 3.4
+      },
+      {
+        "gestureId": "STAIRS",
+        "levelMilestoneTimestampStart": 8.35
+      },
+      {
+        "gestureId": "ROTATION",
+        "levelMilestoneTimestampStart": 25.75
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 31.69
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 32.69
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 33.69
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 36.13
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 37.13
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 38.13
+      }
+    ]
   }
 ]
