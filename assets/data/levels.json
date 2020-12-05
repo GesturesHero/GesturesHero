@@ -263,31 +263,31 @@
     "levelMilestones": [
       {
         "gestureId": "PINCH3",
-        "levelMilestoneTimestampStart": 12.00
+        "levelMilestoneTimestampStart": 7.00
       },
       {
         "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 24.00
+        "levelMilestoneTimestampStart": 19.00
       },
       {
         "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 27.50
+        "levelMilestoneTimestampStart": 22.50
       },
       {
         "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 31.00
+        "levelMilestoneTimestampStart": 26.00
       },
       {
         "gestureId": "PINCH3",
-        "levelMilestoneTimestampStart": 36.50
+        "levelMilestoneTimestampStart": 31.50
       },
       {
         "gestureId": "REVERSED_ROTATION",
-        "levelMilestoneTimestampStart": 51.60
+        "levelMilestoneTimestampStart": 46.60
       },
       {
         "gestureId": "HAMMER3",
-        "levelMilestoneTimestampStart": 55.2
+        "levelMilestoneTimestampStart": 50.20
       }
     ]
   },
