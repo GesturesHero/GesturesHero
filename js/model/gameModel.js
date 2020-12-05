@@ -413,12 +413,12 @@ class GestureHammer1LeapMotion extends Gesture {
         if (this.hand1Index < this.gestureCount
             && this.gestureParts[this.hand1Index][0].isRecognized(frame)) {
             this.hand1Index++;
-            log.debug("hand1 " + this.hand1Index + "/" + this.gestureCount);
+            log.debug("Hammer Hand 1 " + this.hand1Index + "/" + this.gestureCount);
         }
         if (this.hand2Index < this.gestureCount
             && this.gestureParts[this.hand2Index][1].isRecognized(frame)) {
             this.hand2Index++;
-            log.debug("hand2 " + this.hand2Index + "/" + this.gestureCount);
+            log.debug("Hammer Hand 2 " + this.hand2Index + "/" + this.gestureCount);
         }
         this.recognized = this.hand1Index + this.hand2Index === this.gestureCount * 2;
     }
