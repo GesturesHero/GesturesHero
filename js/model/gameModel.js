@@ -16,8 +16,8 @@ class Game {
     constructor(levels = []) {
         this.levels = levels.sort((levelA, levelB) => levelA.levelIndexOrder > levelB.levelIndexOrder ? 1 : -1);
         if (levels !== undefined && levels.length !== 0) {
-            //this.currentLevel = levels[0]; // TODO : To remove in production
-            this.currentLevel = levels[levels.length - 1];
+            //this.currentLevel = levels[0];
+            this.currentLevel = levels[levels.length - 1]; // TODO : To remove in production
         } else {
             this.currentLevel = undefined;
         }
@@ -267,7 +267,6 @@ class LevelSong {
     }
 }
 
-
 // ------------------------------------------------------------------------------------------------------LEVEL MILESTONE
 
 /**
@@ -309,7 +308,6 @@ class LevelMilestone {
         };
     }
 }
-
 
 // --------------------------------------------------------------------------------------------------------------GESTURE
 
@@ -384,7 +382,6 @@ class Gesture {
         return temp;
     }
 }
-
 
 class GestureHammer1LeapMotion extends Gesture {
 
@@ -534,7 +531,7 @@ class GestureScratchLeapMotion extends Gesture {
         if (frame.hands.length !== 1) return;
         if (this.gestureIndex < this.gestureCount && this.gestureParts[this.gestureIndex].isRecognized(frame)) {
             this.gestureIndex++;
-            log.debug("scratch " + this.gestureIndex + "/" + this.gestureCount);
+            log.debug("Scratch " + this.gestureIndex + "/" + this.gestureCount);
         }
         this.recognized = this.gestureIndex === this.gestureCount;
     }
@@ -651,10 +648,6 @@ class GestureHammerPart extends GesturePart {
         let hand = frame.hands[this.handIndex];
         let handPosition = hand.indexFinger.tipPosition;
 
-        if (!this.previousHandPosition) { // Initializes hand position.
-            this.previousHandPosition = handPosition;
-        }
-
         switch (this.gesturePartStep) {
             case 0: // Check the initial position.
                 if (this.previousHandPosition
@@ -685,6 +678,8 @@ class GestureHammerPart extends GesturePart {
                 log.debug("gameModel.GestureHammerPart.isRecognized : OK");
                 return true;
         }
+
+        this.previousHandPosition = handPosition;
 
         return false;
     }
@@ -919,10 +914,6 @@ class GestureScratchPart extends GesturePart {
         let hand = frame.hands[0];
         let palmPosition = hand.palmPosition;
 
-        if (!this.previousPalmPosition) { // Initializes palm position.
-            this.previousPalmPosition = palmPosition;
-        }
-
         switch (this.gesturePartStep) {
             case 0: // Check the initial position.
                 if (this.previousPalmPosition && this._isHandGoingRight(this.previousPalmPosition, palmPosition)) {
@@ -951,6 +942,8 @@ class GestureScratchPart extends GesturePart {
                 log.debug(`gameModel.GestureScratchPart.isRecognized : OK`);
                 return true;
         }
+
+        this.previousPalmPosition = palmPosition;
 
         return false;
     }

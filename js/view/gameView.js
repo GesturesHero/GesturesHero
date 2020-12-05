@@ -150,7 +150,6 @@ let currentGestureIndex;
 let previousGestureIndex;
 let nextGestureIndex;
 
-
 /**
  * Inits the gesture displaying.
  * @param level {Object} The object representing the level.
