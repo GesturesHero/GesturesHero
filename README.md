@@ -63,3 +63,6 @@ Disclaimer : The rights belong to the authors of the music.
 * [C2C - F.U.Y.A](https://www.youtube.com/watch?v=1KOaT1vdLmc)
 * [C2C - Down The Road](https://www.youtube.com/watch?v=k1uUIJPD0Nk)
 * [Timmy Trumpet x Vengaboys - Up & Down](https://www.youtube.com/watch?v=SBDCd_lD6hI)
+* [Armin van Buuren - Blah Blah Blah](https://www.youtube.com/watch?v=mfJhMfOPWdE)
+* [Stromae - Merci](https://www.youtube.com/watch?v=2qfm71JSaXA)
+* [OneRepublic - Wherever I Go](https://www.youtube.com/watch?v=OXWrjWDQh7Q)
