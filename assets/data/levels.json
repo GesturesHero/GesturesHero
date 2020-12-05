@@ -248,5 +248,123 @@
         "levelMilestoneTimestampStart": 32.6
       }
     ]
+  },
+  {
+    "levelId": "Orch2",
+    "levelName": "Music Theory : Orchestra #2",
+    "levelDifficulty": 6,
+    "levelIndexOrder": 6.2,
+    "levelColor": "#000000",
+    "levelSong": {
+      "songAuthor": "Armin Van Buuren",
+      "songTitle" : "Blah Blah Blah",
+      "songUrl": "/assets/data/songs/Armin_Van_Buuren_-_Blah_Blah_Blah.mp3"
+    },
+    "levelMilestones": [
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 24.00
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 27.50
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 31.00
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 34.25
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 38.00
+      },
+      {
+        "gestureId": "REVERSED_ROTATION",
+        "levelMilestoneTimestampStart": 51.60
+      },
+      {
+        "gestureId": "HAMMER3",
+        "levelMilestoneTimestampStart": 55.2
+      }
+    ]
+  },
+  {
+    "levelId": "Orch3",
+    "levelName": "Music Theory : Orchestra #3",
+    "levelDifficulty": 6,
+    "levelIndexOrder": 6.3,
+    "levelColor": "#c07668",
+    "levelSong": {
+      "songAuthor": "Stromae",
+      "songTitle" : "Merci",
+      "songUrl": "/assets/data/songs/Stromae_-_Merci.mp3"
+    },
+    "levelMilestones": [
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 15.00
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 17.30
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 20.05
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 24.30
+      },
+      {
+        "gestureId": "REVERSED_ROTATION",
+        "levelMilestoneTimestampStart": 34.00
+      },
+      {
+        "gestureId": "ROTATION",
+        "levelMilestoneTimestampStart": 38.30
+      },
+      {
+        "gestureId": "STAIRS",
+        "levelMilestoneTimestampStart": 51.70
+      }
+    ]
+  },
+  {
+    "levelId": "Orch4",
+    "levelName": "Music Theory : Orchestra #4",
+    "levelDifficulty": 6,
+    "levelIndexOrder": 6.4,
+    "levelColor": "#f1d300",
+    "levelSong": {
+      "songAuthor": "OneRepublic",
+      "songTitle" : "Wherever I Go",
+      "songUrl": "/assets/data/songs/OneRepublic_-_Wherever_I_Go.mp3"
+    },
+    "levelMilestones": [
+      {
+        "gestureId": "STAIRS",
+        "levelMilestoneTimestampStart": 7.90
+      },
+      {
+        "gestureId": "HAMMER3",
+        "levelMilestoneTimestampStart": 13.00
+      },
+      {
+        "gestureId": "HAMMER3",
+        "levelMilestoneTimestampStart": 18.00
+      },
+      {
+        "gestureId": "HAMMER3",
+        "levelMilestoneTimestampStart": 22.50
+      },
+      {
+        "gestureId": "HAMMER3",
+        "levelMilestoneTimestampStart": 27.50
+      }
+    ]
   }
 ]
