@@ -448,7 +448,6 @@ class GestureHammer3LeapMotion extends GestureHammer1LeapMotion {
     }
 }
 
-
 class GestureRotationLeapMotion extends Gesture {
 
     constructor(gestureId, durationInSec, illustrationUrl, clockwise) {
@@ -546,6 +545,51 @@ class GestureScratchLeapMotion extends Gesture {
     }
 }
 
+class GesturePinchLeapMotion extends Gesture {
+
+    constructor(gestureId, durationInSec, illustrationUrl) {
+        super(gestureId, durationInSec, illustrationUrl);
+        this.gestureParts = [
+            new GesturePinchPartStart(1),
+            new GesturePinchPart(2)
+        ];
+        this.gestureCount = this.gestureParts.length;
+    }
+
+    /**
+     * @override
+     */
+    init() {
+        this.gestureIndex = 0;
+        this.recognized = false;
+        this.gestureParts.forEach(gesturePart => gesturePart.init());
+    }
+
+    /**
+     * @override
+     */
+    check(frame) {
+        if (frame.hands.length !== 2) return;
+        if (this.gestureIndex < this.gestureCount && this.gestureParts[this.gestureIndex].isRecognized(frame)) this.gestureIndex++;
+        this.recognized = this.gestureIndex === this.gestureCount;
+    }
+}
+
+class GesturePinch3LeapMotion extends GesturePinchLeapMotion {
+
+    constructor(gestureId, durationInSec, illustrationUrl) {
+        super(gestureId, durationInSec, illustrationUrl);
+        this.gestureParts = [
+            new GesturePinchPartStart(1),
+            new GesturePinchPart(2),
+            new GesturePinchPartStart(3),
+            new GesturePinchPart(4),
+            new GesturePinchPartStart(5),
+            new GesturePinchPart(6)
+        ];
+        this.gestureCount = this.gestureParts.length;
+    }
+}
 
 // ---------------------------------------------------------------------------------------------------------GESTURE PART
 
@@ -929,5 +973,77 @@ class GestureScratchPart extends GesturePart {
 
     _isHandGoingRight(before, after) {
         return before[0] > after[0];
+    }
+}
+
+class GesturePinchPartStart extends GesturePart {
+
+    /**
+     * @override
+     */
+    constructor(gesturePartId) {
+        super(gesturePartId);
+    }
+
+    /**
+     * @override
+     */
+    init() {
+        // Nothing
+    }
+
+    /**
+     * @override
+     */
+    isRecognized(frame) {
+        if (frame.hands.length !== 2) {
+            return false;
+        }
+
+        return this.isRecognizedStart(frame);
+    }
+
+    isRecognizedStart(frame) {
+        // TODO
+        return true;
+    }
+}
+
+class GesturePinchPart extends GesturePart {
+
+    /**
+     * @override
+     */
+    constructor(gesturePartId) {
+        super(gesturePartId);
+        // TODO
+    }
+
+    /**
+     * @override
+     */
+    init() {
+        // TODO
+    }
+
+    /**
+     * @override
+     */
+    isRecognized(frame) {
+        if (frame.hands.length !== 2) {
+            return false;
+        }
+
+        return this.isRecognizedFrame(frame);
+    }
+
+    isRecognizedFrame(frame) {
+        // TODO
+        return this.isRecognizedEnd(frame);
+    }
+
+    isRecognizedEnd(frame) {
+        // TODO
+        return true;
     }
 }
