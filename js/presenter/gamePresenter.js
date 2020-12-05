@@ -1,12 +1,12 @@
 /**
- * @overview This file contains the functions to ensure the intermediate between the view and the game logic.
+ * @overview This file contains the functions to ensure the intermediate between the view, the game logic and the services.
  */
 
 let game = undefined; // Global game instance (model)
 let gestureService = undefined; // Global instance of the gesture recognizer service.
 let gameBuilderService = undefined; // Global instance of the game builder service.
 
-// ------------------------------------------------------------------------------------------------------------------------------ VIEW -> MODEL
+// ---------------------------------------------------------------------------------------------------------------- GAME
 
 /**
  * Refreshes the game logic (model) and the game rendering (view).
@@ -44,6 +44,20 @@ function _buildGame(callback) {
     }));
 }
 
+/**
+ * Resets the game.
+ */
+function resetGame() {
+    _buildGame(() => {
+        // Do nothing
+    });
+}
+
+function isGameFinished() {
+    return game.isFinished();
+}
+
+// --------------------------------------------------------------------------------------------------------------- LEVEL
 
 /**
  * @return {string} The current level id.
@@ -114,18 +128,8 @@ function setNextLevel() {
     game.setToNextLevel();
 }
 
-/**
- * Resets the game.
- */
-function resetGame() {
-    _buildGame(() => {
-        // Do nothing
-    });
-}
 
-function isGameFinished() {
-    return game.isFinished();
-}
+// --------------------------------------------------------------------------------------------------------------- LEVEL
 
 /**
  * Gets the gesture illustration URL.
@@ -133,14 +137,6 @@ function isGameFinished() {
  */
 function getGestureIllustrationUrl(gestureId) {
     return gestureService.getGestureIllustrationUrl(gestureId);
-}
-
-/**
- * Sets the color of the hands that are shown in real time.
- * @param color {String} A hexadecimal color code.
- */
-function setHandsColor(color) {
-    gestureService.setHandsColor(color);
 }
 
 /**
@@ -160,9 +156,18 @@ function checkGestureNow(gestureId, callback) {
     gestureService.recognize(gestureId, callback);
 }
 
-// ------------------------------------------------------------------------------------------------------------------------------ MODEL -> VIEW
 
-// ------------------------------------------------------------------------------------------------------------------------------ UTILS
+// --------------------------------------------------------------------------------------------------------------- UTILS
+
+/**
+ * Sets the color of the hands that are shown in real time.
+ * @param color {String} A hexadecimal color code.
+ */
+function setHandsColor(color) {
+    gestureService.setHandsColor(color);
+}
+
+// --------------------------------------------------------------------------------------------------------------- UTILS
 
 /**
  * Alerts the user of a message.
