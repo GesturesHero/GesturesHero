@@ -62,7 +62,7 @@ The music has been cropped via [Audacity](https://audacity.fr/).
 Special thanks to their designers for making them available freely.
 
 ## Musics
-Disclaimer : The rights belong to the authors of the music.
+Disclaimer : The rights belong to the authors of the musics.
 * [Wii - Mii Channel Theme](https://www.youtube.com/watch?v=po-0n1BKW2w)
 * [John Williams - Cantina Band](https://www.youtube.com/watch?v=EsvfptdFXf4)
 * [C2C - F.U.Y.A](https://www.youtube.com/watch?v=1KOaT1vdLmc)
