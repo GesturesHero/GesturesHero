@@ -911,6 +911,8 @@ class GestureScratchPart extends GesturePart {
      */
     init() {
         this.gesturePartStep = 0;
+        this.previousPalmPosition = null;
+        this.positionPalmPeak = null;
     }
 
     /**
@@ -958,13 +960,13 @@ class GestureScratchPart extends GesturePart {
     }
 
     _hasHandTraveledRight(before, after) {
-        let diff = before[0] - after[0];
-        return diff > 30;
+        let difference = before[0] - after[0];
+        return difference > 30;
     }
 
     _hasHandTraveledLeft(before, after) {
-        let diff = after[0] - before[0];
-        return diff > 30;
+        let difference = after[0] - before[0];
+        return difference > 30;
     }
 
     _isHandGoingLeft(before, after) {
