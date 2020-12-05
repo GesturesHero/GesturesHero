@@ -31,7 +31,6 @@ function initializeGame() {
     _buildGame((game) => {
         refreshGameView();
     });
-
 }
 
 /**
@@ -128,7 +127,6 @@ function setNextLevel() {
     game.setToNextLevel();
 }
 
-
 // ------------------------------------------------------------------------------------------------------------- GESTURE
 
 /**
@@ -155,7 +153,6 @@ function getGestureDuration(gestureId) {
 function checkGestureNow(gestureId, callback) {
     gestureService.recognize(gestureId, callback);
 }
-
 
 // --------------------------------------------------------------------------------- 3D SCENE (HANDS REAL TIME FEEDBACK)
 

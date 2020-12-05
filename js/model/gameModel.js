@@ -394,16 +394,18 @@ class GestureHammer1LeapMotion extends Gesture {
             [new GestureHammerPart(1, 0), new GestureHammerPart(2, 1)]
         ];
         this.gestureCount = this.gestureParts.length;
+        this.hand1Index = 0;
+        this.hand2Index = 0;
     }
 
     /**
      * @override
      */
     init() {
+        this.gestureParts.forEach(gesturePart => gesturePart.forEach(gesturePartForHand => gesturePartForHand.init()));
         this.hand1Index = 0;
         this.hand2Index = 0;
         this.recognized = false;
-        this.gestureParts.forEach(gesturePart => gesturePart.forEach(gesturePartForHand => gesturePartForHand.init()));
     }
 
     /**
@@ -436,16 +438,6 @@ class GestureHammer3LeapMotion extends GestureHammer1LeapMotion {
         ];
         this.gestureCount = this.gestureParts.length;
     }
-
-    /**
-     * @override
-     */
-    init() {
-        this.hand1Index = 0;
-        this.hand2Index = 0;
-        this.recognized = false;
-        this.gestureParts.forEach(gesturePart => gesturePart.forEach(gesturePartForHand => gesturePartForHand.init()));
-    }
 }
 
 class GestureRotationLeapMotion extends Gesture {
@@ -458,15 +450,16 @@ class GestureRotationLeapMotion extends Gesture {
             new GestureRotationPart(2, this.clockwise)
         ];
         this.gestureCount = this.gestureParts.length;
+        this.gestureIndex = 0;
     }
 
     /**
      * @override
      */
     init() {
+        this.gestureParts.forEach(gesturePart => gesturePart.init());
         this.gestureIndex = 0;
         this.recognized = false;
-        this.gestureParts.forEach(gesturePart => gesturePart.init());
     }
 
     /**
@@ -490,15 +483,16 @@ class GestureStairsLeapMotion extends Gesture {
             new GestureStairsPart(4, "left"),
         ];
         this.gestureCount = this.gestureParts.length;
+        this.gestureIndex = 0;
     }
 
     /**
      * @override
      */
     init() {
+        this.gestureParts.forEach(gesturePart => gesturePart.init());
         this.gestureIndex = 0;
         this.recognized = false;
-        this.gestureParts.forEach(gesturePart => gesturePart.init());
     }
 
     /**
@@ -521,15 +515,16 @@ class GestureScratchLeapMotion extends Gesture {
             new GestureScratchPart(2),
         ];
         this.gestureCount = this.gestureParts.length;
+        this.gestureIndex = 0;
     }
 
     /**
      * @override
      */
     init() {
+        this.gestureParts.forEach(gesturePart => gesturePart.init());
         this.gestureIndex = 0;
         this.recognized = false;
-        this.gestureParts.forEach(gesturePart => gesturePart.init());
     }
 
     /**
@@ -554,15 +549,16 @@ class GesturePinchLeapMotion extends Gesture {
             new GesturePinchPart(2)
         ];
         this.gestureCount = this.gestureParts.length;
+        this.gestureIndex = 0;
     }
 
     /**
      * @override
      */
     init() {
+        this.gestureParts.forEach(gesturePart => gesturePart.init());
         this.gestureIndex = 0;
         this.recognized = false;
-        this.gestureParts.forEach(gesturePart => gesturePart.init());
     }
 
     /**
