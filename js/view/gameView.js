@@ -366,6 +366,7 @@ function _onAudioPlayerUpdate(level) {
                 if (milestoneToCheckWith !== undefined) {
 
                     // Update gesture display.
+                    _clearUserFeedback();
                     _revealNewCurrentGesture();
                     _renderGestures();
 
@@ -446,6 +447,17 @@ function _updateGestureFeedback(recognitionState) {
     timeout = setTimeout(() => {
         $('.gesture-feedback-current').html('<span></span>');
     }, (FEEDBACK_TIMEOUT_IN_SEC * SECOND_TO_MILLISECONDS));
+}
+
+/**
+ * Clears the user feedback.
+ * This method is used when the timeout of a gesture is not elapsed bu when a new gesture comes.
+ * The feedback couldn't overlay the gesture illustration.
+ * @private
+ */
+function _clearUserFeedback(){
+    clearTimeout(timeout);
+    $('.gesture-feedback-current').html('<span></span>');
 }
 
 // ------------------------------------------------------------------------------------------------ LEVEL COMPLETED PAGE
