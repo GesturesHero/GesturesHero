@@ -38,7 +38,7 @@ npm run start
 
 ## Authors
 
-* ANDRE Maxime ([@mxmadr](https://github.com/mxmadr))
+* ANDRÉ Maxime ([@mxmadr](https://github.com/mxmadr))
 * BAYET Anthony ([@abayet](https://github.com/abayet))
 * JETZEN Tobias ([@tjetzen](https://github.com/tjetzen))
 * LUYCX Pierre ([@tarhses](https://github.com/tarhses))
