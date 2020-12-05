@@ -611,7 +611,7 @@ class GestureHammerPart extends GesturePart {
         let hand = frame.hands[this.handIndex];
         let handPosition = hand.indexFinger.tipPosition;
 
-        if(!this.previousHandPosition){ // Initializes hand position.
+        if (!this.previousHandPosition) { // Initializes hand position.
             this.previousHandPosition = handPosition;
         }
 
@@ -877,7 +877,7 @@ class GestureScratchPart extends GesturePart {
         let hand = frame.hands[0];
         let palmPosition = hand.palmPosition;
 
-        if(!this.previousPalmPosition){ // Initializes palm position.
+        if (!this.previousPalmPosition) { // Initializes palm position.
             this.previousPalmPosition = palmPosition;
         }
 
