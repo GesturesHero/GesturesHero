@@ -162,32 +162,40 @@
         "levelMilestoneTimestampStart": 1.00
       },
       {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 5.00
+        "gestureId": "SCRATCH",
+        "levelMilestoneTimestampStart": 4.40
       },
       {
         "gestureId": "ROTATION",
-        "levelMilestoneTimestampStart": 5.9
+        "levelMilestoneTimestampStart": 6.00
       },
       {
         "gestureId": "REVERSED_ROTATION",
-        "levelMilestoneTimestampStart": 7.6
+        "levelMilestoneTimestampStart": 7.60
       },
       {
         "gestureId": "STAIRS",
-        "levelMilestoneTimestampStart": 9.3
+        "levelMilestoneTimestampStart": 9.20
       },
       {
         "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 12.3
+        "levelMilestoneTimestampStart": 12.10
       },
       {
         "gestureId": "ROTATION",
-        "levelMilestoneTimestampStart": 13.2
+        "levelMilestoneTimestampStart": 13.70
+      },
+      {
+        "gestureId": "REVERSED_ROTATION",
+        "levelMilestoneTimestampStart": 15.30
       },
       {
         "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 14.9
+        "levelMilestoneTimestampStart": 16.90
+      },
+      {
+        "gestureId": "SCRATCH",
+        "levelMilestoneTimestampStart": 20.00
       }
     ]
   },
@@ -199,7 +207,7 @@
     "levelColor": "#d61f7b",
     "levelSong": {
       "songAuthor": "Timmy Trumpet, Vengaboys",
-      "songTitle" : "Up Down",
+      "songTitle" : "Up & Down",
       "songUrl": "/assets/data/songs/Timmy_Trumpet_x_Vengaboys_-_Up_Down.mp3"
     },
     "levelMilestones": [
