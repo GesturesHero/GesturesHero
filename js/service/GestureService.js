@@ -54,26 +54,26 @@ class LeapMotionGestureService extends GestureService {
     /**
      * Setup the 3D scene. Place camera and add lights.
      */
-    _setup3DScene(){
+    _setup3DScene() {
         // We create the camera that will be in the 3D scene to "record" the hands
-        let camera = new THREE.PerspectiveCamera(45 , window.innerWidth / window.innerHeight, 1, 1000);
+        let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
         camera.position.fromArray([0, 200, 500]); // Setup the position of the camera in the scene. Where (0, 0, 0) is the leapmotion
         camera.lookAt(new THREE.Vector3(0, 200, 0)); // Setup the point which the camera is pointing on
         // Link the camera and the 3D scene
-        let scope = this.controller.plugins.riggedHand; 
+        let scope = this.controller.plugins.riggedHand;
         scope.camera = camera;
-        
-        this.light = new THREE.PointLight( 0x33cccc, 1, 10000 );
-        this.light.position.set( 0, 0, 250 );
-        scope.scene.add( this.light );
+
+        this.light = new THREE.PointLight(0x33cccc, 1, 10000);
+        this.light.position.set(0, 0, 250);
+        scope.scene.add(this.light);
     }
 
     /**
      * Sets the color of the hands that are shown in real time.
-     * @param color {String} A hexadecimal color code. 
+     * @param color {String} A hexadecimal color code.
      */
-    setHandsColor(color){
-        if(this.light) this.light.color = new THREE.Color(color);
+    setHandsColor(color) {
+        if (this.light) this.light.color = new THREE.Color(color);
     }
 
     /**
@@ -110,7 +110,7 @@ class LeapMotionGestureService extends GestureService {
      * Gets the gesture duration.
      * @param gestureId {string} The gesture id.
      */
-    getGestureDuration(gestureId){
+    getGestureDuration(gestureId) {
         let gesture = this.recognizableGestures.get(gestureId);
         return gesture !== undefined ? gesture.getDurationInSec() : undefined;
     }

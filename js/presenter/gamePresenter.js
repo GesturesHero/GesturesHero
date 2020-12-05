@@ -5,6 +5,7 @@
 let game = undefined; // Global game instance (model)
 let gestureService = undefined; // Global instance of the gesture recognizer service.
 let gameBuilderService = undefined; // Global instance of the game builder service.
+
 // ------------------------------------------------------------------------------------------------------------------------------ VIEW -> MODEL
 
 /**
@@ -122,6 +123,10 @@ function resetGame() {
     });
 }
 
+function isGameFinished() {
+    return game.isFinished();
+}
+
 /**
  * Gets the gesture illustration URL.
  * @param gestureId {string} The gesture id.
@@ -132,9 +137,9 @@ function getGestureIllustrationUrl(gestureId) {
 
 /**
  * Sets the color of the hands that are shown in real time.
- * @param color {String} A hexadecimal color code. 
+ * @param color {String} A hexadecimal color code.
  */
-function setHandsColor(color){
+function setHandsColor(color) {
     gestureService.setHandsColor(color);
 }
 
@@ -142,7 +147,7 @@ function setHandsColor(color){
  * Gets the gesture duration.
  * @param gestureId {string} The gesture id.
  */
-function getGestureDuration(gestureId){
+function getGestureDuration(gestureId) {
     return gestureService.getGestureDuration(gestureId);
 }
 

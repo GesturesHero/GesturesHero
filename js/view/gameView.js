@@ -368,7 +368,7 @@ function _onAudioPlayerFinish(level) {
                     // If an already-completed level is done again, the next level could not be set.
                     setNextLevel();
                 }
-                if (getCurrentLevel() === undefined) { // Game finished.
+                if (isGameFinished()) { // Game finished.
                     drawEndPage(); // In case of no more levels.
                     resetGame();
                 } else {
