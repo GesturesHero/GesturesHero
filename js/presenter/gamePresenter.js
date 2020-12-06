@@ -31,7 +31,6 @@ function initializeGame() {
     _buildGame((game) => {
         refreshGameView();
     });
-
 }
 
 /**
@@ -128,8 +127,7 @@ function setNextLevel() {
     game.setToNextLevel();
 }
 
-
-// --------------------------------------------------------------------------------------------------------------- LEVEL
+// ------------------------------------------------------------------------------------------------------------- GESTURE
 
 /**
  * Gets the gesture illustration URL.
@@ -156,8 +154,7 @@ function checkGestureNow(gestureId, callback) {
     gestureService.recognize(gestureId, callback);
 }
 
-
-// --------------------------------------------------------------------------------------------------------------- UTILS
+// --------------------------------------------------------------------------------- 3D SCENE (HANDS REAL TIME FEEDBACK)
 
 /**
  * Sets the color of the hands that are shown in real time.
