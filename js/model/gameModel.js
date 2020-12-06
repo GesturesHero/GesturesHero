@@ -441,10 +441,9 @@ class GestureRotationLeapMotion extends Gesture {
 
     constructor(gestureId, durationInSec, illustrationUrl, clockwise) {
         super(gestureId, durationInSec, illustrationUrl);
-        this.clockwise = clockwise;
         this.gestureParts = [
-            new GestureRotationPartStart(1, this.clockwise),
-            new GestureRotationPart(2, this.clockwise)
+            new GestureRotationStartPart(1, clockwise),
+            new GestureRotationPart(2, clockwise)
         ];
         this.gestureCount = this.gestureParts.length;
         this.gestureIndex = 0;
@@ -463,7 +462,36 @@ class GestureRotationLeapMotion extends Gesture {
      * @override
      */
     check(frame) {
-        if (frame.hands.length !== 2) return;
+        if (this.gestureIndex < this.gestureCount && this.gestureParts[this.gestureIndex].isRecognized(frame)) this.gestureIndex++;
+        this.recognized = this.gestureIndex === this.gestureCount;
+    }
+}
+
+class GestureGrabLeapMotion extends Gesture {
+
+    constructor(gestureId, durationInSec, illustrationUrl, grab) {
+        super(gestureId, durationInSec, illustrationUrl);
+        this.gestureParts = [
+            new GestureGrabStartPart(1, grab),
+            new GestureGrabPart(2, grab)
+        ];
+        this.gestureCount = this.gestureParts.length;
+        this.gestureIndex = 0;
+    }
+
+    /**
+     * @override
+     */
+    init() {
+        this.gestureParts.forEach(gesturePart => gesturePart.init());
+        this.gestureIndex = 0;
+        this.recognized = false;
+    }
+
+    /**
+     * @override
+     */
+    check(frame) {
         if (this.gestureIndex < this.gestureCount && this.gestureParts[this.gestureIndex].isRecognized(frame)) this.gestureIndex++;
         this.recognized = this.gestureIndex === this.gestureCount;
     }
@@ -703,7 +731,7 @@ class GestureHammerPart extends GesturePart {
     }
 }
 
-class GestureRotationPartStart extends GesturePart {
+class GestureRotationStartPart extends GesturePart {
 
     /**
      * @override
@@ -728,10 +756,6 @@ class GestureRotationPartStart extends GesturePart {
             return false;
         }
 
-        return this.isRecognizedStart(frame);
-    }
-
-    isRecognizedStart(frame) {
         for (const hand of frame.hands) {
             const normal = hand.palmNormal[1] * this.direction;
             if (normal > -0.8) {
@@ -771,41 +795,111 @@ class GestureRotationPart extends GesturePart {
             return false;
         }
 
-        return this.isRecognizedFrame(frame);
-    }
-
-    isRecognizedFrame(frame) {
         for (const [i, hand] of frame.hands.entries()) {
-
             // Normal
             const normal = hand.palmNormal[1] * this.handRotationDirection;
             if (normal < this.previousNormals[i] - 0.1) {
-                log.debug("GestureRotationPart.isRecognizedFrame : Miss gesturing : Hands turning backward");
+                log.debug("GestureRotationPart.isRecognized : Miss gesturing: Hands turning backward");
                 return false;
+            } else {
+                this.previousNormals[i] = Math.max(normal, this.previousNormals[i]);
             }
 
-            this.previousNormals[i] = Math.max(normal, this.previousNormals[i]);
+            if (normal < 0.8) {
+                log.debug("gameModel.GestureRotationPart.isRecognized : Unfinished gesture");
+                return false;
+            }
 
             // Grab
             if (hand.grabStrength === 1) {
-                log.debug("GestureRotationPart.isRecognizedFrame : Miss gesturing : Hands not open enough");
+                log.debug("GestureRotationPart.isRecognized : Miss gesturing: Hands not open enough");
                 return false;
             }
         }
 
-        return this.isRecognizedEnd(frame);
+        log.debug("gameModel.GestureRotationPart.isRecognized : OK");
+        return true;
+    }
+}
+
+class GestureGrabStartPart extends GesturePart {
+
+    /**
+     * @override
+     */
+    constructor(gesturePartId, grab) {
+        super(gesturePartId);
+        this.grab = grab;
     }
 
-    isRecognizedEnd(frame) {
-        for (const hand of frame.hands) {
-            const normal = hand.palmNormal[1] * this.handRotationDirection;
-            if (normal < 0.8) {
-                log.debug("gameModel.GestureRotationPart.isRecognizedEnd : KO");
-                return false;
-            }
+    /**
+     * @override
+     */
+    init() {
+        // Nothing
+    }
+
+    /**
+     * @override
+     */
+    isRecognized(frame) {
+        if (frame.hands.length !== 1) {
+            return false;
         }
 
-        log.debug("gameModel.GestureRotationPart.isRecognizedEnd : OK");
+        const hand = frame.hands[0];
+        const strength = this.grab ? hand.grabStrength : 1 - hand.grabStrength;
+        if (strength <= 0.05) {
+            log.debug("gameModel.GestureGrabStartPart.isRecognizedStart : OK");
+            return true;
+        } else {
+            log.debug("gameModel.GestureGrabStartPart.isRecognizedStart : KO");
+            return false;
+        }
+    }
+}
+
+class GestureGrabPart extends GesturePart {
+
+    /**
+     * @override
+     */
+    constructor(gesturePartId, grab) {
+        super(gesturePartId);
+        this.grab = grab;
+        this.previousStrength = 0;
+    }
+
+    /**
+     * @override
+     */
+    init() {
+        this.previousStrength = 0;
+    }
+
+    /**
+     * @override
+     */
+    isRecognized(frame) {
+        if (frame.hands.length !== 1) {
+            return false;
+        }
+
+        const hand = frame.hands[0]
+        const strength = this.grab ? hand.grabStrength : 1 - hand.grabStrength;
+        if (strength < this.previousStrength - 0.05) {
+            log.debug("GestureGrabPart.isRecognized : Miss gesturing: decreasing grabStrength");
+            return false;
+        } else {
+            this.previousStrength = Math.max(strength, this.previousStrength);
+        }
+
+        if (strength < 0.95) {
+            log.debug("gameModel.GestureRotationPart.isRecognizedEnd : unfinished gesture");
+            return false;
+        }
+
+        log.debug("gameModel.GestureRotationPart.isRecognized : OK");
         return true;
     }
 }
