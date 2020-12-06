@@ -83,13 +83,79 @@
         "levelMilestoneId": 1,
         "gestureId": "HAMMER1",
         "levelMilestoneIndexOrder": 1,
-        "levelMilestoneTimestampStart": 5.00
+        "levelMilestoneTimestampStart": 0.70
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 1.60
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 2.50
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 3.40
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 4.30
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 5.20
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 6.10
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 7.00
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 7.90
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 8.80
       },
       {
         "levelMilestoneId": 2,
         "gestureId": "STAIRS",
         "levelMilestoneIndexOrder": 2,
         "levelMilestoneTimestampStart": 10.50
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 15.00
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 16.00
       },
       {
         "levelMilestoneId": 3,
@@ -104,10 +170,28 @@
         "levelMilestoneTimestampStart": 21.00
       },
       {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 22.60
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 23.40
+      },
+      {
         "levelMilestoneId": 5,
         "gestureId": "ROTATION",
         "levelMilestoneIndexOrder": 5,
         "levelMilestoneTimestampStart": 24.50
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 28.00
       }
     ]
   },
@@ -245,7 +329,7 @@
       },
       {
         "gestureId": "STAIRS",
-        "levelMilestoneTimestampStart": 32.60
+        "levelMilestoneTimestampStart": 32.65
       }
     ]
   },
