@@ -368,10 +368,10 @@
     ]
   },
   {
-    "levelId": "Orch2",
-    "levelName": "Music Theory : Orchestra #2",
-    "levelDifficulty": 7,
-    "levelIndexOrder": 7.1,
+    "levelId": "Orch5",
+    "levelName": "Music Theory : Orchestra #5",
+    "levelDifficulty": 6,
+    "levelIndexOrder": 6.5,
     "levelColor": "#e61919",
     "levelSong": {
       "songAuthor": "The White Stripes",
@@ -386,6 +386,22 @@
       {
         "gestureId": "STAIRS",
         "levelMilestoneTimestampStart": 8.35
+      },
+      {
+        "gestureId": "GRAB",
+        "levelMilestoneTimestampStart": 12.6
+      },
+      {
+        "gestureId": "UNGRAB",
+        "levelMilestoneTimestampStart": 13.7
+      },
+      {
+        "gestureId": "GRAB",
+        "levelMilestoneTimestampStart": 14.7
+      },
+      {
+        "gestureId": "UNGRAB",
+        "levelMilestoneTimestampStart": 16
       },
       {
         "gestureId": "ROTATION",
