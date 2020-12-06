@@ -82,7 +82,7 @@ class LeapMotionGestureService extends GestureService {
      */
     _setup3DScene() {
         // It creates the camera.
-        let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 600);
+        let camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 600);
         camera.position.fromArray([0, 200, 500]); // Setup the position of the camera in the scene. Where (0, 0, 0) is the leapmotion
         camera.lookAt(new THREE.Vector3(0, 200, 0)); // Setup the point which the camera is pointing on
 
