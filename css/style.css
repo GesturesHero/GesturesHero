@@ -130,11 +130,11 @@
     justify-content: center;
     align-items: center;
 
-    min-height: 75px;
+    height: 1px; /** The feedback will overflow the area but it does not matter */
 }
 
 .gesture-feedback-current {
-    font-size: 30pt;
+    font-size: 50pt;
 }
 
 /* Level lives */

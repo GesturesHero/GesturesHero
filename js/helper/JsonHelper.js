@@ -12,7 +12,7 @@ function loadJsonFile(jsonFilePath, callback) {
     loadingRequest.overrideMimeType("application/json");
     loadingRequest.open('GET', jsonFilePath, true);
     loadingRequest.onreadystatechange = function () {
-        if (loadingRequest.readyState === 4 && loadingRequest.status == "200") {
+        if (loadingRequest.readyState === 4 && loadingRequest.status === 200) {
             callback(loadingRequest.responseText);
         }
     };
