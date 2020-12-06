@@ -13,15 +13,15 @@
     "levelMilestones": [
       {
         "gestureId": "ROTATION",
-        "levelMilestoneTimestampStart": 6.3
+        "levelMilestoneTimestampStart": 6.30
       },
       {
         "gestureId": "HAMMER3",
-        "levelMilestoneTimestampStart": 12.5
+        "levelMilestoneTimestampStart": 12.50
       },
       {
         "gestureId": "ROTATION",
-        "levelMilestoneTimestampStart": 23
+        "levelMilestoneTimestampStart": 23.00
       }
     ]
   },
@@ -43,27 +43,27 @@
       },
       {
         "gestureId": "ROTATION",
-        "levelMilestoneTimestampStart": 6.3
+        "levelMilestoneTimestampStart": 6.30
       },
       {
         "gestureId": "HAMMER3",
-        "levelMilestoneTimestampStart": 12.3
+        "levelMilestoneTimestampStart": 12.30
       },
       {
         "gestureId": "HAMMER3",
-        "levelMilestoneTimestampStart": 14.1
+        "levelMilestoneTimestampStart": 14.10
       },
       {
         "gestureId": "HAMMER3",
-        "levelMilestoneTimestampStart": 18.8
+        "levelMilestoneTimestampStart": 18.80
       },
       {
         "gestureId": "ROTATION",
-        "levelMilestoneTimestampStart": 23.2
+        "levelMilestoneTimestampStart": 23.20
       },
       {
         "gestureId": "HAMMER3",
-        "levelMilestoneTimestampStart": 29.3
+        "levelMilestoneTimestampStart": 29.30
       }
     ]
   },
@@ -83,13 +83,79 @@
         "levelMilestoneId": 1,
         "gestureId": "HAMMER1",
         "levelMilestoneIndexOrder": 1,
-        "levelMilestoneTimestampStart": 5.00
+        "levelMilestoneTimestampStart": 0.70
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 1.60
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 2.50
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 3.40
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 4.30
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 5.20
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 6.10
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 7.00
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 7.90
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 8.80
       },
       {
         "levelMilestoneId": 2,
         "gestureId": "STAIRS",
         "levelMilestoneIndexOrder": 2,
         "levelMilestoneTimestampStart": 10.50
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 15.00
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 16.00
       },
       {
         "levelMilestoneId": 3,
@@ -104,10 +170,28 @@
         "levelMilestoneTimestampStart": 21.00
       },
       {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 22.60
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 23.40
+      },
+      {
         "levelMilestoneId": 5,
         "gestureId": "ROTATION",
         "levelMilestoneIndexOrder": 5,
         "levelMilestoneTimestampStart": 24.50
+      },
+      {
+        "levelMilestoneId": 1,
+        "gestureId": "HAMMER1",
+        "levelMilestoneIndexOrder": 1,
+        "levelMilestoneTimestampStart": 28.00
       }
     ]
   },
@@ -133,15 +217,15 @@
       },
       {
         "gestureId": "SCRATCH",
-        "levelMilestoneTimestampStart": 16.7
+        "levelMilestoneTimestampStart": 16.70
       },
       {
         "gestureId": "SCRATCH",
-        "levelMilestoneTimestampStart": 20.2
+        "levelMilestoneTimestampStart": 20.20
       },
       {
         "gestureId": "SCRATCH",
-        "levelMilestoneTimestampStart": 27.5
+        "levelMilestoneTimestampStart": 27.50
       }
     ]
   },
@@ -213,7 +297,7 @@
     "levelMilestones": [
       {
         "gestureId": "ROTATION",
-        "levelMilestoneTimestampStart": 3.1
+        "levelMilestoneTimestampStart": 3.10
       },
       {
         "gestureId": "REVERSED_ROTATION",
@@ -221,7 +305,7 @@
       },
       {
         "gestureId": "ROTATION",
-        "levelMilestoneTimestampStart": 10
+        "levelMilestoneTimestampStart": 10.00
       },
       {
         "gestureId": "REVERSED_ROTATION",
@@ -229,15 +313,15 @@
       },
       {
         "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 17.3
+        "levelMilestoneTimestampStart": 17.30
       },
       {
         "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 19.1
+        "levelMilestoneTimestampStart": 19.10
       },
       {
         "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 21.00
+        "levelMilestoneTimestampStart": 20.90
       },
       {
         "gestureId": "HAMMER1",
@@ -245,7 +329,125 @@
       },
       {
         "gestureId": "STAIRS",
-        "levelMilestoneTimestampStart": 32.6
+        "levelMilestoneTimestampStart": 32.65
+      }
+    ]
+  },
+  {
+    "levelId": "Orch2",
+    "levelName": "Music Theory : Orchestra #2",
+    "levelDifficulty": 6,
+    "levelIndexOrder": 6.2,
+    "levelColor": "#000000",
+    "levelSong": {
+      "songAuthor": "Armin Van Buuren",
+      "songTitle" : "Blah Blah Blah",
+      "songUrl": "/assets/data/songs/Armin_Van_Buuren_-_Blah_Blah_Blah.mp3"
+    },
+    "levelMilestones": [
+      {
+        "gestureId": "PINCH3",
+        "levelMilestoneTimestampStart": 7.00
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 19.00
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 22.50
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 26.00
+      },
+      {
+        "gestureId": "PINCH3",
+        "levelMilestoneTimestampStart": 31.50
+      },
+      {
+        "gestureId": "REVERSED_ROTATION",
+        "levelMilestoneTimestampStart": 46.60
+      },
+      {
+        "gestureId": "HAMMER3",
+        "levelMilestoneTimestampStart": 50.20
+      }
+    ]
+  },
+  {
+    "levelId": "Orch3",
+    "levelName": "Music Theory : Orchestra #3",
+    "levelDifficulty": 6,
+    "levelIndexOrder": 6.3,
+    "levelColor": "#c07668",
+    "levelSong": {
+      "songAuthor": "Stromae",
+      "songTitle" : "Merci",
+      "songUrl": "/assets/data/songs/Stromae_-_Merci.mp3"
+    },
+    "levelMilestones": [
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 15.00
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 17.30
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 20.05
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 24.30
+      },
+      {
+        "gestureId": "REVERSED_ROTATION",
+        "levelMilestoneTimestampStart": 34.00
+      },
+      {
+        "gestureId": "ROTATION",
+        "levelMilestoneTimestampStart": 38.30
+      },
+      {
+        "gestureId": "STAIRS",
+        "levelMilestoneTimestampStart": 51.70
+      }
+    ]
+  },
+  {
+    "levelId": "Orch4",
+    "levelName": "Music Theory : Orchestra #4",
+    "levelDifficulty": 6,
+    "levelIndexOrder": 6.4,
+    "levelColor": "#f1d300",
+    "levelSong": {
+      "songAuthor": "OneRepublic",
+      "songTitle" : "Wherever I Go",
+      "songUrl": "/assets/data/songs/OneRepublic_-_Wherever_I_Go.mp3"
+    },
+    "levelMilestones": [
+      {
+        "gestureId": "STAIRS",
+        "levelMilestoneTimestampStart": 7.90
+      },
+      {
+        "gestureId": "HAMMER3",
+        "levelMilestoneTimestampStart": 13.00
+      },
+      {
+        "gestureId": "HAMMER3",
+        "levelMilestoneTimestampStart": 18.00
+      },
+      {
+        "gestureId": "HAMMER3",
+        "levelMilestoneTimestampStart": 22.50
+      },
+      {
+        "gestureId": "HAMMER3",
+        "levelMilestoneTimestampStart": 27.50
       }
     ]
   }

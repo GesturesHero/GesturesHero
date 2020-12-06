@@ -2,14 +2,13 @@
  * @overview This file contains the functions for drawing the game views, catching interactions, and rendering the game progression.
  */
 
-// ------------------------------------------------------------------------------------------------------------------------------ ENTRY POINT + INITIALIZATION
+// ---------------------------------------------------------------------------------------- ENTRY POINT + INITIALIZATION
 
 $(document).ready(function () {
     initializeGame();
 });
 
-
-// ------------------------------------------------------------------------------------------------------------------------------ NAVIGATION
+// ---------------------------------------------------------------------------------------------------------- NAVIGATION
 
 let _currentView = view.MENU;
 let _currentLevelViewId = undefined;
@@ -54,7 +53,7 @@ function refreshView(game) {
     }
 }
 
-// ------------------------------------------------------------------------------------------------------------------------------ DRAWERS
+// ---------------------------------------------------------------------------------------------------------------- MENU
 
 /**
  * Draws the (main) menu page (list of levels that are available or not).
@@ -80,7 +79,8 @@ function drawMenuPage(levels, currentLevel) {
  */
 function _drawLevelAccess(level, currentLevel) {
     if (level !== undefined && currentLevel !== undefined) {
-        if (level.levelIndexOrder > currentLevel.levelIndexOrder) { // NON-ACCESSIBLE LEVEL
+
+        if (level.levelIndexOrder > currentLevel.levelIndexOrder) { // Non-accessible level
             $('.menu').append("" +
                 "<div class=\"level-access non-accessible\"" +
                 "id=\"" + level.levelId + "\"" +
@@ -88,7 +88,8 @@ function _drawLevelAccess(level, currentLevel) {
                 "<span class=\"level-title\">" + level.levelName + "</span>" +
                 "<span class=\"song-title\">" + level.levelSong.songAuthor + " - " + level.levelSong.songTitle + "</span>" +
                 "</div>");
-        } else { // ACCESSIBLE LEVEL
+
+        } else { // Accessible level
             $('.menu').append("" +
                 "<div class=\"level-access\"" +
                 "id=\"" + level.levelId + "\"" +
@@ -103,6 +104,10 @@ function _drawLevelAccess(level, currentLevel) {
     }
 }
 
+// --------------------------------------------------------------------------------------------------------------- LEVEL
+
+// --------------------------------------------Drawer
+
 /**
  * Draws a level page.
  * @param level {Level} The level to draw.
@@ -110,18 +115,26 @@ function _drawLevelAccess(level, currentLevel) {
 function drawLevelPage(level) {
     if (level !== undefined) {
         $(".general").load("html/level.html", function () {
+
+            // Set the color of the real time feedback.
             setHandsColor(level.levelColor);
+
+            // Sets the data of the page.
             $('.level-name').text(level.levelName);
             $('.song-author').text(level.levelSong.songAuthor);
             $('.song-title').text(level.levelSong.songTitle);
             $('.level-header').css("background-color", level.levelColor);
             $('.level-song-information').css("background-color", level.levelColor);
+            resetLevelLives(level.levelId);
+            _updateLevelLives(getLevelLive(level.levelId));
+
+            // Sets the custom audio player.
             let audioPlayerCustom = $('.audio-player-custom');
             audioPlayerCustom.css("background-color", level.levelColor);
             audioPlayerCustom.css("border-color", level.levelColor);
-            resetLevelLives(level.levelId);
-            _updateLevelLives(getLevelLive(level.levelId));
             _onAudioPlayerSetUp(level);
+
+            // Sets the gestures.
             _initGestures(level);
             _renderGestures();
         });
@@ -130,14 +143,15 @@ function drawLevelPage(level) {
     }
 }
 
-// Gestures display
+// -------------------------------------------- Gestures displaying
+
 let gestureIllustrationsUrl;
 let currentGestureIndex;
 let previousGestureIndex;
 let nextGestureIndex;
 
 /**
- * Init the gesture displaying.
+ * Inits the gesture displaying.
  * @param level {Object} The object representing the level.
  */
 function _initGestures(level) {
@@ -149,7 +163,7 @@ function _initGestures(level) {
 }
 
 /**
- * Move the next gesture to the current gesture (new value for currentGestureIndex & incrementation for nextGestureIndex).
+ * Moves the next gesture to the current gesture (new value for currentGestureIndex & incrementation for nextGestureIndex).
  */
 function _revealNewCurrentGesture() {
     currentGestureIndex = nextGestureIndex;
@@ -157,12 +171,12 @@ function _revealNewCurrentGesture() {
 }
 
 /**
- * Move the current gesture to the previous gesture (undefined for currentGestureIndex & new value for previousGestureIndex).
+ * Moves the current gesture to the previous gesture (undefined for currentGestureIndex & new value for previousGestureIndex).
  * @param supposedCurrentGestureIndex {int} The index of the gesture that needs to become the previous gesture.
  */
 function _hideCurrentGesture(supposedCurrentGestureIndex) {
     previousGestureIndex = supposedCurrentGestureIndex;
-    if (currentGestureIndex == supposedCurrentGestureIndex) {
+    if (currentGestureIndex === supposedCurrentGestureIndex) {
         currentGestureIndex = -1;
     }
 }
@@ -215,7 +229,40 @@ function _getGesturesIllustrationsUrl(levelIds) {
     return levelIds.map(id => getGestureIllustrationUrl(id));
 }
 
-// End of gesture display
+/**
+ * Sets a gesture illustration.
+ * @param htmlIdentifier {string} The HTML DOM identifier.
+ * @param gestureIllustrationUrl The gesture illustration's URL/path.
+ */
+function _setGestureIllustration(htmlIdentifier, gestureIllustrationUrl) {
+    $(htmlIdentifier).html(
+        '<img src="' + gestureIllustrationUrl + '">'
+    );
+}
+
+/**
+ * Resets to blank the gesture illustration.
+ * @param htmlIdentifier {string} The HTML DOM identifier.
+ */
+function _resetGestureIllustration(htmlIdentifier) {
+    $(htmlIdentifier).html('<span></span>');
+}
+
+// -------------------------------------------- Level lives
+
+let musicNoteSVG = "<svg" +
+    " width=\"3em\"" +
+    " height=\"3em\"" +
+    " viewBox=\"0 0 16 16\"" +
+    " class=\"bi bi-music-note\"" +
+    " fill=\"currentColor\"" +
+    " xmlns=\"http://www.w3.org/2000/svg\">\n" +
+    "  <path d=\"M9 13c0 1.105-1.12 2-2.5 2S4 14.105 4 13s1.12-2 2.5-2 2.5.895 2.5 2z\"/>\n" +
+    "  <path fill-rule=\"evenodd\" d=\"M9 3v10H8V3h1z\"/>\n" +
+    "  <path d=\"M8 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 13 2.22V4L8 5V2.82z\"/>\n" +
+    "</svg>";
+let musicNote = "<span class='music-note'>" + musicNoteSVG + "</span>";
+let musicNoteTranslucent = "<span class='music-note-translucent'>" + musicNoteSVG + "</span>";
 
 /**
  * Updates on the view the amount of level lives.
@@ -238,15 +285,7 @@ function _updateLevelLives(levelLives) {
     $('.level-lives').html(levelLivesNumberHtml);
 }
 
-let musicNoteSVG = "<svg width=\"3em\" height=\"3em\" viewBox=\"0 0 16 16\" class=\"bi bi-music-note\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
-    "  <path d=\"M9 13c0 1.105-1.12 2-2.5 2S4 14.105 4 13s1.12-2 2.5-2 2.5.895 2.5 2z\"/>\n" +
-    "  <path fill-rule=\"evenodd\" d=\"M9 3v10H8V3h1z\"/>\n" +
-    "  <path d=\"M8 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 13 2.22V4L8 5V2.82z\"/>\n" +
-    "</svg>";
-
-let musicNote = "<span class='music-note'>" + musicNoteSVG + "</span>";
-
-let musicNoteTranslucent = "<span class='music-note-translucent'>" + musicNoteSVG + "</span>";
+// -------------------------------------------- Custom audio player
 
 /**
  * Draws and sets up a custom audio player with timed milestones.
@@ -392,38 +431,28 @@ function _getMilestoneAt(intervalStart, intervalEnd, milestones) {
     return milestones.find(milestone => milestone.levelMilestoneTimestampStart >= intervalStart && milestone.levelMilestoneTimestampStart < intervalEnd);
 }
 
-/**
- * Sets a gesture illustration.
- * @param htmlIdentifier {string} The HTML DOM identifier.
- * @param gestureIllustrationUrl The gesture illustration's URL/path.
- */
-function _setGestureIllustration(htmlIdentifier, gestureIllustrationUrl) {
-    $(htmlIdentifier).html(
-        '<img src="' + gestureIllustrationUrl + '">'
-    );
-}
-
-/**
- * Resets to blank the gesture illustration.
- * @param htmlIdentifier {string} The HTML DOM identifier.
- */
-function _resetGestureIllustration(htmlIdentifier) {
-    $(htmlIdentifier).html('<span></span>');
-}
+// -------------------------------------------- Custom audio player
 
 /**
  * Updates the feedback sent to the user regarding its gesture performance.
  * @param recognitionState {boolean} The recognition state.
  */
-let timeout;
-
 function _updateGestureFeedback(recognitionState) {
-    clearTimeout(timeout);
     $('.gesture-feedback-current').html('<span>' + (recognitionState === true ? '✔' : '❌') + '</span>');
-    timeout = setTimeout(() => {
-        $('.gesture-feedback-current').html('<span></span>');
-    }, (FEEDBACK_TIMEOUT_IN_SEC * SECOND_TO_MILLISECONDS));
+    
+    // Set the transition duration to 0 to set opacity value instantly
+    $('.gesture-feedback-current').css('transitionDuration', '0s');
+    $('.gesture-feedback-current').css('opacity', 1);
+
+    // Get the height value to trigger an update from the browser
+    ($('.gesture-feedback-current').css('height'));
+
+    // Set a css transition, to make the feedback symbole smoothly fade out.
+    $('.gesture-feedback-current').css('transition', 'opacity 0.5s');
+    $('.gesture-feedback-current').css('opacity', 0);
 }
+
+// ------------------------------------------------------------------------------------------------ LEVEL COMPLETED PAGE
 
 /**
  * Draws the level completed page.
@@ -434,6 +463,8 @@ function drawLevelCompletedPage() {
     });
 }
 
+// --------------------------------------------------------------------------------------------------- LEVEL FAILED PAGE
+
 /**
  * Draws the level failed page.
  */
@@ -443,6 +474,8 @@ function drawLevelFailedPage() {
     });
 }
 
+// ------------------------------------------------------------------------------------------------------- GAME END PAGE
+
 /**
  * Draws the end page.
  */
@@ -451,7 +484,7 @@ function drawEndPage() {
     });
 }
 
-// ------------------------------------------------------------------------------------------------------------------------------ ALERTS
+// -------------------------------------------------------------------------------------------------------------- ALERTS
 
 let alertDisplayTimeout;
 
