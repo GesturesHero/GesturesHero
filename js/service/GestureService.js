@@ -2,7 +2,7 @@
  * @overview This file contains the available gesture services.
  */
 
-// ---------------------------------------------------------------------------------------------------GESTURE SERVICE
+// ----------------------------------------------------------------------------------------------------- GESTURE SERVICE
 
 /**
  * @overview Represents an abstract gesture service.
@@ -47,8 +47,8 @@ class LeapMotionGestureService extends GestureService {
         this.recognizableGestures.set("REVERSED_ROTATION", new GestureRotationLeapMotion("REVERSED_ROTATION", 1.5, "/assets/data/gestures-illustrations/reversed-rotation.gif", false));
         this.recognizableGestures.set("STAIRS", new GestureStairsLeapMotion("STAIRS", 2.8, "/assets/data/gestures-illustrations/stairs.gif"));
         this.recognizableGestures.set("SCRATCH", new GestureScratchLeapMotion("SCRATCH", 1.5, "/assets/data/gestures-illustrations/scratch.gif"));
-        this.recognizableGestures.set("PINCH", new GesturePinchLeapMotion("PINCH", 1.5, "/assets/data/gestures-illustrations/pinch.gif"));
-        this.recognizableGestures.set("PINCH3", new GesturePinch3LeapMotion("PINCH3", 2.5, "/assets/data/gestures-illustrations/pinch3.gif"));
+        this.recognizableGestures.set("PINCH", new GesturePinch1LeapMotion("PINCH", 1, "/assets/data/gestures-illustrations/pinch1.gif"));
+        this.recognizableGestures.set("PINCH", new GesturePinch3LeapMotion("PINCH3", 3, "/assets/data/gestures-illustrations/pinch3.gif"));
     }
 
     /**
@@ -59,7 +59,7 @@ class LeapMotionGestureService extends GestureService {
     _setup3DScene() {
         // It creates the camera.
         let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
-        camera.position.fromArray([0, 200, 500]); // Setup the position of the camera in the scene. Where (0, 0, 0) is the leapmotion
+        camera.position.fromArray([0, 200, 500]); // Setup the position of the camera in the scene. Where (0, 0, 0) is the LeapMotion
         camera.lookAt(new THREE.Vector3(0, 200, 0)); // Setup the point which the camera is pointing on
 
         // It links the camera with the 3D scene.
