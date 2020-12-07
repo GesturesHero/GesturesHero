@@ -545,13 +545,14 @@ class GestureScratchLeapMotion extends Gesture {
     }
 }
 
-class GesturePinchLeapMotion extends Gesture {
+class GesturePinch1LeapMotion extends Gesture {
 
     constructor(gestureId, durationInSec, illustrationUrl) {
         super(gestureId, durationInSec, illustrationUrl);
         this.gestureParts = [
             new GesturePinchPartStart(1),
-            new GesturePinchPart(2)
+            new GesturePinchPartDuring(2),
+            new GesturePinchPartEnd(3)
         ];
         this.gestureCount = this.gestureParts.length;
     }
@@ -575,17 +576,22 @@ class GesturePinchLeapMotion extends Gesture {
     }
 }
 
-class GesturePinch3LeapMotion extends GesturePinchLeapMotion {
+class GesturePinch3LeapMotion extends GesturePinch1LeapMotion {
 
     constructor(gestureId, durationInSec, illustrationUrl) {
         super(gestureId, durationInSec, illustrationUrl);
         this.gestureParts = [
             new GesturePinchPartStart(1),
-            new GesturePinchPart(2),
-            new GesturePinchPartStart(3),
-            new GesturePinchPart(4),
-            new GesturePinchPartStart(5),
-            new GesturePinchPart(6)
+            new GesturePinchPartDuring(2),
+            new GesturePinchPartEnd(3),
+
+            new GesturePinchPartStart(4),
+            new GesturePinchPartDuring(5),
+            new GesturePinchPartEnd(6),
+
+            new GesturePinchPartStart(7),
+            new GesturePinchPartDuring(8),
+            new GesturePinchPartEnd(9)
         ];
         this.gestureCount = this.gestureParts.length;
     }
@@ -655,7 +661,7 @@ class GestureHammerPart extends GesturePart {
         let hand = frame.hands[this.handIndex];
         let handPosition = hand.indexFinger.tipPosition;
 
-        if(!this.previousHandPosition){ // Initializes hand position.
+        if (!this.previousHandPosition) { // Initializes hand position.
             this.previousHandPosition = handPosition;
         }
 
@@ -921,7 +927,7 @@ class GestureScratchPart extends GesturePart {
         let hand = frame.hands[0];
         let palmPosition = hand.palmPosition;
 
-        if(!this.previousPalmPosition){ // Initializes palm position.
+        if (!this.previousPalmPosition) { // Initializes palm position.
             this.previousPalmPosition = palmPosition;
         }
 
@@ -983,6 +989,7 @@ class GesturePinchPartStart extends GesturePart {
      */
     constructor(gesturePartId) {
         super(gesturePartId);
+        this.openHandToleranceMax = 0.2;
     }
 
     /**
@@ -996,54 +1003,119 @@ class GesturePinchPartStart extends GesturePart {
      * @override
      */
     isRecognized(frame) {
+        let isRecognized = true;
+
         if (frame.hands.length !== 2) {
-            return false;
+            isRecognized = false;
         }
 
-        return this.isRecognizedStart(frame);
+        return isRecognized && this._isStartFrameRecognized(frame);
     }
 
-    isRecognizedStart(frame) {
-        // TODO
+    _isStartFrameRecognized(frame) {
+        for (const hand of frame.hands) {
+            let pinchStrength = hand.pinchStrength;
+            if (pinchStrength > this.openHandToleranceMax) {
+                log.debug("gameModel.GesturePinchPartStart.isRecognizedStart : KO");
+                return false;
+            }
+        }
+
+        log.debug("gameModel.GesturePinchPartStart.isRecognizedStart : OK");
         return true;
     }
 }
 
-class GesturePinchPart extends GesturePart {
+class GesturePinchPartDuring extends GesturePart {
 
     /**
      * @override
      */
     constructor(gesturePartId) {
         super(gesturePartId);
-        // TODO
+        this.nearHandClosed = 0.8;
+        this.previousPinchStrength = [0, 0];
+        this.hasOpenedAgain = false;
     }
 
     /**
      * @override
      */
     init() {
-        // TODO
+        this.previousPinchStrength = [0, 0];
+        this.hasOpenedAgain = false;
     }
 
     /**
      * @override
      */
     isRecognized(frame) {
-        if (frame.hands.length !== 2) {
-            return false;
+        let isRecognized = true;
+
+        if (frame.hands.length !== 2) { // A hand is missing on the two.
+            isRecognized = false;
         }
 
-        return this.isRecognizedFrame(frame);
+        if (this.hasOpenedAgain === true) { // Once one of the hands had opened again, the gesture is blocked to the fail state.
+            isRecognized = false;
+        }
+
+        return isRecognized && this._isFrameRecognized(frame);
     }
 
-    isRecognizedFrame(frame) {
-        // TODO
-        return this.isRecognizedEnd(frame);
+    _isFrameRecognized(frame) {
+        let isRecognized = false;
+        for (let i = 0; i < frame.hands.length; i++) {
+
+            let currentPinchStrength = frame.hand[i].pinchStrength;
+
+            if (currentPinchStrength < this.previousPinchStrength[i]) { // Hand has opened again.
+                this.hasOpenedAgain = true;
+
+            } else if (currentPinchStrength >= this.previousPinchStrength[i] && currentPinchStrength < this.nearHandClosed) { // Hand progress towards the closed hand.
+                this.previousPinchStrength[i] = currentPinchStrength;
+
+            } else { // Hand has reached the step before the total closed-hand step.
+                isRecognized = true;
+            }
+        }
+        return isRecognized;
+    }
+}
+
+class GesturePinchPartEnd extends GesturePart {
+
+    /**
+     * @override
+     */
+    constructor(gesturePartId) {
+        super(gesturePartId);
+        this.nearHandClosed = 0.8;
     }
 
-    isRecognizedEnd(frame) {
-        // TODO
-        return true;
+    /**
+     * @override
+     */
+    init() {
+        // Nothing
+    }
+
+    /**
+     * @override
+     */
+    isRecognized(frame) {
+        let isRecognized = true;
+
+        if (frame.hands.length !== 2) { // A hand is missing on the two.
+            isRecognized = false;
+        }
+
+        for(const hand of frame.hand){ // At least one of the hand has - finally - not reached the closed-hand step.
+            if(hand.pinchStrength < this.nearHandClosed){
+                isRecognized = false;
+            }
+        }
+
+        return isRecognized;
     }
 }
