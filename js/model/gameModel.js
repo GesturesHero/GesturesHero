@@ -1058,7 +1058,7 @@ class GesturePinchPartDuring extends GesturePart {
         let isRecognized = false;
         for (let i = 0; i < frame.hands.length; i++) {
 
-            let currentPinchStrength = frame.hand[i].pinchStrength;
+            let currentPinchStrength = frame.hands[i].pinchStrength;
 
             if (currentPinchStrength < this.previousPinchStrength[i]) { // Hand has opened again.
                 this.hasOpenedAgain = true;
@@ -1101,7 +1101,7 @@ class GesturePinchPartEnd extends GesturePart {
             isRecognized = false;
         }
 
-        for(const hand of frame.hand){ // At least one of the hand has - finally - not reached the closed-hand step.
+        for(const hand of frame.hands){ // At least one of the hand has - finally - not reached the closed-hand step.
             if(hand.pinchStrength < this.nearHandClosed){
                 isRecognized = false;
             }
