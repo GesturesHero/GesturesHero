@@ -68,31 +68,36 @@
 
 /* Level header */
 .level-header {
-    padding-top: 10px;
+    align-items: center;
+
+    padding: 5px;
+    margin-bottom: 10px;
 
     font-size: 30pt;
-    font-family: "Luckiest Guy", Arial, sans-serif;
-    color: #ffffff;
-    background-color: #000000;
-}
-
-.level-header h1 {
-    padding: 0;
-    margin: 0;
-}
-
-/* Level song information */
-
-.level-song-information {
-    padding-top: 10px;
-    margin-bottom: 20px;
-
-    font-size: 15pt;
     font-family: Arial, sans-serif;
     color: #ffffff;
     background-color: #000000;
 }
 
+.menu-button:hover {
+    cursor: pointer;
+}
+
+.level-information {
+    display: flex;
+    flex-direction: column;
+}
+
+.level-information-song {
+    font-size: 15pt;
+}
+
+.level-information h1 {
+    padding: 0;
+    margin: 0;
+
+    font-family: "Luckiest Guy", Arial, sans-serif;
+}
 
 /* Level gestures title */
 
@@ -104,7 +109,6 @@
 .level-gestures-title h3 {
     font-size: 15pt;
 }
-
 
 /* Level gestures */
 
@@ -121,6 +125,10 @@
 
 .translucent {
     opacity: 0.2;
+}
+
+.next-gesture img {
+    width: 100%;
 }
 
 /* Gesture feedback */
