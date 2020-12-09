@@ -1,21 +1,34 @@
 <div class="level">
 
     <div class="row level-header">
-        <h1 class="level-name">Level</h1>
-    </div>
+        <div class="col-1 menu-button" onclick="switchView(view.MENU)">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door-fill" fill="currentColor"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.5 10.995V14.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5V11c0-.25-.25-.5-.5-.5H7c-.25 0-.5.25-.5.495z"/>
+                <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+            </svg>
+        </div>
+        <div class="col-11 level-information">
+            <div>
+                <h1 class="level-name">Level</h1><br/>
+            </div>
+            <div class="level-information-song">
+                <span class="song-author">Author</span>
+                <span>&nbsp;&#8211;&nbsp;</span>
+                <span class="song-title">Title</span>
+            </div>
+        </div>
 
-    <div class="row level-song-information">
-        <span class="song-author">Author</span><span>&nbsp;&#8211;&nbsp;</span><span class="song-title">Title</span>
     </div>
 
     <div class="row level-gestures-title">
-        <div class="col">
+        <div class="col-3">
             <h3>Previous</h3>
         </div>
         <div class="col-6">
             <h2>Current</h2>
         </div>
-        <div class="col">
+        <div class="col-3">
             <h3>Next</h3>
         </div>
     </div>
@@ -26,11 +39,11 @@
     </div>
 
     <div class="row level-gestures">
-        <div class="col previous-gesture translucent">
+        <div class="col-3 previous-gesture translucent">
         </div>
         <div class="col-6 current-gesture">
         </div>
-        <div class="col next-gesture translucent">
+        <div class="col-3 next-gesture translucent">
         </div>
     </div>
 
