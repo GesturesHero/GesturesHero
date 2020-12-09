@@ -228,6 +228,7 @@
 
 .end {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 500px;
@@ -235,6 +236,11 @@
     font-size: 50pt;
     font-family: "Luckiest Guy", Arial, sans-serif;
     color: #ffc107;
+}
+
+.end .btn {
+    margin-left: 50px;
+    font-size: 25pt !important;
 }
 
 /* ---- Page > Level completed ---- */
@@ -271,6 +277,7 @@
 
 .level-failed .btn{
     margin-left: 50px;
+
     font-size: 25pt !important;
 }
 
