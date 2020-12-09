@@ -68,10 +68,332 @@
     ]
   },
   {
-    "levelId": "Quali1",
+    "levelId": "Qual1",
     "levelName": "Music Theory : Qualification #1",
-    "levelIndexOrder": 3.1,
     "levelDifficulty": 3,
+    "levelIndexOrder": 3.1,
+    "levelColor": "#f1d300",
+    "levelSong": {
+      "songAuthor": "OneRepublic",
+      "songTitle" : "Wherever I Go",
+      "songUrl": "/assets/data/songs/OneRepublic_-_Wherever_I_Go.mp3"
+    },
+    "levelMilestones": [
+      {
+        "gestureId": "STAIRS",
+        "levelMilestoneTimestampStart": 7.90
+      },
+      {
+        "gestureId": "HAMMER3",
+        "levelMilestoneTimestampStart": 13.00
+      },
+      {
+        "gestureId": "HAMMER3",
+        "levelMilestoneTimestampStart": 18.00
+      },
+      {
+        "gestureId": "HAMMER3",
+        "levelMilestoneTimestampStart": 22.50
+      },
+      {
+        "gestureId": "HAMMER3",
+        "levelMilestoneTimestampStart": 27.50
+      }
+    ]
+  },
+  {
+    "levelId": "Tran1",
+    "levelName": "Music Theory : Transition #1",
+    "levelDifficulty": 4,
+    "levelIndexOrder": 4.1,
+    "levelColor": "#e61919",
+    "levelSong": {
+      "songAuthor": "The White Stripes",
+      "songTitle" : "Black Math",
+      "songUrl": "/assets/data/songs/The_White_Stripes_-_Black_Math.mp3"
+    },
+    "levelMilestones": [
+      {
+        "gestureId": "STAIRS",
+        "levelMilestoneTimestampStart": 3.0
+      },
+      {
+        "gestureId": "STAIRS",
+        "levelMilestoneTimestampStart": 8.35
+      },
+      {
+        "gestureId": "GRAB",
+        "levelMilestoneTimestampStart": 12.6
+      },
+      {
+        "gestureId": "UNGRAB",
+        "levelMilestoneTimestampStart": 13.7
+      },
+      {
+        "gestureId": "GRAB",
+        "levelMilestoneTimestampStart": 14.7
+      },
+      {
+        "gestureId": "UNGRAB",
+        "levelMilestoneTimestampStart": 16
+      },
+      {
+        "gestureId": "ROTATION",
+        "levelMilestoneTimestampStart": 25.75
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 31.69
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 32.69
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 33.69
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 36.13
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 37.13
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 38.13
+      }
+    ]
+  },
+  {
+    "levelId": "Grad1",
+    "levelName": "Music Theory : Graduation #1",
+    "levelDifficulty": 5,
+    "levelIndexOrder": 5.1,
+    "levelColor": "#000000",
+    "levelSong": {
+      "songAuthor": "Armin Van Buuren",
+      "songTitle" : "Blah Blah Blah",
+      "songUrl": "/assets/data/songs/Armin_Van_Buuren_-_Blah_Blah_Blah.mp3"
+    },
+    "levelMilestones": [
+      {
+        "gestureId": "PINCH3",
+        "levelMilestoneTimestampStart": 6.80
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 19.00
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 22.50
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 26.00
+      },
+      {
+        "gestureId": "PINCH3",
+        "levelMilestoneTimestampStart": 31.50
+      },
+      {
+        "gestureId": "GRAB",
+        "levelMilestoneTimestampStart": 46.60
+      },
+      {
+        "gestureId": "HAMMER3",
+        "levelMilestoneTimestampStart": 50.20
+      }
+    ]
+  },
+  {
+    "levelId": "Grad2",
+    "levelName": "Music Theory : Graduation #2",
+    "levelIndexOrder": 5.2,
+    "levelDifficulty": 5,
+    "levelColor": "#c07668",
+    "levelSong": {
+      "songAuthor": "Stromae",
+      "songTitle" : "Merci",
+      "songUrl": "/assets/data/songs/Stromae_-_Merci.mp3"
+    },
+    "levelMilestones": [
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 15.00
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 17.30
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 20.05
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 24.30
+      },
+      {
+        "gestureId": "REVERSED_ROTATION",
+        "levelMilestoneTimestampStart": 34.00
+      },
+      {
+        "gestureId": "ROTATION",
+        "levelMilestoneTimestampStart": 38.30
+      },
+      {
+        "gestureId": "STAIRS",
+        "levelMilestoneTimestampStart": 51.70
+      }
+    ]
+  },
+  {
+    "levelId": "Orch1",
+    "levelName": "Music Theory : Orchestra #1",
+    "levelDifficulty": 6,
+    "levelIndexOrder": 6.1,
+    "levelColor": "#d61f7b",
+    "levelSong": {
+      "songAuthor": "Timmy Trumpet, Vengaboys",
+      "songTitle" : "Up & Down",
+      "songUrl": "/assets/data/songs/Timmy_Trumpet_x_Vengaboys_-_Up_Down.mp3"
+    },
+    "levelMilestones": [
+      {
+        "gestureId": "ROTATION",
+        "levelMilestoneTimestampStart": 3.10
+      },
+      {
+        "gestureId": "REVERSED_ROTATION",
+        "levelMilestoneTimestampStart": 6.45
+      },
+      {
+        "gestureId": "ROTATION",
+        "levelMilestoneTimestampStart": 10.00
+      },
+      {
+        "gestureId": "REVERSED_ROTATION",
+        "levelMilestoneTimestampStart": 13.55
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 17.30
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 19.10
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 20.90
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 22.60
+      },
+      {
+        "gestureId": "STAIRS",
+        "levelMilestoneTimestampStart": 32.65
+      }
+    ]
+  },
+  {
+    "levelId": "Orch2",
+    "levelName": "Music Theory : Orchestra #2",
+    "levelDifficulty": 6,
+    "levelIndexOrder": 6.2,
+    "levelColor": "#ff8100",
+    "levelSong": {
+      "songAuthor": "C2C",
+      "songTitle" : "F.U.Y.A",
+      "songUrl": "/assets/data/songs/C2C_-_FUYA.mp3"
+    },
+    "levelMilestones": [
+      {
+        "gestureId": "SCRATCH",
+        "levelMilestoneTimestampStart": 5.30
+      },
+      {
+        "gestureId": "SCRATCH",
+        "levelMilestoneTimestampStart": 12.75
+      },
+      {
+        "gestureId": "SCRATCH",
+        "levelMilestoneTimestampStart": 16.70
+      },
+      {
+        "gestureId": "SCRATCH",
+        "levelMilestoneTimestampStart": 20.20
+      },
+      {
+        "gestureId": "SCRATCH",
+        "levelMilestoneTimestampStart": 27.50
+      }
+    ]
+  },
+  {
+    "levelId": "Orch3",
+    "levelName": "Music Theory : Orchestra #3",
+    "levelIndexOrder": 6.3,
+    "levelDifficulty": 6,
+    "levelColor": "#ff0000",
+    "levelSong": {
+      "songAuthor": "C2C",
+      "songTitle" : "Down The Road",
+      "songUrl": "/assets/data/songs/C2C_-_Down_The_Road.mp3"
+    },
+    "levelMilestones": [
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 1.00
+      },
+      {
+        "gestureId": "SCRATCH",
+        "levelMilestoneTimestampStart": 4.40
+      },
+      {
+        "gestureId": "ROTATION",
+        "levelMilestoneTimestampStart": 6.00
+      },
+      {
+        "gestureId": "REVERSED_ROTATION",
+        "levelMilestoneTimestampStart": 7.60
+      },
+      {
+        "gestureId": "STAIRS",
+        "levelMilestoneTimestampStart": 9.20
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 12.10
+      },
+      {
+        "gestureId": "ROTATION",
+        "levelMilestoneTimestampStart": 13.70
+      },
+      {
+        "gestureId": "REVERSED_ROTATION",
+        "levelMilestoneTimestampStart": 15.30
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 16.90
+      },
+      {
+        "gestureId": "SCRATCH",
+        "levelMilestoneTimestampStart": 20.00
+      }
+    ]
+  },
+  {
+    "levelId": "Orch4",
+    "levelName": "Music Theory : Orchestra #4",
+    "levelDifficulty": 6,
+    "levelIndexOrder": 6.4,
     "levelColor": "#ff0080",
     "levelSong": {
       "songAuthor": "John Williams",
@@ -192,328 +514,6 @@
         "gestureId": "HAMMER1",
         "levelMilestoneIndexOrder": 1,
         "levelMilestoneTimestampStart": 28.00
-      }
-    ]
-  },
-  {
-    "levelId": "Tran1",
-    "levelName": "Music Theory : Transition #1",
-    "levelIndexOrder": 4.1,
-    "levelDifficulty": 4,
-    "levelColor": "#ff8100",
-    "levelSong": {
-      "songAuthor": "C2C",
-      "songTitle" : "F.U.Y.A",
-      "songUrl": "/assets/data/songs/C2C_-_FUYA.mp3"
-    },
-    "levelMilestones": [
-      {
-        "gestureId": "SCRATCH",
-        "levelMilestoneTimestampStart": 5.30
-      },
-      {
-        "gestureId": "SCRATCH",
-        "levelMilestoneTimestampStart": 12.75
-      },
-      {
-        "gestureId": "SCRATCH",
-        "levelMilestoneTimestampStart": 16.70
-      },
-      {
-        "gestureId": "SCRATCH",
-        "levelMilestoneTimestampStart": 20.20
-      },
-      {
-        "gestureId": "SCRATCH",
-        "levelMilestoneTimestampStart": 27.50
-      }
-    ]
-  },
-  {
-    "levelId": "Grad1",
-    "levelName": "Music Theory : Graduation #1",
-    "levelIndexOrder": 5.1,
-    "levelDifficulty": 5,
-    "levelColor": "#ff0000",
-    "levelSong": {
-      "songAuthor": "C2C",
-      "songTitle" : "Down The Road",
-      "songUrl": "/assets/data/songs/C2C_-_Down_The_Road.mp3"
-    },
-    "levelMilestones": [
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 1.00
-      },
-      {
-        "gestureId": "SCRATCH",
-        "levelMilestoneTimestampStart": 4.40
-      },
-      {
-        "gestureId": "ROTATION",
-        "levelMilestoneTimestampStart": 6.00
-      },
-      {
-        "gestureId": "REVERSED_ROTATION",
-        "levelMilestoneTimestampStart": 7.60
-      },
-      {
-        "gestureId": "STAIRS",
-        "levelMilestoneTimestampStart": 9.20
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 12.10
-      },
-      {
-        "gestureId": "ROTATION",
-        "levelMilestoneTimestampStart": 13.70
-      },
-      {
-        "gestureId": "REVERSED_ROTATION",
-        "levelMilestoneTimestampStart": 15.30
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 16.90
-      },
-      {
-        "gestureId": "SCRATCH",
-        "levelMilestoneTimestampStart": 20.00
-      }
-    ]
-  },
-  {
-    "levelId": "Orch1",
-    "levelName": "Music Theory : Orchestra #1",
-    "levelDifficulty": 6,
-    "levelIndexOrder": 6.1,
-    "levelColor": "#d61f7b",
-    "levelSong": {
-      "songAuthor": "Timmy Trumpet, Vengaboys",
-      "songTitle" : "Up & Down",
-      "songUrl": "/assets/data/songs/Timmy_Trumpet_x_Vengaboys_-_Up_Down.mp3"
-    },
-    "levelMilestones": [
-      {
-        "gestureId": "ROTATION",
-        "levelMilestoneTimestampStart": 3.10
-      },
-      {
-        "gestureId": "REVERSED_ROTATION",
-        "levelMilestoneTimestampStart": 6.45
-      },
-      {
-        "gestureId": "ROTATION",
-        "levelMilestoneTimestampStart": 10.00
-      },
-      {
-        "gestureId": "REVERSED_ROTATION",
-        "levelMilestoneTimestampStart": 13.55
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 17.30
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 19.10
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 20.90
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 22.60
-      },
-      {
-        "gestureId": "STAIRS",
-        "levelMilestoneTimestampStart": 32.65
-      }
-    ]
-  },
-  {
-    "levelId": "Orch2",
-    "levelName": "Music Theory : Orchestra #2",
-    "levelDifficulty": 6,
-    "levelIndexOrder": 6.2,
-    "levelColor": "#000000",
-    "levelSong": {
-      "songAuthor": "Armin Van Buuren",
-      "songTitle" : "Blah Blah Blah",
-      "songUrl": "/assets/data/songs/Armin_Van_Buuren_-_Blah_Blah_Blah.mp3"
-    },
-    "levelMilestones": [
-      {
-        "gestureId": "PINCH3",
-        "levelMilestoneTimestampStart": 6.80
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 19.00
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 22.50
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 26.00
-      },
-      {
-        "gestureId": "PINCH3",
-        "levelMilestoneTimestampStart": 31.50
-      },
-      {
-        "gestureId": "REVERSED_ROTATION",
-        "levelMilestoneTimestampStart": 46.60
-      },
-      {
-        "gestureId": "HAMMER3",
-        "levelMilestoneTimestampStart": 50.20
-      }
-    ]
-  },
-  {
-    "levelId": "Orch3",
-    "levelName": "Music Theory : Orchestra #3",
-    "levelDifficulty": 6,
-    "levelIndexOrder": 6.3,
-    "levelColor": "#c07668",
-    "levelSong": {
-      "songAuthor": "Stromae",
-      "songTitle" : "Merci",
-      "songUrl": "/assets/data/songs/Stromae_-_Merci.mp3"
-    },
-    "levelMilestones": [
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 15.00
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 17.30
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 20.05
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 24.30
-      },
-      {
-        "gestureId": "REVERSED_ROTATION",
-        "levelMilestoneTimestampStart": 34.00
-      },
-      {
-        "gestureId": "ROTATION",
-        "levelMilestoneTimestampStart": 38.30
-      },
-      {
-        "gestureId": "STAIRS",
-        "levelMilestoneTimestampStart": 51.70
-      }
-    ]
-  },
-  {
-    "levelId": "Orch4",
-    "levelName": "Music Theory : Orchestra #4",
-    "levelDifficulty": 6,
-    "levelIndexOrder": 6.4,
-    "levelColor": "#f1d300",
-    "levelSong": {
-      "songAuthor": "OneRepublic",
-      "songTitle" : "Wherever I Go",
-      "songUrl": "/assets/data/songs/OneRepublic_-_Wherever_I_Go.mp3"
-    },
-    "levelMilestones": [
-      {
-        "gestureId": "STAIRS",
-        "levelMilestoneTimestampStart": 7.90
-      },
-      {
-        "gestureId": "HAMMER3",
-        "levelMilestoneTimestampStart": 13.00
-      },
-      {
-        "gestureId": "HAMMER3",
-        "levelMilestoneTimestampStart": 18.00
-      },
-      {
-        "gestureId": "HAMMER3",
-        "levelMilestoneTimestampStart": 22.50
-      },
-      {
-        "gestureId": "HAMMER3",
-        "levelMilestoneTimestampStart": 27.50
-      }
-    ]
-  },
-  {
-    "levelId": "Orch5",
-    "levelName": "Music Theory : Orchestra #5",
-    "levelDifficulty": 6,
-    "levelIndexOrder": 6.5,
-    "levelColor": "#e61919",
-    "levelSong": {
-      "songAuthor": "The White Stripes",
-      "songTitle" : "Black Math",
-      "songUrl": "/assets/data/songs/The_White_Stripes_-_Black_Math.mp3"
-    },
-    "levelMilestones": [
-      {
-        "gestureId": "STAIRS",
-        "levelMilestoneTimestampStart": 3.4
-      },
-      {
-        "gestureId": "STAIRS",
-        "levelMilestoneTimestampStart": 8.35
-      },
-      {
-        "gestureId": "GRAB",
-        "levelMilestoneTimestampStart": 12.6
-      },
-      {
-        "gestureId": "UNGRAB",
-        "levelMilestoneTimestampStart": 13.7
-      },
-      {
-        "gestureId": "GRAB",
-        "levelMilestoneTimestampStart": 14.7
-      },
-      {
-        "gestureId": "UNGRAB",
-        "levelMilestoneTimestampStart": 16
-      },
-      {
-        "gestureId": "ROTATION",
-        "levelMilestoneTimestampStart": 25.75
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 31.69
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 32.69
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 33.69
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 36.13
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 37.13
-      },
-      {
-        "gestureId": "HAMMER1",
-        "levelMilestoneTimestampStart": 38.13
       }
     ]
   }
