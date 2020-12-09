@@ -63,11 +63,12 @@ Special thanks to their designers for making them available freely.
 
 ## Musics
 Disclaimer : The rights belong to the authors of the musics.
-* [Wii - Mii Channel Theme](https://www.youtube.com/watch?v=po-0n1BKW2w)
-* [John Williams - Cantina Band](https://www.youtube.com/watch?v=EsvfptdFXf4)
-* [C2C - F.U.Y.A](https://www.youtube.com/watch?v=1KOaT1vdLmc)
-* [C2C - Down The Road](https://www.youtube.com/watch?v=k1uUIJPD0Nk)
-* [Timmy Trumpet x Vengaboys - Up & Down](https://www.youtube.com/watch?v=SBDCd_lD6hI)
-* [Armin van Buuren - Blah Blah Blah](https://www.youtube.com/watch?v=mfJhMfOPWdE)
-* [Stromae - Merci](https://www.youtube.com/watch?v=2qfm71JSaXA)
-* [OneRepublic - Wherever I Go](https://www.youtube.com/watch?v=OXWrjWDQh7Q)
+* [Wii - Mii Channel Theme](https://youtu.be/po-0n1BKW2w)
+* [John Williams - Cantina Band](https://youtu.beEsvfptdFXf4)
+* [C2C - F.U.Y.A](https://youtu.be/1KOaT1vdLmc)
+* [C2C - Down The Road](https://youtu.be/k1uUIJPD0Nk)
+* [Timmy Trumpet x Vengaboys - Up & Down](https://youtu.be/SBDCd_lD6hI)
+* [Armin van Buuren - Blah Blah Blah](https://youtu.be/mfJhMfOPWdE)
+* [Stromae - Merci](https://youtu.be/2qfm71JSaXA)
+* [OneRepublic - Wherever I Go](https://youtu.be/OXWrjWDQh7Q)
+* [The White Stripes - Black Math](https://youtu.be/-VfnSZt-5pw)
