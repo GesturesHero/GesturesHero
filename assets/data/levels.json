@@ -347,7 +347,7 @@
     "levelMilestones": [
       {
         "gestureId": "PINCH3",
-        "levelMilestoneTimestampStart": 7.00
+        "levelMilestoneTimestampStart": 6.80
       },
       {
         "gestureId": "HAMMER1",
