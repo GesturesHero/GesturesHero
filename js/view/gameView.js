@@ -365,7 +365,6 @@ function _onAudioPlayerUpdate(level) {
                 if (milestoneToCheckWith !== undefined) {
 
                     // Update gesture display.
-                    _clearUserFeedback();
                     _revealNewCurrentGesture();
                     _renderGestures();
 
@@ -434,29 +433,23 @@ function _getMilestoneAt(intervalStart, intervalEnd, milestones) {
 
 // -------------------------------------------- Custom audio player
 
-let timeout;
-
 /**
  * Updates the feedback sent to the user regarding its gesture performance.
  * @param recognitionState {boolean} The recognition state.
  */
 function _updateGestureFeedback(recognitionState) {
-    clearTimeout(timeout);
     $('.gesture-feedback-current').html('<span>' + (recognitionState === true ? '✔' : '❌') + '</span>');
-    timeout = setTimeout(() => {
-        $('.gesture-feedback-current').html('<span></span>');
-    }, (FEEDBACK_TIMEOUT_IN_SEC * SECOND_TO_MILLISECONDS));
-}
+    
+    // Set the transition duration to 0 to set opacity value instantly
+    $('.gesture-feedback-current').css('transitionDuration', '0s');
+    $('.gesture-feedback-current').css('opacity', 1);
 
-/**
- * Clears the user feedback.
- * This method is used when the timeout of a gesture is not elapsed bu when a new gesture comes.
- * The feedback couldn't overlay the gesture illustration.
- * @private
- */
-function _clearUserFeedback(){
-    clearTimeout(timeout);
-    $('.gesture-feedback-current').html('<span></span>');
+    // Get the height value to trigger an update from the browser
+    ($('.gesture-feedback-current').css('height'));
+
+    // Set a css transition, to make the feedback symbole smoothly fade out.
+    $('.gesture-feedback-current').css('transition', 'opacity 0.5s');
+    $('.gesture-feedback-current').css('opacity', 0);
 }
 
 // ------------------------------------------------------------------------------------------------ LEVEL COMPLETED PAGE
