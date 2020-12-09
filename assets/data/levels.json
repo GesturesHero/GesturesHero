@@ -347,7 +347,7 @@
     "levelMilestones": [
       {
         "gestureId": "PINCH3",
-        "levelMilestoneTimestampStart": 7.00
+        "levelMilestoneTimestampStart": 6.80
       },
       {
         "gestureId": "HAMMER1",
@@ -448,6 +448,72 @@
       {
         "gestureId": "HAMMER3",
         "levelMilestoneTimestampStart": 27.50
+      }
+    ]
+  },
+  {
+    "levelId": "Orch5",
+    "levelName": "Music Theory : Orchestra #5",
+    "levelDifficulty": 6,
+    "levelIndexOrder": 6.5,
+    "levelColor": "#e61919",
+    "levelSong": {
+      "songAuthor": "The White Stripes",
+      "songTitle" : "Black Math",
+      "songUrl": "/assets/data/songs/The_White_Stripes_-_Black_Math.mp3"
+    },
+    "levelMilestones": [
+      {
+        "gestureId": "STAIRS",
+        "levelMilestoneTimestampStart": 3.4
+      },
+      {
+        "gestureId": "STAIRS",
+        "levelMilestoneTimestampStart": 8.35
+      },
+      {
+        "gestureId": "GRAB",
+        "levelMilestoneTimestampStart": 12.6
+      },
+      {
+        "gestureId": "UNGRAB",
+        "levelMilestoneTimestampStart": 13.7
+      },
+      {
+        "gestureId": "GRAB",
+        "levelMilestoneTimestampStart": 14.7
+      },
+      {
+        "gestureId": "UNGRAB",
+        "levelMilestoneTimestampStart": 16
+      },
+      {
+        "gestureId": "ROTATION",
+        "levelMilestoneTimestampStart": 25.75
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 31.69
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 32.69
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 33.69
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 36.13
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 37.13
+      },
+      {
+        "gestureId": "HAMMER1",
+        "levelMilestoneTimestampStart": 38.13
       }
     ]
   }
