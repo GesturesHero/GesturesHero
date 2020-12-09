@@ -16,8 +16,8 @@ class Game {
     constructor(levels = []) {
         this.levels = levels.sort((levelA, levelB) => levelA.levelIndexOrder > levelB.levelIndexOrder ? 1 : -1);
         if (levels !== undefined && levels.length !== 0) {
-            //this.currentLevel = levels[0];
-            this.currentLevel = levels[levels.length - 1]; // TODO : To remove in production
+            this.currentLevel = levels[0];
+            // this.currentLevel = levels[levels.length - 1]; // TODO : To remove in production
         } else {
             this.currentLevel = undefined;
         }
