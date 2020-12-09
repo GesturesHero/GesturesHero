@@ -37,6 +37,42 @@ class LeapMotionGestureService extends GestureService {
         super();
         this.controller = new Leap.Controller();
         this.controller.use('riggedHand').connect();
+        this.CLICK_COOLDOWN = 500;
+        this.lastClickTime = 0;
+
+        const checkClick = (frame) => {
+            if(Date.now()- this.lastClickTime < this.CLICK_COOLDOWN) return;
+            for (const hand of frame.hands) {
+                let handMesh = hand.data('riggedHand.mesh');
+
+                // Get the position of the element that is the most close to the limit. The closest of the screen.
+                let screenPosition = (() => {
+                    let furthestPos = handMesh.screenPosition(hand.palmPosition);
+
+                    for(const finger of hand.fingers){
+
+                        let fingerPos = handMesh.screenPosition(finger.tipPosition);
+                        if(fingerPos.z > furthestPos.z) {
+                            furthestPos = fingerPos;
+                            furthestPos.z = fingerPos.z;
+                        }
+                    }
+                    return furthestPos;
+                })();
+
+                if(screenPosition.z > 1){
+                    log.debug("hand click detected");
+                    let elementPointed = document.elementFromPoint(screenPosition.x,  window.screen.height-screenPosition.y);
+                    if(elementPointed){
+                        elementPointed.click();
+                        this.lastClickTime = Date.now();
+                    }
+                }
+            }
+        };
+
+        this.controller.on('frame', checkClick);
+
         this.light = null;
         this._setup3DScene();
 
@@ -60,9 +96,11 @@ class LeapMotionGestureService extends GestureService {
      */
     _setup3DScene() {
         // It creates the camera.
-        let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
-        camera.position.fromArray([0, 200, 500]); // Setup the position of the camera in the scene. Where (0, 0, 0) is the leapmotion
-        camera.lookAt(new THREE.Vector3(0, 200, 0)); // Setup the point which the camera is pointing on
+        let distCamera = 500;
+        let heightCamera = 200;
+        let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, distCamera+150);
+        camera.position.fromArray([0, heightCamera, distCamera]); // Setup the position of the camera in the scene. Where (0, 0, 0) is the leapmotion
+        camera.lookAt(new THREE.Vector3(0, heightCamera, 0)); // Setup the point which the camera is pointing on
 
         // It links the camera with the 3D scene.
         let scope = this.controller.plugins.riggedHand;
