@@ -62,8 +62,9 @@ class LeapMotionGestureService extends GestureService {
 
                 if(screenPosition.z > 1){
                     log.debug("hand click detected");
-                    let elementPointed = document.elementFromPoint(screenPosition.x,  window.screen.height-screenPosition.y);
+                    let elementPointed = document.elementFromPoint(screenPosition.x,  window.innerHeight-screenPosition.y);
                     if(elementPointed){
+                        console.log(elementPointed);
                         elementPointed.click();
                         this.lastClickTime = Date.now();
                     }
@@ -97,8 +98,15 @@ class LeapMotionGestureService extends GestureService {
     _setup3DScene() {
         // It creates the camera.
         let distCamera = 500;
-        let heightCamera = 200;
-        let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, distCamera+150);
+        let heightCamera = 300;
+        let ratio = 4;
+        //let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, distCamera+150);
+        let camera = new THREE.OrthographicCamera( 
+            window.innerWidth / - ratio, // LEFT frustum plane
+            window.innerWidth / ratio, // RIGHT frustum plane
+            window.innerHeight / ratio, // TOP frustum plane
+            window.innerHeight / - ratio, // BOTTOM frustum plane
+            1, distCamera+150);
         camera.position.fromArray([0, heightCamera, distCamera]); // Setup the position of the camera in the scene. Where (0, 0, 0) is the leapmotion
         camera.lookAt(new THREE.Vector3(0, heightCamera, 0)); // Setup the point which the camera is pointing on
 
