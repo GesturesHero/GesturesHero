@@ -384,7 +384,7 @@ class Gesture {
     }
 
     /**
-     * Returns the number of tracked hand.
+     * Returns the number of effective tracked hand.
      * @param gestureRepresentation {Object} A gesture representation to check with.
      */
     getNumberOfEffectiveTrackedHand(gestureRepresentation) {
