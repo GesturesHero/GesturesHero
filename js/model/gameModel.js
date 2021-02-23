@@ -311,7 +311,7 @@ class LevelMilestone {
 
 // --------------------------------------------------------------------------------------------------------------GESTURE
 
-const hand = {
+const handSide = {
     LEFT: 'left',
     RIGHT: 'right',
     ANY: 'any'
@@ -327,7 +327,7 @@ class Gesture {
      * @param gestureId {string} The gesture id.
      * @param durationInSec {number} The gesture duration within the one the gesture must be recognized.
      * @param illustrationUrl {string} An URL to an illustration of the gesture (PNG, GIF, etc.).
-     * @param gestureParts {[[GesturePart, GesturePart]]} The gesture parts that compose the gesture. Each element (from list) represents a gesture part. Each of them is split into sub-element (from sub-list) that represents the sub-part of a gesture part performed by only one hand.
+     * @param gestureParts {[[GesturePart, GesturePart]]} The gesture parts that compose the gesture. Each element (from list) represents a gesture part. Each of them is split into sub-element (from sub-list) that represents the sub-part of a gesture part performed by only one handSide.
      */
     constructor(gestureId, durationInSec, illustrationUrl, gestureParts = [[]]) {
         this.gestureId = gestureId;
@@ -376,7 +376,7 @@ class Gesture {
         if (this.gesturePartTotalCount > 0) {
             this.expectedHandNumber = this.gestureParts[0].length;
         }
-        this.gesturePartCurrentCountByHand = []; // Each element represents a hand counter. The counter informs the number of gesture part recognized by this hand in regard to the total count of gesture parts. Example : gesturePartTotalCount = 2, gesturePartCurrentCountByHand = [2,2], there is two hands, each hand validated 2 gesture parts on a total of 2 gesture parts, the gesture is so recognized.
+        this.gesturePartCurrentCountByHand = []; // Each element represents a handSide counter. The counter informs the number of gesture part recognized by this handSide in regard to the total count of gesture parts. Example : gesturePartTotalCount = 2, gesturePartCurrentCountByHand = [2,2], there is two hands, each handSide validated 2 gesture parts on a total of 2 gesture parts, the gesture is so recognized.
         for (let i = 0; i < this.expectedHandNumber; i++) {
             this.gesturePartCurrentCountByHand.push(0);
         }
@@ -384,7 +384,7 @@ class Gesture {
     }
 
     /**
-     * Returns the number of tracked hand.
+     * Returns the number of tracked handSide.
      * @param gestureRepresentation {Object} A gesture representation to check with.
      */
     getNumberOfTrackedHand(gestureRepresentation) {
@@ -399,7 +399,7 @@ class Gesture {
         if (this.expectedHandNumber === 0 && this.getNumberOfTrackedHand(gestureRepresentation) !== this.expectedHandNumber) {
             return;
         }
-        // Checking if each hand passes its current gesture part.
+        // Checking if each handSide passes its current gesture part.
         for (let handIndex = 0; handIndex < this.expectedHandNumber; handIndex++) {
             if (this.gesturePartCurrentCountByHand[handIndex] < this.gesturePartTotalCount
                 && this.gestureParts[this.gesturePartCurrentCountByHand[handIndex]][handIndex].isRecognized(gestureRepresentation)) {
@@ -407,7 +407,7 @@ class Gesture {
             }
         }
 
-        // Checking if each hand has reached out all their gestures parts.
+        // Checking if each handSide has reached out all their gestures parts.
         let numberOfHandOk = 0;
         for (let handIndex = 0; handIndex < this.expectedHandNumber; handIndex++) {
             if (this.gesturePartCurrentCountByHand[handIndex] === this.gesturePartTotalCount) {
@@ -623,36 +623,36 @@ class GestureLeapMotion extends Gesture {
 //     }
 // }s
 
-class GestureLeapMotionPinch1 extends GestureLeapMotion {
+class Pinch1GestureLeapMotion extends GestureLeapMotion {
 
     constructor(gestureId, durationInSec, illustrationUrl) {
         super(gestureId, durationInSec, illustrationUrl);
         this.gestureParts = [
-            [new LeapMotionPalmIsOpen(hand.LEFT), new LeapMotionPalmIsOpen(hand.RIGHT)],
-            [new LeapMotionPalmIsPinching(hand.LEFT), new LeapMotionPalmIsPinching(hand.RIGHT)],
-            [new LeapMotionPalmIsClosed(hand.LEFT), new LeapMotionPalmIsClosed(hand.RIGHT)]
+            [new PalmIsOpenLeapMotion(handSide.LEFT), new PalmIsOpenLeapMotion(handSide.RIGHT)],
+            [new PalmIsPinchingLeapMotion(handSide.LEFT), new PalmIsPinchingLeapMotion(handSide.RIGHT)],
+            [new PalmIsClosedLeapMotion(handSide.LEFT), new PalmIsClosedLeapMotion(handSide.RIGHT)]
         ];
         this.gesturePartTotalCount = this.gestureParts.length;
         this.init();
     }
 }
 
-class GestureLeapMotionPinch3 extends GestureLeapMotion {
+class Pinch3GestureLeapMotion extends GestureLeapMotion {
 
     constructor(gestureId, durationInSec, illustrationUrl) {
         super(gestureId, durationInSec, illustrationUrl);
         this.gestureParts = [
-            [new LeapMotionPalmIsOpen(hand.LEFT), new LeapMotionPalmIsOpen(hand.RIGHT)],
-            [new LeapMotionPalmIsPinching(hand.LEFT), new LeapMotionPalmIsPinching(hand.RIGHT)],
-            [new LeapMotionPalmIsClosed(hand.LEFT), new LeapMotionPalmIsClosed(hand.RIGHT)],
+            [new PalmIsOpenLeapMotion(handSide.LEFT), new PalmIsOpenLeapMotion(handSide.RIGHT)],
+            [new PalmIsPinchingLeapMotion(handSide.LEFT), new PalmIsPinchingLeapMotion(handSide.RIGHT)],
+            [new PalmIsClosedLeapMotion(handSide.LEFT), new PalmIsClosedLeapMotion(handSide.RIGHT)],
 
-            [new LeapMotionPalmIsOpen(hand.LEFT), new LeapMotionPalmIsOpen(hand.RIGHT)],
-            [new LeapMotionPalmIsPinching(hand.LEFT), new LeapMotionPalmIsPinching(hand.RIGHT)],
-            [new LeapMotionPalmIsClosed(hand.LEFT), new LeapMotionPalmIsClosed(hand.RIGHT)],
+            [new PalmIsOpenLeapMotion(handSide.LEFT), new PalmIsOpenLeapMotion(handSide.RIGHT)],
+            [new PalmIsPinchingLeapMotion(handSide.LEFT), new PalmIsPinchingLeapMotion(handSide.RIGHT)],
+            [new PalmIsClosedLeapMotion(handSide.LEFT), new PalmIsClosedLeapMotion(handSide.RIGHT)],
 
-            [new LeapMotionPalmIsOpen(hand.LEFT), new LeapMotionPalmIsOpen(hand.RIGHT)],
-            [new LeapMotionPalmIsPinching(hand.LEFT), new LeapMotionPalmIsPinching(hand.RIGHT)],
-            [new LeapMotionPalmIsClosed(hand.LEFT), new LeapMotionPalmIsClosed(hand.RIGHT)]
+            [new PalmIsOpenLeapMotion(handSide.LEFT), new PalmIsOpenLeapMotion(handSide.RIGHT)],
+            [new PalmIsPinchingLeapMotion(handSide.LEFT), new PalmIsPinchingLeapMotion(handSide.RIGHT)],
+            [new PalmIsClosedLeapMotion(handSide.LEFT), new PalmIsClosedLeapMotion(handSide.RIGHT)]
         ];
         this.gesturePartTotalCount = this.gestureParts.length;
         this.init();
@@ -708,8 +708,8 @@ class GesturePart {
 //      * @override
 //      */
 //     isRecognized(frame) {
-//         let hand = frame.hands[this.handIndex];
-//         let handPosition = hand.indexFinger.tipPosition;
+//         let handSide = frame.hands[this.handIndex];
+//         let handPosition = handSide.indexFinger.tipPosition;
 //
 //         switch (this.gesturePartStep) {
 //             case 0: // Check the initial position.
@@ -730,7 +730,7 @@ class GesturePart {
 //                 }
 //                 break;
 //
-//             case 2: // Check if finger/hand went back to the initial position.
+//             case 2: // Check if finger/handSide went back to the initial position.
 //                 if (this._hasHandTraveledUp(this.previousHandPeak, handPosition)) {
 //                     this.previousHandPeak = this.previousHandPosition;
 //                     this.gesturePartStep++;
@@ -791,8 +791,8 @@ class GesturePart {
 //             return false;
 //         }
 //
-//         for (const hand of frame.hands) {
-//             const normal = hand.palmNormal[1] * this.direction;
+//         for (const handSide of frame.hands) {
+//             const normal = handSide.palmNormal[1] * this.direction;
 //             if (normal > -0.8) {
 //                 log.debug("gameModel.GestureRotationPartStart.isRecognizedStart : KO");
 //                 return false;
@@ -830,9 +830,9 @@ class GesturePart {
 //             return false;
 //         }
 //
-//         for (const [i, hand] of frame.hands.entries()) {
+//         for (const [i, handSide] of frame.hands.entries()) {
 //             // Normal
-//             const normal = hand.palmNormal[1] * this.handRotationDirection;
+//             const normal = handSide.palmNormal[1] * this.handRotationDirection;
 //             if (normal < this.previousNormals[i] - 0.1) {
 //                 log.debug("GestureRotationPart.isRecognized : Miss gesturing: Hands turning backward");
 //                 return false;
@@ -846,7 +846,7 @@ class GesturePart {
 //             }
 //
 //             // Grab
-//             if (hand.grabStrength === 1) {
+//             if (handSide.grabStrength === 1) {
 //                 log.debug("GestureRotationPart.isRecognized : Miss gesturing: Hands not open enough");
 //                 return false;
 //             }
@@ -882,8 +882,8 @@ class GesturePart {
 //             return false;
 //         }
 //
-//         const hand = frame.hands[0];
-//         const strength = this.grab ? hand.grabStrength : 1 - hand.grabStrength;
+//         const handSide = frame.hands[0];
+//         const strength = this.grab ? handSide.grabStrength : 1 - handSide.grabStrength;
 //         if (strength <= 0.05) {
 //             log.debug("gameModel.GestureGrabStartPart.isRecognizedStart : OK");
 //             return true;
@@ -920,8 +920,8 @@ class GesturePart {
 //             return false;
 //         }
 //
-//         const hand = frame.hands[0]
-//         const strength = this.grab ? hand.grabStrength : 1 - hand.grabStrength;
+//         const handSide = frame.hands[0]
+//         const strength = this.grab ? handSide.grabStrength : 1 - handSide.grabStrength;
 //         if (strength < this.previousStrength - 0.05) {
 //             log.debug("GestureGrabPart.isRecognized : Miss gesturing: decreasing grabStrength");
 //             return false;
@@ -965,11 +965,11 @@ class GesturePart {
 //         let handMoving = frame.hands[this.handMustMove];
 //         let handStatic = frame.hands[this.handMustStayStatic];
 //
-//         for (const hand of frame.hands) {
-//             if (hand.type === this.handMustMove) {
-//                 handMoving = hand;
+//         for (const handSide of frame.hands) {
+//             if (handSide.type === this.handMustMove) {
+//                 handMoving = handSide;
 //             } else {
-//                 handStatic = hand;
+//                 handStatic = handSide;
 //             }
 //         }
 //
@@ -984,18 +984,18 @@ class GesturePart {
 //         if (!this.lowestPositions) { // Initializes positions.
 //             this.lowestPositions = positions;
 //
-//         } else if (this._hasHandNotMove(this.lowestPositions[this.handMustMove], positions[this.handMustMove])) { // Static hand still moves but not the moving hand.
-//             // If the "moving hand" has not move yet, the other "static hand" that is supposed to still static could still move (from the previous part where it was the moving hand).
-//             // Therefore, we allow this movement until the "moving hand" starts its movement. To that end, we update the initial position of the "still hand" to the last known.
+//         } else if (this._hasHandNotMove(this.lowestPositions[this.handMustMove], positions[this.handMustMove])) { // Static handSide still moves but not the moving handSide.
+//             // If the "moving handSide" has not move yet, the other "static handSide" that is supposed to still static could still move (from the previous part where it was the moving handSide).
+//             // Therefore, we allow this movement until the "moving handSide" starts its movement. To that end, we update the initial position of the "still handSide" to the last known.
 //             this.lowestPositions[this.handMustStayStatic] = positions[this.handMustStayStatic];
 //             log.debug(`gameModel.GestureStairPart.isRecognized : ${this.handMustStayStatic} still moving from previous gesture part : OK`);
 //
-//         } else if (!this._hasHandNotMove(this.lowestPositions[this.handMustStayStatic], positions[this.handMustStayStatic])) { // Static hand move but it not supposed to (KO).
-//             // If the "moving hand" starts to move, we force the "static hand" to stay static during the gesture part.
-//             // If the static hand moves, the gestures part is not recognized.
+//         } else if (!this._hasHandNotMove(this.lowestPositions[this.handMustStayStatic], positions[this.handMustStayStatic])) { // Static handSide move but it not supposed to (KO).
+//             // If the "moving handSide" starts to move, we force the "static handSide" to stay static during the gesture part.
+//             // If the static handSide moves, the gestures part is not recognized.
 //             log.debug(`gameModel.GestureStairPart.isRecognized : ${this.handMustStayStatic} has moved : KO`);
 //
-//         } else if (this._hasHandTraveledUp(this.lowestPositions[this.handMustMove], positions[this.handMustMove])) { // Static hand stay static AND the moving hand has moved (OK).
+//         } else if (this._hasHandTraveledUp(this.lowestPositions[this.handMustMove], positions[this.handMustMove])) { // Static handSide stay static AND the moving handSide has moved (OK).
 //             log.debug(`gameModel.GestureStairPart.isRecognized : ${this.handMustMove} : OK`);
 //             return true;
 //         }
@@ -1040,8 +1040,8 @@ class GesturePart {
 //      */
 //     isRecognized(frame) {
 //
-//         let hand = frame.hands[0];
-//         let palmPosition = hand.palmPosition;
+//         let handSide = frame.hands[0];
+//         let palmPosition = handSide.palmPosition;
 //
 //         switch (this.gesturePartStep) {
 //             case 0: // Check the initial position.
@@ -1053,14 +1053,14 @@ class GesturePart {
 //                 }
 //                 break;
 //
-//             case 1: // Check if the hand went right.
+//             case 1: // Check if the handSide went right.
 //                 if (this._hasHandTraveledRight(this.positionPalmPeak, palmPosition) && this._isHandGoingLeft(this.previousPalmPosition, palmPosition)) {
 //                     this.positionPalmPeak = this.previousPalmPosition;
 //                     this.gesturePartStep++;
 //                 }
 //                 break;
 //
-//             case 2: // Check if hand went back to the initial position.
+//             case 2: // Check if handSide went back to the initial position.
 //                 if (this._hasHandTraveledLeft(this.positionPalmPeak, palmPosition)) {
 //                     this.positionPalmPeak = this.previousPalmPosition;
 //                     this.gesturePartStep++;
@@ -1096,14 +1096,14 @@ class GesturePart {
 //     }
 // }
 
-class LeapMotionPalmIsOpen extends GesturePart {
+class PalmIsOpenLeapMotion extends GesturePart {
 
     /**
      * @override
      */
     constructor(handSide) {
         super();
-        this.handSide = handSide !== hand.ANY ? handSide : 0; // If any hand, take the first one.
+        this.handSide = handSide !== handSide.ANY ? handSide : 0; // If any handSide, take the first one.
         this.openHandToleranceMax = 0.2; // 0 = opened ; 1 = closed.
     }
 
@@ -1122,16 +1122,16 @@ class LeapMotionPalmIsOpen extends GesturePart {
         let hand = frame.hands[handSide];
         if (hand !== undefined && hand.pinchStrength <= this.openHandToleranceMax) {
             isRecognized = true;
-            log.debug("gameModel.LeapMotionPalmIsOpen.isRecognized : OK");
+            log.debug("gameModel.PalmIsOpenLeapMotion.isRecognized : OK");
         } else {
-            log.debug("gameModel.LeapMotionPalmIsOpen.isRecognized : OK");
+            log.debug("gameModel.PalmIsOpenLeapMotion.isRecognized : OK");
         }
 
         return isRecognized;
     }
 }
 
-class LeapMotionPalmIsPinching extends GesturePart {
+class PalmIsPinchingLeapMotion extends GesturePart {
 
     /**
      * @override
@@ -1139,7 +1139,7 @@ class LeapMotionPalmIsPinching extends GesturePart {
     constructor(handSide) {
         super();
         this.nearHandClosed = 0.8; // 0 = opened ; 1 = closed.
-        this.handSide = handSide !== hand.ANY ? handSide : 0; // If any hand, take the first one.
+        this.handSide = handSide !== handSide.ANY ? handSide : 0; // If any handSide, take the first one.
         this.init();
     }
 
@@ -1157,27 +1157,27 @@ class LeapMotionPalmIsPinching extends GesturePart {
     isRecognized(frame) {
         let isRecognized = false;
 
-        if (this.hasOpenedAgain !== true) { // While the hand has not opened again, the gesture recognition goes on.
+        if (this.hasOpenedAgain !== true) { // While the handSide has not opened again, the gesture recognition goes on.
 
             let currentPinchStrength = frame.hands[this.handSide].pinchStrength;
 
             if (currentPinchStrength < this.previousPinchStrength) { // Hand has opened again.
                 this.hasOpenedAgain = true;
-                log.debug("gameModel.LeapMotionPalmIsPinching.isRecognized : KO");
+                log.debug("gameModel.PalmIsPinchingLeapMotion.isRecognized : KO");
 
-            } else if (currentPinchStrength >= this.previousPinchStrength && currentPinchStrength < this.nearHandClosed) { // Hand progress towards the closed hand.
+            } else if (currentPinchStrength >= this.previousPinchStrength && currentPinchStrength < this.nearHandClosed) { // Hand progress towards the closed handSide.
                 this.previousPinchStrength = currentPinchStrength;
 
-            } else { // Hand has reached the step before the total closed-hand step.
+            } else { // Hand has reached the step before the total closed-handSide step.
                 isRecognized = true;
-                log.debug("gameModel.LeapMotionPalmIsPinching.isRecognized : OK");
+                log.debug("gameModel.PalmIsPinchingLeapMotion.isRecognized : OK");
             }
         }
         return isRecognized;
     }
 }
 
-class LeapMotionPalmIsClosed extends GesturePart {
+class PalmIsClosedLeapMotion extends GesturePart {
 
     /**
      * @override
@@ -1185,7 +1185,7 @@ class LeapMotionPalmIsClosed extends GesturePart {
     constructor(handSide) {
         super();
         this.nearHandClosed = 0.8; // 0 = opened ; 1 = closed.
-        this.handSide = handSide !== hand.ANY ? handSide : 0; // If any hand, take the first one.
+        this.handSide = handSide !== handSide.ANY ? handSide : 0; // If any handSide, take the first one.
         this.init();
     }
 
@@ -1203,9 +1203,9 @@ class LeapMotionPalmIsClosed extends GesturePart {
         let isRecognized = false;
         if (frame.hands[this.handSide].pinchStrength >= this.nearHandClosed) {
             isRecognized = true;
-            log.debug("gameModel.LeapMotionPalmIsClosed.isRecognized : OK");
+            log.debug("gameModel.PalmIsClosedLeapMotion.isRecognized : OK");
         } else {
-            log.debug("gameModel.LeapMotionPalmIsClosed.isRecognized : KO");
+            log.debug("gameModel.PalmIsClosedLeapMotion.isRecognized : KO");
         }
         return isRecognized;
     }
