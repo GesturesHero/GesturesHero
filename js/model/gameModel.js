@@ -387,7 +387,7 @@ class Gesture {
      * Returns the number of tracked hand.
      * @param gestureRepresentation {Object} A gesture representation to check with.
      */
-    getNumberOfTrackedHand(gestureRepresentation) {
+    getNumberOfEffectiveTrackedHand(gestureRepresentation) {
     }
 
     /**
@@ -396,7 +396,7 @@ class Gesture {
      * @return nothing.
      */
     check(gestureRepresentation) {
-        if (this.expectedHandNumber === 0 && this.getNumberOfTrackedHand(gestureRepresentation) !== this.expectedHandNumber) {
+        if (this.expectedHandNumber === 0 && this.getNumberOfEffectiveTrackedHand(gestureRepresentation) !== this.expectedHandNumber) {
             return;
         }
         // Checking if each hand passes its current gesture part.
@@ -436,7 +436,7 @@ class GestureLeapMotion extends Gesture {
     /**
      * @override
      */
-    getNumberOfTrackedHand(frame) {
+    getNumberOfEffectiveTrackedHand(frame) {
         return frame.hands.length;
     }
 }
