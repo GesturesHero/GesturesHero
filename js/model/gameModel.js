@@ -628,7 +628,7 @@ class Pinch1GestureLeapMotion extends GestureLeapMotion {
     constructor(gestureId, durationInSec, illustrationUrl) {
         super(gestureId, durationInSec, illustrationUrl);
         this.gestureParts = [
-            [new PalmIsOpenLeapMotion(handSide.LEFT), new PalmIsOpenLeapMotion(handSide.RIGHT)],
+            [new PalmIsOpenedLeapMotion(handSide.LEFT), new PalmIsOpenedLeapMotion(handSide.RIGHT)],
             [new PalmIsPinchingLeapMotion(handSide.LEFT), new PalmIsPinchingLeapMotion(handSide.RIGHT)],
             [new PalmIsClosedLeapMotion(handSide.LEFT), new PalmIsClosedLeapMotion(handSide.RIGHT)]
         ];
@@ -642,15 +642,15 @@ class Pinch3GestureLeapMotion extends GestureLeapMotion {
     constructor(gestureId, durationInSec, illustrationUrl) {
         super(gestureId, durationInSec, illustrationUrl);
         this.gestureParts = [
-            [new PalmIsOpenLeapMotion(handSide.LEFT), new PalmIsOpenLeapMotion(handSide.RIGHT)],
+            [new PalmIsOpenedLeapMotion(handSide.LEFT), new PalmIsOpenedLeapMotion(handSide.RIGHT)],
             [new PalmIsPinchingLeapMotion(handSide.LEFT), new PalmIsPinchingLeapMotion(handSide.RIGHT)],
             [new PalmIsClosedLeapMotion(handSide.LEFT), new PalmIsClosedLeapMotion(handSide.RIGHT)],
 
-            [new PalmIsOpenLeapMotion(handSide.LEFT), new PalmIsOpenLeapMotion(handSide.RIGHT)],
+            [new PalmIsOpenedLeapMotion(handSide.LEFT), new PalmIsOpenedLeapMotion(handSide.RIGHT)],
             [new PalmIsPinchingLeapMotion(handSide.LEFT), new PalmIsPinchingLeapMotion(handSide.RIGHT)],
             [new PalmIsClosedLeapMotion(handSide.LEFT), new PalmIsClosedLeapMotion(handSide.RIGHT)],
 
-            [new PalmIsOpenLeapMotion(handSide.LEFT), new PalmIsOpenLeapMotion(handSide.RIGHT)],
+            [new PalmIsOpenedLeapMotion(handSide.LEFT), new PalmIsOpenedLeapMotion(handSide.RIGHT)],
             [new PalmIsPinchingLeapMotion(handSide.LEFT), new PalmIsPinchingLeapMotion(handSide.RIGHT)],
             [new PalmIsClosedLeapMotion(handSide.LEFT), new PalmIsClosedLeapMotion(handSide.RIGHT)]
         ];
@@ -1096,7 +1096,7 @@ class GesturePart {
 //     }
 // }
 
-class PalmIsOpenLeapMotion extends GesturePart {
+class PalmIsOpenedLeapMotion extends GesturePart {
 
     /**
      * @override
@@ -1122,9 +1122,9 @@ class PalmIsOpenLeapMotion extends GesturePart {
         let hand = frame.hands[handSide];
         if (hand !== undefined && hand.pinchStrength <= this.openHandToleranceMax) {
             isRecognized = true;
-            log.debug("gameModel.PalmIsOpenLeapMotion.isRecognized : OK");
+            log.debug("gameModel.PalmIsOpenedLeapMotion.isRecognized : OK");
         } else {
-            log.debug("gameModel.PalmIsOpenLeapMotion.isRecognized : OK");
+            log.debug("gameModel.PalmIsOpenedLeapMotion.isRecognized : OK");
         }
 
         return isRecognized;
