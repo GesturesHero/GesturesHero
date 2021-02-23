@@ -86,8 +86,8 @@ class LeapMotionGestureService extends GestureService {
         // this.recognizableGestures.set("REVERSED_ROTATION", new GestureRotationLeapMotion("REVERSED_ROTATION", 1.5, "/assets/data/gestures-illustrations/reversed-rotation.gif", false));
         // this.recognizableGestures.set("STAIRS", new GestureStairsLeapMotion("STAIRS", 2.8, "/assets/data/gestures-illustrations/stairs.gif"));
         // this.recognizableGestures.set("SCRATCH", new GestureScratchLeapMotion("SCRATCH", 1.5, "/assets/data/gestures-illustrations/scratch.gif"));
-        this.recognizableGestures.set("PINCH1", new GesturePinch1LeapMotion("PINCH1", 1, "/assets/data/gestures-illustrations/pinch1.gif"));
-        this.recognizableGestures.set("PINCH3", new GesturePinch3LeapMotion("PINCH3", 2.5, "/assets/data/gestures-illustrations/pinch3.gif"));
+        this.recognizableGestures.set("PINCH1", new GestureLeapMotionPinch1("PINCH1", 1, "/assets/data/gestures-illustrations/pinch1.gif"));
+        this.recognizableGestures.set("PINCH3", new GestureLeapMotionPinch3("PINCH3", 2.5, "/assets/data/gestures-illustrations/pinch3.gif"));
     }
 
     /**
