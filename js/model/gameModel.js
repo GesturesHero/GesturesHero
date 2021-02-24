@@ -632,7 +632,6 @@ class Pinch1GestureLeapMotion extends GestureLeapMotion {
             [new PalmIsPinchingLeapMotion(handSide.LEFT), new PalmIsPinchingLeapMotion(handSide.RIGHT)],
             [new PalmIsClosedLeapMotion(handSide.LEFT), new PalmIsClosedLeapMotion(handSide.RIGHT)]
         ];
-        this.gesturePartTotalCount = this.gestureParts.length;
         this.init();
     }
 }
@@ -654,7 +653,6 @@ class Pinch3GestureLeapMotion extends GestureLeapMotion {
             [new PalmIsPinchingLeapMotion(handSide.LEFT), new PalmIsPinchingLeapMotion(handSide.RIGHT)],
             [new PalmIsClosedLeapMotion(handSide.LEFT), new PalmIsClosedLeapMotion(handSide.RIGHT)]
         ];
-        this.gesturePartTotalCount = this.gestureParts.length;
         this.init();
     }
 }
