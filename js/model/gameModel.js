@@ -657,6 +657,30 @@ class Pinch3GestureLeapMotion extends GestureLeapMotion {
     }
 }
 
+class RotationGestureLeapMotion extends GestureLeapMotion {
+
+    constructor(gestureId, durationInSec, illustrationUrl) {
+        super(gestureId, durationInSec, illustrationUrl);
+        this.gestureParts = [
+            [new PalmIsFlatLeapMotion("left", "down"), new PalmIsFlatLeapMotion("right", "down")],
+            [new PalmIsRotatingLeapMotion("left", "down"), new PalmIsRotatingLeapMotion("right", "down")]
+        ];
+        this.init();
+    }
+}
+
+class ReversedRotationGestureLeapMotion extends GestureLeapMotion {
+
+    constructor(gestureId, durationInSec, illustrationUrl) {
+        super(gestureId, durationInSec, illustrationUrl);
+        this.gestureParts = [
+            [new PalmIsFlatLeapMotion("left", "up"), new PalmIsFlatLeapMotion("right", "up")],
+            [new PalmIsRotatingLeapMotion("left", "up"), new PalmIsRotatingLeapMotion("right", "up")]
+        ];
+        this.init();
+    }
+}
+
 // ---------------------------------------------------------------------------------------------------------GESTURE PART
 
 /**
@@ -1206,5 +1230,87 @@ class PalmIsClosedLeapMotion extends GesturePart {
             log.debug("gameModel.PalmIsClosedLeapMotion.isRecognized : KO");
         }
         return isRecognized;
+    }
+}
+
+class PalmIsFlatLeapMotion extends GesturePart {
+
+    /**
+     * @param {"left" | "right"} handSide 
+     * @param {"up" | "down"} direction 
+     */
+    constructor(handSide, direction) {
+        super();
+        this.handSide = handSide;
+        this.rotation = direction === "down" ? 1 : -1;
+    }
+
+    /**
+     * @override
+     */
+    init() {
+        // Nothing
+    }
+
+    /**
+     * @override
+     */
+    isRecognized(frame) {
+        const hand = frame.find(h => h.type = this.handSide);
+        const normal = hand.palmNormal[1] * this.rotation;
+        const success = normal < -0.8;
+        log.debug(`gameModel.PalmIsFlatLeapMotion.isRecognized : ${success}`);
+        return success
+    }
+}
+
+class PalmIsRotatingLeapMotion extends GesturePart {
+
+    /**
+     * @param {"left" | "right"} handSide
+     * @param {"up" | "down"} startDirection
+     */
+    constructor(handSide, startDirection) {
+        super();
+        this.handSide = handSide;
+        this.rotation = startDirection === "down" ? 1 : -1;
+        this.previousNormals = [-1, -1];
+    }
+
+    /**
+     * @override
+     */
+    init() {
+        this.previousNormals = [-1, -1];
+    }
+
+    /**
+     * @override
+     */
+    isRecognized(frame) {
+        const hand = frame.hands.find(h => h.type === this.handSide)
+
+        // Normal
+        const normal = hand.palmNormal[1] * this.rotation;
+        if (normal < this.previousNormals[i] - 0.1) {
+            log.debug("gameModel.PalmIsRotatingLeapMotion.isRecognized : Miss gesturing: Hands turning backwards");
+            return false;
+        } else {
+            this.previousNormals[i] = Math.max(normal, this.previousNormals[i]);
+        }
+
+        if (normal < 0.8) {
+            log.debug("gameModel.PalmIsRotatingLeapMotion.isRecognized : Unfinished gesture");
+            return false;
+        }
+
+        // Grab
+        if (hand.grabStrength === 1) {
+            log.debug("gameModel.PalmIsRotatingLeapMotion.isRecognized : Miss gesturing: Hands not open enough");
+            return false;
+        }
+
+        log.debug("gameModel.PalmIsRotatingLeapMotion.isRecognized : OK");
+        return true;
     }
 }
