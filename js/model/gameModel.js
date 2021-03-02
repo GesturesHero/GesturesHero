@@ -441,7 +441,6 @@ class GestureLeapMotion extends Gesture {
     }
 }
 
-
 class Pinch1GestureLeapMotion extends GestureLeapMotion {
 
     constructor(gestureId, durationInSec, illustrationUrl) {
@@ -524,6 +523,98 @@ class ReleaseGestureLeapMotion extends GestureLeapMotion {
     }
 }
 
+class GestureHammer1LeapMotion extends GestureLeapMotion {
+
+    constructor(gestureId, durationInSec, illustrationUrl) {
+        super(gestureId, durationInSec, illustrationUrl);
+        this.gestureParts = [
+            [new PalmMoveDownUp("left"), new PalmMoveDownUp("right")]
+        ];
+        this.gestureCount = this.gestureParts.length;
+        this.hand1Index = 0;
+        this.hand2Index = 0;
+    }
+
+    /**
+     * @override
+     */
+    init() {
+        this.gestureParts.forEach(gesturePart => gesturePart.forEach(gesturePartForHand => gesturePartForHand.init()));
+        this.hand1Index = 0;
+        this.hand2Index = 0;
+        this.recognized = false;
+    }
+
+    /**
+     * @override
+     */
+    check(frame) {
+        // todo: foreach instead of [0] and [1] -- to be generalized in Gesture.check()
+        if (frame.hands.length !== 2) return;
+        if (this.hand1Index < this.gestureCount
+            && this.gestureParts[this.hand1Index][0].isRecognized(frame)) {
+            this.hand1Index++;
+            log.debug("Hammer Hand 1 " + this.hand1Index + "/" + this.gestureCount);
+        }
+        if (this.hand2Index < this.gestureCount
+            && this.gestureParts[this.hand2Index][1].isRecognized(frame)) {
+            this.hand2Index++;
+            log.debug("Hammer Hand 2 " + this.hand2Index + "/" + this.gestureCount);
+        }
+        this.recognized = this.hand1Index + this.hand2Index === this.gestureCount * 2;
+    }
+}
+
+class GestureHammer3LeapMotion extends GestureLeapMotion {
+
+    constructor(gestureId, durationInSec, illustrationUrl) {
+        super(gestureId, durationInSec, illustrationUrl);
+        this.gestureParts = [
+            [new PalmMoveDownUp("left"), new PalmMoveDownUp("right")],
+            [new PalmMoveDownUp("left"), new PalmMoveDownUp("right")],
+            [new PalmMoveDownUp("left"), new PalmMoveDownUp("right")],
+        ];
+        this.gestureCount = this.gestureParts.length;
+    }
+}
+
+class GestureScratchLeapMotion extends GestureLeapMotion {
+
+    constructor(gestureId, durationInSec, illustrationUrl) {
+        super(gestureId, durationInSec, illustrationUrl);
+        this.gestureParts = [
+            [new PalmMoveRightLeft(0)],
+            [new PalmMoveRightLeft(1)],
+            [new PalmMoveRightLeft(2)],
+        ];
+        this.gestureCount = this.gestureParts.length;
+        this.gestureIndex = 0;
+    }
+
+    /**
+     * @override
+     */
+    init() {
+        // todo: foreach instead of [0] -- to be generalized in Gesture.check()
+        this.gestureParts.forEach(parts => parts[0].init());
+        this.gestureIndex = 0;
+        this.recognized = false;
+    }
+
+    /**
+     * @override
+     */
+    check(frame) {
+        if (frame.hands.length !== 1) return;
+        // todo: foreach instead of [0] -- to be generalized in Gesture.check()
+        if (this.gestureIndex < this.gestureCount && this.gestureParts[this.gestureIndex][0].isRecognized(frame)) {
+            this.gestureIndex++;
+            log.debug("Scratch " + this.gestureIndex + "/" + this.gestureCount);
+        }
+        this.recognized = this.gestureIndex === this.gestureCount;
+    }
+}
+
 // ---------------------------------------------------------------------------------------------------------GESTURE PART
 
 /**
@@ -550,7 +641,6 @@ class GesturePart {
     isRecognized(gestureRepresentation) {
     }
 }
-
 
 class PalmIsOpenedLeapMotion extends GesturePart {
 
@@ -946,3 +1036,169 @@ class PalmHasStartMoving extends GesturePart {
     }
 }
 
+class PalmMoveDownUp extends GesturePart {
+    constructor(handType) {
+        super();
+        this.handType = handType;
+        this.previousHandPeak = null;
+        this.previousHandPosition = null;
+        this.gesturePartStep = 0;
+    }
+
+    /**
+     * @override
+     */
+    init() {
+        this.previousHandPeak = null;
+        this.previousHandPosition = null;
+        this.gesturePartStep = 0;
+    }
+
+    /**
+     * @override
+     */
+    isRecognized(frame) {
+        let hand;
+        for (const h of frame.hands) {
+            if (h.type === this.handType) {
+                hand = h;
+            }
+        }
+        let handPosition = hand.indexFinger.tipPosition;
+
+        switch (this.gesturePartStep) {
+            case 0: // Check the initial position.
+                if (this.previousHandPosition
+                    && this._isHandGoingDown(this.previousHandPosition, handPosition)) {
+                    this.previousHandPeak = this.previousHandPosition;
+                    this.gesturePartStep++;
+                } else if (this.previousHandPosition && this._isHandGoingUp(this.previousHandPosition, handPosition)) {
+                    this.previousHandPosition = handPosition;
+                }
+                break;
+
+            case 1: // Check if the finger went down.
+                if (this._hasHandTraveledDown(this.previousHandPeak, handPosition)
+                    && this._isHandGoingUp(this.previousHandPosition, handPosition)) {
+                    this.previousHandPeak = this.previousHandPosition;
+                    this.gesturePartStep++;
+                }
+                break;
+
+            case 2: // Check if finger/hand went back to the initial position.
+                if (this._hasHandTraveledUp(this.previousHandPeak, handPosition)) {
+                    this.previousHandPeak = this.previousHandPosition;
+                    this.gesturePartStep++;
+                }
+                break;
+
+            default: // State = 3 ; The previous state was successful, ti means that the gesture has been recognized.
+                log.debug("gameModel.GestureHammerPart.isRecognized : OK");
+                return true;
+        }
+
+        this.previousHandPosition = handPosition;
+
+        return false;
+    }
+
+    _hasHandTraveledDown(before, after) {
+        let difference = before[1] - after[1];
+        return difference > 30;
+    }
+
+    _hasHandTraveledUp(before, after) {
+        let difference = after[1] - before[1];
+        return difference > 30;
+    }
+
+    _isHandGoingUp(before, after) {
+        return before[1] < after[1];
+    }
+
+    _isHandGoingDown(before, after) {
+        return before[1] > after[1];
+    }
+}
+
+class PalmMoveRightLeft extends GesturePart {
+
+    /**
+     * @override
+     */
+    constructor() {
+        super();
+        this.gesturePartStep = 0;
+        this.previousPalmPosition = null;
+        this.positionPalmPeak = null;
+    }
+
+    /**
+     * @override
+     */
+    init() {
+        this.gesturePartStep = 0;
+        this.previousPalmPosition = null;
+        this.positionPalmPeak = null;
+    }
+
+    /**
+     * @override
+     */
+    isRecognized(frame) {
+
+        let hand = frame.hands[0];
+        let palmPosition = hand.palmPosition;
+
+        switch (this.gesturePartStep) {
+            case 0: // Check the initial position.
+                if (this.previousPalmPosition && this._isHandGoingRight(this.previousPalmPosition, palmPosition)) {
+                    this.positionPalmPeak = this.previousPalmPosition;
+                    this.gesturePartStep++;
+                } else if (this.previousPalmPosition && this._isHandGoingLeft(this.previousPalmPosition, palmPosition)) {
+                    this.previousPalmPosition = palmPosition;
+                }
+                break;
+
+            case 1: // Check if the hand went right.
+                if (this._hasHandTraveledRight(this.positionPalmPeak, palmPosition) && this._isHandGoingLeft(this.previousPalmPosition, palmPosition)) {
+                    this.positionPalmPeak = this.previousPalmPosition;
+                    this.gesturePartStep++;
+                }
+                break;
+
+            case 2: // Check if hand went back to the initial position.
+                if (this._hasHandTraveledLeft(this.positionPalmPeak, palmPosition)) {
+                    this.positionPalmPeak = this.previousPalmPosition;
+                    this.gesturePartStep++;
+                }
+                break;
+
+            default: // State = 3 ; The previous state was successful, it means that the gesture has been recognized.
+                log.debug(`gameModel.GestureScratchPart.isRecognized : OK`);
+                return true;
+        }
+
+        this.previousPalmPosition = palmPosition;
+
+        return false;
+    }
+
+    _hasHandTraveledRight(before, after) {
+        let difference = before[0] - after[0];
+        return difference > 30;
+    }
+
+    _hasHandTraveledLeft(before, after) {
+        let difference = after[0] - before[0];
+        return difference > 30;
+    }
+
+    _isHandGoingLeft(before, after) {
+        return before[0] < after[0];
+    }
+
+    _isHandGoingRight(before, after) {
+        return before[0] > after[0];
+    }
+}
