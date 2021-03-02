@@ -615,6 +615,45 @@ class GestureScratchLeapMotion extends GestureLeapMotion {
     }
 }
 
+class GestureStairsLeapMotion extends Gesture {
+
+    constructor(gestureId, durationInSec, illustrationUrl) {
+        super(gestureId, durationInSec, illustrationUrl);
+        this.gestureParts = [
+            [new PalmIsStill("left"), new PalmWentUp("right")],
+            [new PalmHasStartMoving("left")],
+
+            [new PalmIsStill("right"), new PalmWentUp("left")],
+            [new PalmHasStartMoving("right")],
+
+            [new PalmIsStill("left"), new PalmWentUp("right")],
+            [new PalmHasStartMoving("left")],
+
+            [new PalmIsStill("right"), new PalmWentUp("left")],
+        ];
+        this.init();
+    }
+
+    /**
+     * @override
+     */
+    check(frame) {
+        if (frame.hands.length !== 2) return;
+
+        if (this.gestureIndex < this.gestureCount){
+            let checkValue = true;
+            console.log(this.gestureParts);
+            console.log(this.gestureParts[this.gestureIndex]);
+            for(const handCondition of this.gestureParts[this.gestureIndex]){
+                if(!handCondition.isRecognized(frame)) checkValue = false;
+            }
+            if(checkValue) this.gestureIndex++;
+        }
+
+        this.recognized = this.gestureIndex === this.gestureCount;
+    }
+}
+
 // ---------------------------------------------------------------------------------------------------------GESTURE PART
 
 /**
