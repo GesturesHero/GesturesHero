@@ -681,6 +681,30 @@ class ReversedRotationGestureLeapMotion extends GestureLeapMotion {
     }
 }
 
+class GrabGestureLeapMotion extends GestureLeapMotion {
+
+    constructor(gestureId, durationInSec, illustrationUrl) {
+        super(gestureId, durationInSec, illustrationUrl);
+        this.gestureParts = [
+            [new PalmIsOpenedLeapMotion("any")],
+            [new HandIsGrabbingLeapMotion("any")]
+        ];
+        this.init();
+    }
+}
+
+class ReleaseGestureLeapMotion extends GestureLeapMotion {
+
+    constructor(gestureId, durationInSec, illustrationUrl) {
+        super(gestureId, durationInSec, illustrationUrl);
+        this.gestureParts = [
+            [new PalmIsClosedLeapMotion("any")],
+            [new HandIsGrabbingLeapMotion("any", true)]
+        ];
+        this.init();
+    }
+}
+
 // ---------------------------------------------------------------------------------------------------------GESTURE PART
 
 /**
@@ -1289,6 +1313,7 @@ class PalmIsRotatingLeapMotion extends GesturePart {
      */
     isRecognized(frame) {
         const hand = frame.hands.find(h => h.type === this.handSide)
+        console.assert(hand !== undefined)
 
         // Normal
         const normal = hand.palmNormal[1] * this.rotation;
@@ -1311,6 +1336,53 @@ class PalmIsRotatingLeapMotion extends GesturePart {
         }
 
         log.debug("gameModel.PalmIsRotatingLeapMotion.isRecognized : OK");
+        return true;
+    }
+}
+
+class HandIsGrabbingLeapMotion extends GesturePart {
+
+    /**
+     * @override
+     */
+    constructor(handSide, reversed = false) {
+        super();
+        this.handSide = handSide;
+        this.reversed = reversed;
+        this.previousStrength = 0;
+    }
+
+    /**
+     * @override
+     */
+    init() {
+        this.previousStrength = 0;
+    }
+
+    /**
+     * @override
+     */
+    isRecognized(frame) {
+        const hand = this.handSide === "any"
+            ? frame.hands[0]
+            : frame.hands.find(h => h.type === handSide);
+
+        console.assert(hand !== undefined);
+
+        const strength = this.reversed ? hand.grabStrength : 1 - hand.grabStrength;
+        if (strength < this.previousStrength - 0.05) {
+            log.debug("gameModel.HandIsGrabbingLeapMotion.isRecognized : Miss gesturing: decreasing grabStrength");
+            return false;
+        } else {
+            this.previousStrength = Math.max(strength, this.previousStrength);
+        }
+
+        if (strength < 0.95) {
+            log.debug("gameModel.HandIsGrabbingLeapMotion.isRecognized : unfinished gesture");
+            return false;
+        }
+
+        log.debug("gameModel.HandIsGrabbingLeapMotion.isRecognized : OK");
         return true;
     }
 }
