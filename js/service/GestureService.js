@@ -78,14 +78,14 @@ class LeapMotionGestureService extends GestureService {
         this._setup3DScene();
 
         this.recognizableGestures = new Map();
-        // this.recognizableGestures.set("HAMMER1", new GestureHammer1LeapMotion("HAMMER1", 0.7, "/assets/data/gestures-illustrations/hammer.gif"));
-        // this.recognizableGestures.set("HAMMER3", new GestureHammer3LeapMotion("HAMMER3", 1.5, "/assets/data/gestures-illustrations/hammer3.gif"));
-        // this.recognizableGestures.set("GRAB", new GestureGrabLeapMotion("GRAB", 0.7, "/assets/data/gestures-illustrations/grab.gif", true));
-        // this.recognizableGestures.set("UNGRAB", new GestureGrabLeapMotion("UNGRAB", 0.7, "/assets/data/gestures-illustrations/ungrab.gif", false));
-        // this.recognizableGestures.set("ROTATION", new GestureRotationLeapMotion("ROTATION", 1.5, "/assets/data/gestures-illustrations/rotation.gif", true));
-        // this.recognizableGestures.set("REVERSED_ROTATION", new GestureRotationLeapMotion("REVERSED_ROTATION", 1.5, "/assets/data/gestures-illustrations/reversed-rotation.gif", false));
-        // this.recognizableGestures.set("STAIRS", new GestureStairsLeapMotion("STAIRS", 2.8, "/assets/data/gestures-illustrations/stairs.gif"));
-        // this.recognizableGestures.set("SCRATCH", new GestureScratchLeapMotion("SCRATCH", 1.5, "/assets/data/gestures-illustrations/scratch.gif"));
+        this.recognizableGestures.set("HAMMER1", new GestureHammer1LeapMotion("HAMMER1", 0.7, "/assets/data/gestures-illustrations/hammer.gif"));
+        this.recognizableGestures.set("HAMMER3", new GestureHammer3LeapMotion("HAMMER3", 1.5, "/assets/data/gestures-illustrations/hammer3.gif"));
+        this.recognizableGestures.set("GRAB", new GestureGrabLeapMotion("GRAB", 0.7, "/assets/data/gestures-illustrations/grab.gif", true));
+        this.recognizableGestures.set("UNGRAB", new GestureGrabLeapMotion("UNGRAB", 0.7, "/assets/data/gestures-illustrations/ungrab.gif", false));
+        this.recognizableGestures.set("ROTATION", new GestureRotationLeapMotion("ROTATION", 1.5, "/assets/data/gestures-illustrations/rotation.gif", true));
+        this.recognizableGestures.set("REVERSED_ROTATION", new GestureRotationLeapMotion("REVERSED_ROTATION", 1.5, "/assets/data/gestures-illustrations/reversed-rotation.gif", false));
+        this.recognizableGestures.set("STAIRS", new GestureStairsLeapMotion("STAIRS", 2.8, "/assets/data/gestures-illustrations/stairs.gif"));
+        this.recognizableGestures.set("SCRATCH", new GestureScratchLeapMotion("SCRATCH", 1.5, "/assets/data/gestures-illustrations/scratch.gif"));
         this.recognizableGestures.set("PINCH1", new Pinch1GestureLeapMotion("PINCH1", 1, "/assets/data/gestures-illustrations/pinch1.gif"));
         this.recognizableGestures.set("PINCH3", new Pinch3GestureLeapMotion("PINCH3", 2.5, "/assets/data/gestures-illustrations/pinch3.gif"));
     }
