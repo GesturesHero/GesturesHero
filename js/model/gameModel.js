@@ -620,16 +620,16 @@ class GestureStairsLeapMotion extends Gesture {
     constructor(gestureId, durationInSec, illustrationUrl) {
         super(gestureId, durationInSec, illustrationUrl);
         this.gestureParts = [
-            [new PalmIsStill("left"), new PalmWentUp("right")],
-            [new PalmHasStartMoving("left")],
+            [new HandIsStillLeapMotion(handSide.LEFT), new HandMoveUpLeapMotion(handSide.RIGHT)],
+            [new HandHasStartMovingUpLeapMotion(handSide.LEFT)],
 
-            [new PalmIsStill("right"), new PalmWentUp("left")],
-            [new PalmHasStartMoving("right")],
+            [new HandIsStillLeapMotion(handSide.RIGHT), new HandMoveUpLeapMotion(handSide.LEFT)],
+            [new HandHasStartMovingUpLeapMotion(handSide.RIGHT)],
 
-            [new PalmIsStill("left"), new PalmWentUp("right")],
-            [new PalmHasStartMoving("left")],
+            [new HandIsStillLeapMotion(handSide.LEFT), new HandMoveUpLeapMotion(handSide.RIGHT)],
+            [new HandHasStartMovingUpLeapMotion(handSide.LEFT)],
 
-            [new PalmIsStill("right"), new PalmWentUp("left")],
+            [new HandIsStillLeapMotion(handSide.RIGHT), new HandMoveUpLeapMotion(handSide.LEFT)],
         ];
         this.init();
     }
@@ -926,7 +926,7 @@ class HandIsGrabbingLeapMotion extends GesturePart {
     }
 }
 
-class PalmIsStill extends GesturePart {
+class HandIsStillLeapMotion extends GesturePart {
     /**
      * @override
      */
@@ -949,34 +949,34 @@ class PalmIsStill extends GesturePart {
      * @override
      */
     isRecognized(frame) {
-        let hand;
+        let hand = frame.hands.find(h => h.type === this.handType); // "this.handType" works here ?
 
-        for (const h of frame.hands) {
+        /*for (const h of frame.hands) {
             if (h.type === this.handType) {
                 hand = h;
             }
-        }
+        }*/
 
         let positions = hand.palmPosition;
 
         if (!this.lowestPositions) { // Initializes positions.
             this.lowestPositions = positions;
 
-        } else if (!this._hasHandNotMove(this.lowestPositions, positions)) {
+        } else if (!this._hasHandNotMoveVerically(this.lowestPositions, positions)) {
             this.isFailed = true;
-            log.debug(`gameModel.PalmIsStill.isRecognized : ${this.handType} has moved : KO`);
+            log.debug(`gameModel.HandIsStillLeapMotion.isRecognized : ${this.handType} has moved : KO`);
         }
 
         return !this.isFailed;
     }
 
-    _hasHandNotMove(before, after) {
+    _hasHandNotMoveVerically(before, after) {
         let difference = Math.abs(after[1] - before[1]);
         return difference < 10;
     }
 }
 
-class PalmWentUp extends GesturePart {
+class HandMoveUpLeapMotion extends GesturePart {
     /**
      * @override
      */
@@ -999,13 +999,13 @@ class PalmWentUp extends GesturePart {
      * @override
      */
     isRecognized(frame) {
-        let hand;
+        let hand = frame.hands.find(h => h.type === this.handType); // "this.handType" works here ?
 
-        for (const h of frame.hands) {
+        /*for (const h of frame.hands) {
             if (h.type === this.handType) {
                 hand = h;
             }
-        }
+        }*/
 
         let positions = hand.palmPosition;
 
@@ -1013,7 +1013,7 @@ class PalmWentUp extends GesturePart {
             this.lowestPositions = positions;
 
         } else if (this._hasHandTraveledUp(this.lowestPositions, positions)) {
-            log.debug(`gameModel.PalmWentUp.isRecognized : ${this.handMustMove} : OK`);
+            log.debug(`gameModel.HandMoveUpLeapMotion.isRecognized : ${this.handMustMove} : OK`);
             return true;
         }
 
@@ -1026,7 +1026,7 @@ class PalmWentUp extends GesturePart {
     }
 }
 
-class PalmHasStartMoving extends GesturePart {
+class HandHasStartMovingUpLeapMotion extends GesturePart {
     /**
      * @override
      */
@@ -1047,13 +1047,13 @@ class PalmHasStartMoving extends GesturePart {
      * @override
      */
     isRecognized(frame) {
-        let hand;
+        let hand = frame.hands.find(h => h.type === this.handType); // "this.handType" works here ?
 
-        for (const h of frame.hands) {
+        /*for (const h of frame.hands) {
             if (h.type === this.handType) {
                 hand = h;
             }
-        }
+        }*/
 
         let positions = hand.palmPosition;
 
@@ -1061,7 +1061,7 @@ class PalmHasStartMoving extends GesturePart {
             this.lowestPositions = positions;
 
         } else if (!this._hasHandNotMove(this.lowestPositions, positions)) {
-            log.debug(`gameModel.PalmHasStartMoving.isRecognized : ${this.handType} has start moving moved : OK`);
+            log.debug(`gameModel.HandHasStartMovingUpLeapMotion.isRecognized : ${this.handType} has start moving moved : OK`);
             return true;
 
         }
