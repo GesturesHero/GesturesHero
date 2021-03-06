@@ -549,40 +549,9 @@ class GestureHammer1LeapMotion extends GestureLeapMotion {
     constructor(gestureId, durationInSec, illustrationUrl) {
         super(gestureId, durationInSec, illustrationUrl);
         this.gestureParts = [
-            [new PalmMoveDownUp("left"), new PalmMoveDownUp("right")]
+            [new PalmMoveDownUpLeapMotion(handSide.LEFT), new PalmMoveDownUpLeapMotion(handSide.RIGHT)]
         ];
-        this.gestureCount = this.gestureParts.length;
-        this.hand1Index = 0;
-        this.hand2Index = 0;
-    }
-
-    /**
-     * @override
-     */
-    init() {
-        this.gestureParts.forEach(gesturePart => gesturePart.forEach(gesturePartForHand => gesturePartForHand.init()));
-        this.hand1Index = 0;
-        this.hand2Index = 0;
-        this.recognized = false;
-    }
-
-    /**
-     * @override
-     */
-    check(frame) {
-        // todo: foreach instead of [0] and [1] -- to be generalized in Gesture.check() --> EDIT Maxime : Already done
-        if (frame.hands.length !== 2) return;
-        if (this.hand1Index < this.gestureCount
-            && this.gestureParts[this.hand1Index][0].isRecognized(frame)) {
-            this.hand1Index++;
-            log.debug("Hammer Hand 1 " + this.hand1Index + "/" + this.gestureCount);
-        }
-        if (this.hand2Index < this.gestureCount
-            && this.gestureParts[this.hand2Index][1].isRecognized(frame)) {
-            this.hand2Index++;
-            log.debug("Hammer Hand 2 " + this.hand2Index + "/" + this.gestureCount);
-        }
-        this.recognized = this.hand1Index + this.hand2Index === this.gestureCount * 2;
+        this.init();
     }
 }
 
@@ -591,11 +560,11 @@ class GestureHammer3LeapMotion extends GestureLeapMotion {
     constructor(gestureId, durationInSec, illustrationUrl) {
         super(gestureId, durationInSec, illustrationUrl);
         this.gestureParts = [
-            [new PalmMoveDownUp("left"), new PalmMoveDownUp("right")],
-            [new PalmMoveDownUp("left"), new PalmMoveDownUp("right")],
-            [new PalmMoveDownUp("left"), new PalmMoveDownUp("right")],
+            [new PalmMoveDownUpLeapMotion(handSide.LEFT), new PalmMoveDownUpLeapMotion(handSide.RIGHT)],
+            [new PalmMoveDownUpLeapMotion(handSide.LEFT), new PalmMoveDownUpLeapMotion(handSide.RIGHT)],
+            [new PalmMoveDownUpLeapMotion(handSide.LEFT), new PalmMoveDownUpLeapMotion(handSide.RIGHT)],
         ];
-        this.gestureCount = this.gestureParts.length;
+        this.init();
     }
 }
 
@@ -604,35 +573,11 @@ class GestureScratchLeapMotion extends GestureLeapMotion {
     constructor(gestureId, durationInSec, illustrationUrl) {
         super(gestureId, durationInSec, illustrationUrl);
         this.gestureParts = [
-            [new PalmMoveRightLeft(0)],
-            [new PalmMoveRightLeft(1)],
-            [new PalmMoveRightLeft(2)],
+            [new PalmMoveRightLeftLeapMotion()],
+            [new PalmMoveRightLeftLeapMotion()],
+            [new PalmMoveRightLeftLeapMotion()],
         ];
-        this.gestureCount = this.gestureParts.length;
-        this.gestureIndex = 0;
-    }
-
-    /**
-     * @override
-     */
-    init() {
-        // todo: foreach instead of [0] -- to be generalized in Gesture.check() --> EDIT Maxime : Already done
-        this.gestureParts.forEach(parts => parts[0].init());
-        this.gestureIndex = 0;
-        this.recognized = false;
-    }
-
-    /**
-     * @override
-     */
-    check(frame) {
-        if (frame.hands.length !== 1) return;
-        // todo: foreach instead of [0] -- to be generalized in Gesture.check() --> EDIT Maxime : Already done
-        if (this.gestureIndex < this.gestureCount && this.gestureParts[this.gestureIndex][0].isRecognized(frame)) {
-            this.gestureIndex++;
-            log.debug("Scratch " + this.gestureIndex + "/" + this.gestureCount);
-        }
-        this.recognized = this.gestureIndex === this.gestureCount;
+        this.init();
     }
 }
 
@@ -1078,7 +1023,7 @@ class HandHasStartMovingUpLeapMotion extends GesturePart {
     }
 }
 
-class PalmMoveDownUp extends GesturePart {
+class PalmMoveDownUpLeapMotion extends GesturePart {
     constructor(handType) {
         super();
         this.handType = handType;
@@ -1163,7 +1108,7 @@ class PalmMoveDownUp extends GesturePart {
     }
 }
 
-class PalmMoveRightLeft extends GesturePart {
+class PalmMoveRightLeftLeapMotion extends GesturePart {
 
     /**
      * @override
