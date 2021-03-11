@@ -28,66 +28,73 @@ class GestureService {
 /**
  * @overview Represents gesture service for LeapMotion.
  */
-class LeapMotionGestureService extends GestureService {
+class GestureServiceLeapMotion extends GestureService {
 
     /**
      * Instantiates a gesture recognizer.
      */
     constructor() {
         super();
-        this.controller = new Leap.Controller();
-        this.controller.use('riggedHand').connect();
         this.CLICK_COOLDOWN = 500;
         this.lastClickTime = 0;
+        this.bugMsgSent = false;
 
-        const checkClick = (frame) => {
+        this.controller = null;
+        this._setupController();
+
+        this.light = null;
+        this._setup3DScene();
+
+        this.recognizableGestures = null;
+        this._setupGestureMap();
+    }
+
+    /**
+     * Setup the controller
+     */
+    _setupController() {
+        this.controller = new Leap.Controller();
+        this.controller.use('riggedHand').connect();
+        this.controller.on('frame', (frame) => {
+            /* Sometimes, window.getComputedStyle(...) as below return an CSS style string with empty values.
+            Therefore, the method handMesh.screenPosition(...) return an error, and there is no hands visualization.
+            No solution as been found at this moment to solve this problem except reloading the page. 
+            The line below is there to empeach the software to freeze. */
+            if(window.getComputedStyle(this.controller.plugins.riggedHand.renderer.domElement).width == ""){
+                // Sent debug message only once to not spam the console
+                if(!this.bugMsgSent){
+                    log.debug("Visualization bugging");
+                    this.bugMsgSent = true;
+                }
+                return;
+            }
+
             if(Date.now()- this.lastClickTime < this.CLICK_COOLDOWN) return;
+            
             for (const hand of frame.hands) {
                 let handMesh = hand.data('riggedHand.mesh');
 
                 // Get the position of the element that is the most close to the limit. The closest of the screen.
-                let screenPosition = (() => {
-                    let furthestPos = handMesh.screenPosition(hand.palmPosition);
+                let furthestPos = handMesh.screenPosition(hand.palmPosition);
+                let fingerPos;
 
-                    for(const finger of hand.fingers){
-
-                        let fingerPos = handMesh.screenPosition(finger.tipPosition);
-                        if(fingerPos.z > furthestPos.z) {
-                            furthestPos = fingerPos;
-                            furthestPos.z = fingerPos.z;
-                        }
+                for(const finger of hand.fingers){
+                    fingerPos = handMesh.screenPosition(finger.tipPosition);
+                    if(fingerPos.z > furthestPos.z) {
+                        furthestPos = fingerPos;
                     }
-                    return furthestPos;
-                })();
+                }
 
-                if(screenPosition.z > 1){
-                    log.debug("hand click detected");
-                    let elementPointed = document.elementFromPoint(screenPosition.x,  window.innerHeight-screenPosition.y);
+                if(furthestPos.z > 1){
+                    log.debug("handSide click detected");
+                    let elementPointed = document.elementFromPoint(furthestPos.x,  window.innerHeight-furthestPos.y);
                     if(elementPointed){
-                        console.log(elementPointed);
                         elementPointed.click();
                         this.lastClickTime = Date.now();
                     }
                 }
             }
-        };
-
-        this.controller.on('frame', checkClick);
-
-        this.light = null;
-        this._setup3DScene();
-
-        this.recognizableGestures = new Map();
-        this.recognizableGestures.set("HAMMER1", new GestureHammer1LeapMotion("HAMMER1", 0.7, "/assets/data/gestures-illustrations/hammer.gif"));
-        this.recognizableGestures.set("HAMMER3", new GestureHammer3LeapMotion("HAMMER3", 1.5, "/assets/data/gestures-illustrations/hammer3.gif"));
-        this.recognizableGestures.set("GRAB", new GestureGrabLeapMotion("GRAB", 0.7, "/assets/data/gestures-illustrations/grab.gif", true));
-        this.recognizableGestures.set("UNGRAB", new GestureGrabLeapMotion("UNGRAB", 0.7, "/assets/data/gestures-illustrations/ungrab.gif", false));
-        this.recognizableGestures.set("ROTATION", new GestureRotationLeapMotion("ROTATION", 1.5, "/assets/data/gestures-illustrations/rotation.gif", true));
-        this.recognizableGestures.set("REVERSED_ROTATION", new GestureRotationLeapMotion("REVERSED_ROTATION", 1.5, "/assets/data/gestures-illustrations/reversed-rotation.gif", false));
-        this.recognizableGestures.set("STAIRS", new GestureStairsLeapMotion("STAIRS", 2.8, "/assets/data/gestures-illustrations/stairs.gif"));
-        this.recognizableGestures.set("SCRATCH", new GestureScratchLeapMotion("SCRATCH", 1.5, "/assets/data/gestures-illustrations/scratch.gif"));
-        this.recognizableGestures.set("PINCH1", new GesturePinch1LeapMotion("PINCH1", 1, "/assets/data/gestures-illustrations/pinch1.gif"));
-        this.recognizableGestures.set("PINCH3", new GesturePinch3LeapMotion("PINCH3", 2.5, "/assets/data/gestures-illustrations/pinch3.gif"));
+        });
     }
 
     /**
@@ -100,7 +107,7 @@ class LeapMotionGestureService extends GestureService {
         let distCamera = 500;
         let heightCamera = 300;
         let ratio = 4;
-        //let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, distCamera+150);
+        
         let camera = new THREE.OrthographicCamera( 
             window.innerWidth / - ratio, // LEFT frustum plane
             window.innerWidth / ratio, // RIGHT frustum plane
@@ -118,6 +125,23 @@ class LeapMotionGestureService extends GestureService {
         this.light = new THREE.PointLight(0x33cccc, 1, 10000);
         this.light.position.set(0, 0, 250);
         scope.scene.add(this.light);
+    }
+
+    /** 
+     * Setup the gesture map
+     */
+    _setupGestureMap() {
+        this.recognizableGestures = new Map();
+        this.recognizableGestures.set("HAMMER1", new GestureHammer1LeapMotion("HAMMER1", 0.7, "/assets/data/gestures-illustrations/hammer.gif"));
+        this.recognizableGestures.set("HAMMER3", new GestureHammer3LeapMotion("HAMMER3", 1.5, "/assets/data/gestures-illustrations/hammer3.gif"));
+        this.recognizableGestures.set("GRAB", new GrabGestureLeapMotion("GRAB", 0.7, "/assets/data/gestures-illustrations/grab.gif"));
+        this.recognizableGestures.set("UNGRAB", new ReleaseGestureLeapMotion("UNGRAB", 0.7, "/assets/data/gestures-illustrations/ungrab.gif"));
+        this.recognizableGestures.set("ROTATION", new RotationGestureLeapMotion("ROTATION", 1.5, "/assets/data/gestures-illustrations/rotation.gif"));
+        this.recognizableGestures.set("REVERSED_ROTATION", new ReversedRotationGestureLeapMotion("REVERSED_ROTATION", 1.5, "/assets/data/gestures-illustrations/reversed-rotation.gif"));
+        this.recognizableGestures.set("STAIRS", new GestureStairsLeapMotion("STAIRS", 2.8, "/assets/data/gestures-illustrations/stairs.gif"));
+        this.recognizableGestures.set("SCRATCH", new GestureScratchLeapMotion("SCRATCH", 1.5, "/assets/data/gestures-illustrations/scratch.gif"));
+        this.recognizableGestures.set("PINCH1", new Pinch1GestureLeapMotion("PINCH1", 1, "/assets/data/gestures-illustrations/pinch1.gif"));
+        this.recognizableGestures.set("PINCH3", new Pinch3GestureLeapMotion("PINCH3", 2.5, "/assets/data/gestures-illustrations/pinch3.gif"));
     }
 
     /**

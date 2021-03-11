@@ -25,7 +25,7 @@ function initializeGame() {
     gameBuilderService = new JSONGameBuilder();
 
     // Setting up the gesture recognizer.
-    gestureService = new LeapMotionGestureService();
+    gestureService = new GestureServiceLeapMotion();
 
     // Builds the game
     _buildGame((game) => {
