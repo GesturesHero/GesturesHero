@@ -317,6 +317,11 @@ const handSide = {
     ANY: 'any'
 };
 
+const verticalDirection = {
+    UP: 'up',
+    DOWN: 'down'
+}
+
 /**
  * @overview Represents an abstract gesture.
  */
@@ -413,19 +418,6 @@ class Gesture {
             return;
         }
 
-        /*let isGesturePartRecognized = true;
-
-        // Checking the gesture part's recognition for each hand.
-        for (let handIndex = 0; handIndex < this.expectedHandNumber; handIndex++) {
-
-            if(!this.gestureParts[this.gesturePartCurrentCount][handIndex].isRecognized(gestureRepresentation)){
-                isGesturePartRecognized = false;
-                // Once one hand's gesture part is not recognized, the global gesture part for the both hands cannot be recognized neither.
-                // Indeed, a gesture part requires a simultaneous hands recognition.
-                // So that, the recognition blocks on the same gesture part until the next gesture representation arrives.
-            }
-        }*/
-
         let isGesturePartRecognized = true;
 
         // Checking the gesture part's recognition for each hand.
@@ -513,8 +505,8 @@ class RotationGestureLeapMotion extends GestureLeapMotion {
     constructor(gestureId, durationInSec, illustrationUrl) {
         super(gestureId, durationInSec, illustrationUrl);
         this.gestureParts = [
-            [new PalmIsFlatLeapMotion("left", "down"), new PalmIsFlatLeapMotion("right", "down")],
-            [new PalmIsRotatingLeapMotion("left", "down"), new PalmIsRotatingLeapMotion("right", "down")]
+            [new PalmIsFlatLeapMotion(handSide.LEFT, verticalDirection.DOWN), new PalmIsFlatLeapMotion(handSide.RIGHT, verticalDirection.DOWN)],
+            [new PalmIsRotatingLeapMotion(handSide.LEFT, verticalDirection.DOWN), new PalmIsRotatingLeapMotion(handSide.RIGHT, verticalDirection.DOWN)]
         ];
         this.init();
     }
@@ -525,8 +517,8 @@ class ReversedRotationGestureLeapMotion extends GestureLeapMotion {
     constructor(gestureId, durationInSec, illustrationUrl) {
         super(gestureId, durationInSec, illustrationUrl);
         this.gestureParts = [
-            [new PalmIsFlatLeapMotion("left", "up"), new PalmIsFlatLeapMotion("right", "up")],
-            [new PalmIsRotatingLeapMotion("left", "up"), new PalmIsRotatingLeapMotion("right", "up")]
+            [new PalmIsFlatLeapMotion(handSide.LEFT, verticalDirection.UP), new PalmIsFlatLeapMotion(handSide.RIGHT, verticalDirection.UP)],
+            [new PalmIsRotatingLeapMotion(handSide.LEFT, verticalDirection.UP), new PalmIsRotatingLeapMotion(handSide.RIGHT, verticalDirection.UP)]
         ];
         this.init();
     }
@@ -537,8 +529,8 @@ class GrabGestureLeapMotion extends GestureLeapMotion {
     constructor(gestureId, durationInSec, illustrationUrl) {
         super(gestureId, durationInSec, illustrationUrl);
         this.gestureParts = [
-            [new PalmIsOpenedLeapMotion("any")],
-            [new HandIsGrabbingLeapMotion("any")]
+            [new PalmIsOpenedLeapMotion(handSide.ANY)],
+            [new HandIsGrabbingLeapMotion(handSide.ANY)]
         ];
         this.init();
     }
@@ -549,8 +541,8 @@ class ReleaseGestureLeapMotion extends GestureLeapMotion {
     constructor(gestureId, durationInSec, illustrationUrl) {
         super(gestureId, durationInSec, illustrationUrl);
         this.gestureParts = [
-            [new PalmIsPinchedLeapMotion("any")],
-            [new HandIsGrabbingLeapMotion("any", true)]
+            [new PalmIsPinchedLeapMotion(handSide.ANY)],
+            [new HandIsGrabbingLeapMotion(handSide.ANY, true)]
         ];
         this.init();
     }
@@ -762,13 +754,13 @@ class PalmIsPinchedLeapMotion extends GesturePart {
 class PalmIsFlatLeapMotion extends GesturePart {
 
     /**
-     * @param {"left" | "right"} handSide 
-     * @param {"up" | "down"} direction 
+     * @param {handSide} handSide 
+     * @param {verticalDirection} direction 
      */
     constructor(handSide, direction) {
         super();
         this.handSide = handSide;
-        this.rotation = direction === "down" ? 1 : -1;
+        this.rotation = direction === verticalDirection.DOWN ? 1 : -1;
     }
 
     /**
@@ -793,13 +785,13 @@ class PalmIsFlatLeapMotion extends GesturePart {
 class PalmIsRotatingLeapMotion extends GesturePart {
 
     /**
-     * @param {"left" | "right"} handSide
-     * @param {"up" | "down"} startDirection
+     * @param {handSide} handSide
+     * @param {verticalDirection} startDirection
      */
     constructor(handSide, startDirection) {
         super();
         this.handSide = handSide;
-        this.rotation = startDirection === "down" ? 1 : -1;
+        this.rotation = startDirection === verticalDirection.DOWN ? 1 : -1;
         this.previousNormals = {right:-1, left:-1};
     }
 
