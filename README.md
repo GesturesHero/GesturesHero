@@ -2,8 +2,8 @@
 
 ## Pitch
 
-The game where the instrument is your hands!
-GesturesHero is the where the player is challenged to interpret several music excerpts, not with an instrument, but with a sequence of gestures like a gestural dance.
+The game where your hands are your instruments!
+GesturesHero is a game where the player is challenged to interpret several music excerpts, not with an instrument, but with a sequence of gestures like a gestural dance.
 The player starts as a beginner until reaching the level of an orchestra conductor.
 Clocked by the rhythm of the music, he must reproduce in a correct way the gesture that appears on the screen within allotted time.
 Only three wrong notes are tolerated.
