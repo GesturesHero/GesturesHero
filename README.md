@@ -66,7 +66,6 @@ npm run start
 * LeapMotion and related
 
 ## Libraries
-* [MomentJS](https://momentjs.com/)
 * [Bootstrap](https://getbootstrap.com/)
 * [JQuery](https://code.jquery.com/jquery-3.1.0.js)
 * [Bootstrap Icons](https://icons.getbootstrap.com/)

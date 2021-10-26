@@ -497,7 +497,7 @@ function alertUserView(message) {
     log.debug(message); // For logging.
 
     $(".alert").addClass("show");
-    $(".alert .message").append("<span>" + message + "</span><br/><small>" + moment().fromNow() + "</small><br/><hr/>");
+    $(".alert .message").append("<span>" + message + "</span><br/><small>" + new Date().toLocaleString() + "</small><br/><hr/>");
     alertDisplayTimeout = setTimeout(closeAlert, 10 * SECOND_TO_MILLISECONDS);
 }
 
