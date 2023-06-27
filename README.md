@@ -32,10 +32,14 @@ The game has been developed from October to December 2020.
 The game requires :
 - A web browser (Google Chrome, Mozilla Firefox, ...).
 - A [LeapMotion Controller](https://www.ultraleap.com/product/leap-motion-controller/) device. We used the one with the "Model No" "LM-010".
-- [Node JS](https://nodejs.org/en/).
+- The [Node JS](https://nodejs.org/en/) platform installed.
+- The [Leap Motion Orion 4.1.0](https://developer-archive.leapmotion.com/downloads/external/v4-1-hand-tracking/windows?version=4.1.0) software installed.
 
 ### Common
 
+- Start the Leap Motion Control Panel.
+- Plug the LeapMotion Controller.
+- Allow web applications in Leap Motion Control Panel > Settings ... > System > Allow web applications > Apply.
 - Open the project in an IDE (Web Storm, PhpStorm, Visual Studio Code, etc.).
 - Install the dependencies.
 ```sh
